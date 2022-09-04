@@ -1,0 +1,11 @@
+01. npx create-react-app react-portfolio --Install React App with create-react-app. In this case react-portfolio.
+02. npm i @emailjs/browser --We'll use it to implement the contact form without installing a dedicated server.
+03. npm i @fortawesome/free-brands-svg-icons --To install the fonts that we'll use in the project.
+04. npm i @fortawesome/free-solid-svg-icons --To install the fonts that we'll use in the project/for navigation on the left side.
+05. npm i @fortawesome/react-fontawesome --To use Font-awesome in react
+06. npm i animate.css --CSS library to animate objects and fonts.
+07. npm i gsap-trial --We use the trial version in order to do not use any account.
+08. npm i loaders.css --A package for loader. We're using it to add a packman.
+09. npm i react-leaflet --A package for using maps in our contact site.
+10. npm i react-loaders --A complement/integration for loaders.css
+11. npm i react-router-dom --Package to navigate throug three pages.
