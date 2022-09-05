@@ -9,3 +9,13 @@
 09. npm i react-leaflet --A package for using maps in our contact site.
 10. npm i react-loaders --A complement/integration for loaders.css
 11. npm i react-router-dom --Package to navigate throug three pages.
+12. npm i sass --To write less CSS code
+15. npm i --save-dev --save-exact prettier --Install prettier to format the code, remember the --save-dev is only for the developer
+14. Load if not the project into vscode.
+15. Add .prettierrc file wit the following configuration:
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": false
+16. Change the name of App.css to App.scss and change the import on App.js
+17. Add assest folder.
