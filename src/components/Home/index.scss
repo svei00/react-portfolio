@@ -39,13 +39,31 @@
         }
 
         img {
-            width: 128px;
+            animation: rotateIn 1s linear both;
+            animation-delay: 1.4s;          
+        }
+
+        .i {
+            width: 30px;
             margin-left: 20px;
             opacity: 0;
-            height: auto;
-            animation: rotateIn 1s linear both;
-            animation-delay: 1.4s;
+            height: auto;               
         }
+
+        .e {
+            width: 35px;
+            margin-left: 20px;
+            opacity: 0;
+            height: auto;               
+        }
+
+        .v {
+            width: 44px;
+            margin-left: 20px;
+            opacity: 0;
+            height: auto;               
+        }
+        
     }
 
     h2 {

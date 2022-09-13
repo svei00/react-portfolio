@@ -1,6 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
 import './index.scss';
-import LogoExS from '../../assets/images/LogoExcelv2_925x325.png';
+import LogoExS from '../../assets/images/LogoExcelWindow.png';
 import logoIEVSsub from '../../assets/images/IvanEVillanueva.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faHome, faUser } from '@fortawesome/free-solid-svg-icons';
