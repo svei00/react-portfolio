@@ -1,12 +1,37 @@
 .logo-container {
     z-index: 0;
-    width: 400px;
-    height: 609px;
+    width: 600px;
+    height: 915px;
     position: absolute;
-    top: 0;
-    right: 15%;
+    top: 135%;
+    right: 2%;
     bottom: 0;
     left: auto;
     margin: auto;
-    opacity: 0;
+    //opacity: 0;
+
+    svg {
+        width:  100%;
+        height: auto;
+        bottom: 0;
+        transform: rotateZ(-0deg) !important; // It is not reccomended to use !important but in this case we use for don't overload
+    }
+
+    .solid-logo {
+        position: absolute;
+        top: auto;
+        right: auto;
+        bottom: auto;
+        left: 0;
+        margin: auto;
+        width: 100%;
+        opacity: 0;
+        transform: rotateZ(-0deg);
+        z-index: 1;
+    }
+}
+
+.svg-container {
+    stroke: #00993F;
+    stroke-width: 10px;
 }
