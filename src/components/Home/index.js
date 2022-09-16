@@ -52,7 +52,7 @@ const Home = () => {
                     <img src={logoV} className='v' alt='developer' />
                     <AnimatedLetters letterClass={letterClass}                          
                     strArray = {nameArrayV}
-                    idx = {21} />
+                    idx = {19} />
 
 
                     <br />

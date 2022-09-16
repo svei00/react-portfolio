@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340.09 317.46">
-  <defs>
-    <style>
-      .cls-1 {
-        fill: none;
-        stroke: #000;
-        stroke-miterlimit: 10;
-        stroke-width: 2px;
-      }
-    </style>
-  </defs>
-  <path class="cls-1" d="M1,316.46V25.64H197.68v55.47H73.66v50.98h114.26v55.47H73.66v73.44h124.02v55.47H1Z"/>
-  <polyline class="cls-1" points="198.09 261 228.09 236 228.09 291 198.09 316"/>
-  <polyline class="cls-1" points="188.09 132 218.09 107 218.09 163 188.09 188"/>
-  <line class="cls-1" x1="198.09" y1="81" x2="228.09" y2="56"/>
-  <polyline class="cls-1" points="1.09 26 31.09 1 228.09 1 198.09 26"/>
-  <line class="cls-1" x1="228.09" y1="59" x2="228.09" y2="1"/>
-  <line class="cls-1" x1="218.09" y1="107" x2="73.66" y2="107"/>
-  <line class="cls-1" x1="228.09" y1="236" x2="73.66" y2="236"/>
+  <path d="M1,316.46V25.64H197.68v55.47H73.66v50.98h114.26v55.47H73.66v73.44h124.02v55.47H1Z" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+  <polyline points="198.09 261 228.09 236 228.09 291 198.09 316" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+  <polyline points="188.09 132 218.09 107 218.09 163 188.09 188" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+  <line x1="198.09" y1="81" x2="228.09" y2="56" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+  <polyline points="1.09 26 31.09 1 228.09 1 198.09 26" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+  <line x1="228.09" y1="59" x2="228.09" y2="1" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+  <line x1="218.09" y1="107" x2="73.66" y2="107" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+  <line x1="228.09" y1="236" x2="73.66" y2="236" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
 </svg>

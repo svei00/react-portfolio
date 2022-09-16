@@ -1,6 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
 import './index.scss';
-import LogoExS from '../../assets/images/LogoExcelWindow.png';
+import LogoExW from '../../assets/images/LogoExcelWindow.png';
 import logoIEVSsub from '../../assets/images/IvanEVillanueva.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faHome, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -9,7 +9,7 @@ import { faGithub, faLinkedin, faTwitter, faYoutube } from '@fortawesome/free-br
 const Sidebar = () => (
    <div className='nav-bar'>
         <Link className='logo' to='/'>
-            <img src={LogoExS} alt='logo'/>
+            <img src={LogoExW} alt='logo'/>
             <img className='sub-logo' src={logoIEVSsub} alt="Time has come to... S v e í" />
         </Link>
 

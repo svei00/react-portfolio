@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 714.97 316.25">
-  <defs>
-    <style>
-      .cls-1 {
-        fill: none;
-        stroke: #000;
-        stroke-miterlimit: 10;
-        stroke-width: 2px;
-      }
-    </style>
-  </defs>
-  <polygon class="cls-1" points="277.57 24.43 177.57 315.25 101.4 315.25 1.4 24.43 77.18 24.43 140.46 221.5 203.75 24.43 277.57 24.43"/>
-  <polygon class="cls-1" points="308.57 1.43 208.57 292.25 132.4 292.25 32.4 1.43 108.18 1.43 171.46 198.5 234.75 1.43 308.57 1.43"/>
-  <polyline class="cls-1" points="203.36 24 234.36 1 308.36 1 276.41 27.81"/>
-  <polyline class="cls-1" points="177.36 315 208.36 292 132.36 292 101.36 315"/>
-  <line class="cls-1" x1="1.36" y1="24" x2="32.36" y2="1"/>
-  <line class="cls-1" x1="77.36" y1="24" x2="108.36" y2="1"/>
-  <line class="cls-1" x1="139.36" y1="222" x2="170.36" y2="199"/>
+  <polygon points="277.57 24.43 177.57 315.25 101.4 315.25 1.4 24.43 77.18 24.43 140.46 221.5 203.75 24.43 277.57 24.43" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+  <polygon points="308.57 1.43 208.57 292.25 132.4 292.25 32.4 1.43 108.18 1.43 171.46 198.5 234.75 1.43 308.57 1.43" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+  <polyline points="203.36 24 234.36 1 308.36 1 276.41 27.81" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+  <polyline points="177.36 315 208.36 292 132.36 292 101.36 315" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+  <line x1="1.36" y1="24" x2="32.36" y2="1" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+  <line x1="77.36" y1="24" x2="108.36" y2="1" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+  <line x1="139.36" y1="222" x2="170.36" y2="199" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
 </svg>
