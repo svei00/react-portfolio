@@ -1,7 +1,10 @@
 // Define colors using througt the app
 $primary-color: #ffd700;
+$secondary-color: #00993F;
+$terciary-color: #599DFB;
 
 @import 'animate.css';
+@import '~loaders.css/src/animations/pacman.scss';
 
 // Define fonts 
 @font-face {
@@ -22,4 +25,19 @@ $primary-color: #ffd700;
 input,
 textarea {
   font-family: 'Helvetica-Neu';
+}
+
+.loader-active {
+  display: block;
+  position: absolute;
+  color: #ffd700;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  width: 50px;
+  height: 50px;
+  animation: fadeOut 1s 1s;
+  animation-fill-mode: forwards;
 }
