@@ -69,15 +69,16 @@
 
         &:hover {
         
-            &::after{
-                content: '!!';
-            }
-
             background: #599DFB;
             border: solid 1px #00993F;
             color: #FFF;
             font-size: 13.5px;
             font-weight: bold;
+
+            &::after{
+                content: '!!';
+                text-transform: uppercase;
+            }
         }
     }
 }
@@ -116,7 +117,7 @@
 
 .leaflet-container {
     width: 100%;
-    height: 100&;
+    height: 100%;
     position: relative;
     opacity: 0;
     animation: backInRight 1s 1.2s;
