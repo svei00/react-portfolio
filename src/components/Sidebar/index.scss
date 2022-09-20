@@ -91,6 +91,12 @@ nav {
         }
     }
 
+    a.portfolio-link {
+        &:after {
+            content: 'Portfolio';
+        }
+    }
+
     a.active {
         svg {
             color: #00993F;
