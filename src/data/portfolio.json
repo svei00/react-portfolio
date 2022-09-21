@@ -1,0 +1,17 @@
+{
+    "portfolio": [
+        {
+            "cover": "/portfolio//LogoExcelTrim.png",
+            "title": "Excel Solutions",
+            "description": "React, JSX, Taildwind, Jest, Git",
+            "url": "http://www.excelsolutionsv.com"
+        },
+
+        {
+            "cover": "/portfolio/1/LogoExcelTrim.png",
+            "title": "Excel Solutions",
+            "description": "React, JSX, Taildwind, Jest, Git",
+            "url": "http://www.excelsolutionsv.com"
+        }
+    ]
+}
