@@ -1,0 +1,16 @@
+01. Go to Firebase site. firebase.google.com
+02. Login or Sign up
+03. Add a project.
+04. Enable or Disable Google Analytics and hit in Create Project
+05. Go to Authentification
+06. Pick a way to autenticate, for example email or gmail or even facebook
+07. Create a Cloud Firestone
+08. Create as a Web/Code
+09. Install Firebase with npm i firebase or npm install firebase.
+10. Create file firebase.js
+11. Copy and paste the code to the project in the file.
+
+// Allow  Editing when you're editing
+01. Go to Firebase Database.
+02. Hit in Rules (Top left).
+03. set line 5 to true
