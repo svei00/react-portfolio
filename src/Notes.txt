@@ -14,3 +14,8 @@
 01. Go to Firebase Database.
 02. Hit in Rules (Top left).
 03. set line 5 to true
+
+// Allow updating Files
+01. Go to build/storage ub Firebase
+02. Hit in rules.
+03. Change line 5 to true
