@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import Loader from 'react-loaders';
 import AnimatedLetters from '../AnimatedLetters';
-import './index.scss'
-import portfolioData from '../../data/portfolio.json'
+import './index.scss';
+// import portfolioData from '../../data/portfolio.json'; // Staticdata
+import { getDocs, collection } from 'firebase/firestore';
+import { db } from '../../firebase';
+
 
 const Portfolio = () => {
 
     const [letterClass, setLetterClass] = useState('text-animate');
+    const [portfolio, setPortfolio] = useState([]);                 // To update the array
 
     useEffect (() => {
         const timer = setTimeout(() => {
@@ -18,6 +22,18 @@ const Portfolio = () => {
         }
     })
 
+    // Retriving data from Firebase
+   
+
+    // Get data from the server
+    const getPortfolio = async () => {
+        const querySnapshot = await getDocs(collection(db, 'portfolio')); // Name of the collection in Firebase.
+        //console.log(querySnapshot); // Verify if we can retrieve data fron server
+        setPortfolio(querySnapshot.docs.map((doc) => doc.data()));                        
+    };
+
+    console.log(portfolio); // Test 
+
     const renderPortfolio = (portfolio) => {
         return (
             <div className='images-container'>
@@ -26,12 +42,12 @@ const Portfolio = () => {
                         return (
                             <div className='image-box' key={idx}>
                                 <img 
-                                    src={port.cover}
+                                    src={port.image}            // Was cover in mock
                                     classname="portfolio-image"
                                     alt="portfolio"
                                 />
                                 <div className='content'>
-                                    <p className='title'>{port.title}</p>
+                                    <p className='title'>{port.name}</p> {/* // Was title in mock data*/}
                                     <h4 className='description'>{port.description}</h4>
                                     <button
                                         className='btn'
@@ -57,7 +73,7 @@ const Portfolio = () => {
                     />
                 </h1>
                 <div>
-                    {renderPortfolio(portfolioData.portfolio)}                     {/* We use this mock since we don't have a real databasa */}
+                    {renderPortfolio(portfolio)}                     {/* We use this (portfolioData) mock since we don't have a real databasa */}
                 </div>
             </div>
             <Loader type='pacman' />
