@@ -17,3 +17,11 @@ body {
   margin-top: 200px;
   margin-left: 200px;
 }
+
+
+/* You can use different media queries to target different screen sizes like laptop, tablet, different phones sizes... */
+@media screen and (max-width: 1200px) {
+  body {
+    overflow: visible;
+  }
+}
