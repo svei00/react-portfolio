@@ -97,6 +97,12 @@ nav {
         }
     }
 
+    a.skills-link {
+        &:after {
+            content: 'Skills';
+        }
+    }
+
     a.active {
         svg {
             color: #00993F;
