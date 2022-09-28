@@ -19,3 +19,7 @@
     "singleQuote": false
 16. Change the name of App.css to App.scss and change the import on App.js
 17. Add assest folder.
+
+// References
+https://codesandbox.io/s/br6fy // Similar to Sloboba
+https://7zm9j.csb.app/works

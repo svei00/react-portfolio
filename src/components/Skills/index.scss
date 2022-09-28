@@ -1,4 +1,4 @@
-.portfolio-page {
+.skills-page {
     padding-left: 100px;
     padding-right: 100px;
     width: calc(100% - 150px);
@@ -10,4 +10,36 @@
         margin-left: 100px;
         margin-top: 100px;
     }
+}
+
+.boldText {
+    color: #599DFB;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.links {
+    color: #00993F;
+    font-weight: bold;
+    text-decoration: none;
+
+    &:hover {
+        color: #599DFB;
+        text-transform: uppercase;
+
+        &::after {
+            content: '!!';
+    }
+    }
+}
+
+.stage-cloud-container {
+    width: 50%;
+    height: 100%;
+    top: 0;
+    padding-top: 18%;
+    margin-left: 0;
+    position: absolute;
+    right: 0;
+    overflow: hidden;
 }
