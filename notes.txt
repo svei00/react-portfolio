@@ -22,4 +22,5 @@
 
 // References
 https://codesandbox.io/s/br6fy // Similar to Sloboba
-https://7zm9j.csb.app/works
+https://7zm9j.csb.app/works    // Similar as above
+https://rp2ms.csb.app/#/skills // Interesting one, but too simple

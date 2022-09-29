@@ -43,3 +43,8 @@
     right: 0;
     overflow: hidden;
 }
+
+// Cloud
+@keyframes blinker {
+    50% { opacity: 0.0; }
+  }
