@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Loader from 'react-loaders';
-import randomColor from 'randomcolor';
 import AnimatedLetters from '../AnimatedLetters';
 import './index.scss';
 import { TagCloud } from 'react-tagcloud';
@@ -66,7 +65,7 @@ const Skills = () => {
         <>
         <div className='container skills-page'>
             <div className='text-zone'>
-                <h1 className='page-title'>
+                <h1>
                     <AnimatedLetters
                         letterClass={letterClass}
                         strArray={'Skills & Experiencie'.split('')}
@@ -92,8 +91,11 @@ const Skills = () => {
                 </p>
             </div>
 
-            <div className='stage-cloud-container'>
-            <TagCloud tags={data} minSize={1} maxSize={5} renderer={customRenderer}/>
+            <div className='cloud-cont'>
+            <TagCloud tags={data} minSize={1} maxSize={5} renderer={customRenderer}
+            onClick={(tag) => alert(`'${tag.value}'!`)}
+            />
+            
             </div>
         </div>
         <Loader type='pacman' />
