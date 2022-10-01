@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Loader from 'react-loaders';
 import AnimatedLetters from '../AnimatedLetters';
 import './index.scss';
-// import portfolioData from '../../data/portfolio.json'; // Staticdata
+import portfolioData from '../../data/portfolio.json'; // Staticdata
 import { getDocs, collection } from 'firebase/firestore';
 import { db } from '../../firebase';
 
@@ -23,12 +23,14 @@ const Portfolio = () => {
     })
 
     // Retriving data from Firebase
-   
+    useEffect (() => {
+      getPortfolio();  
+    }, []);
 
     // Get data from the server
     const getPortfolio = async () => {
         const querySnapshot = await getDocs(collection(db, 'portfolio')); // Name of the collection in Firebase.
-        //console.log(querySnapshot); // Verify if we can retrieve data fron server
+        console.log(querySnapshot); // Verify if we can retrieve data fron server
         setPortfolio(querySnapshot.docs.map((doc) => doc.data()));                        
     };
 

@@ -22,7 +22,7 @@ const Skills = () => {
     // CloudTag
     const data = [
         { value: 'jQuery', count: 25 },
-        { value: 'MongoDB', count: 18 },
+        { value: 'SQL', count: 18 },
         { value: 'JavaScript', count: 38 },
         { value: 'React', count: 30 },
         { value: 'Nodejs', count: 28 },
@@ -33,11 +33,11 @@ const Skills = () => {
         { value: 'Babel.js', count: 7 },
         { value: 'ECMAScript', count: 25 },
         { value: 'Jest', count: 15 },
-        { value: 'Mocha', count: 17 },
+        { value: 'TailwindCSS', count: 17 },
         { value: 'React Native', count: 27 },
-        { value: 'Angular.js', count: 30 },
+        { value: 'Bootstrap', count: 30 },
         { value: 'TypeScript', count: 15 },
-        { value: 'Flow', count: 30 },
+        { value: 'PHP', count: 30 },
         { value: 'NPM', count: 11 },
         { value: 'Microsoft Excel', count: 48}
       ]

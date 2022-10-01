@@ -1,7 +1,8 @@
 import { useRef } from "react"
 import { auth, db, storage } from "../../firebase"
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
-import { addDoc, collection } from "firebase/firestore/lite";
+// import { addDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 
 const Home = () => {
 
