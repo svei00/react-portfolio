@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Loader from 'react-loaders';
 import AnimatedLetters from '../AnimatedLetters';
 import './index.scss';
-import portfolioData from '../../data/portfolio.json'; // Staticdata
+import windowLogo from '../../assets/images/LogoExcelWindow.png'
+// import portfolioData from '../../data/portfolio.json'; // Staticdata
 import { getDocs, collection } from 'firebase/firestore';
 import { db } from '../../firebase';
+import { Link } from 'react-router-dom';
 
 
 const Portfolio = () => {
 
     const [letterClass, setLetterClass] = useState('text-animate');
     const [portfolio, setPortfolio] = useState([]);                 // To update the array
+    const dashboard = useRef('./dashboard')
 
     useEffect (() => {
         const timer = setTimeout(() => {
@@ -60,6 +63,9 @@ const Portfolio = () => {
                         )
                     })
                 }
+                <Link to='/dashboard'>
+                    <img className='loginDashboard' ref={dashboard} src={windowLogo} alt='Excel SolutionsV' />
+                </Link>
             </div>
         );
     } 
