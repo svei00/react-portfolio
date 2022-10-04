@@ -1,5 +1,5 @@
 import Loader from 'react-loaders';
-import './index.scss';
+import '../Contact/index.scss';
 import AnimatedLetters from '../AnimatedLetters';
 import { useEffect, useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
@@ -53,14 +53,14 @@ const Contact = () => {
                     </h1>
                     <p>
                         I'm interested in a full time job position job or freelance 
-                        opportunities - especially ambitious or large projects. 
+                        opportunities especially ambitious or large projects. 
                         However, if you have other request or question, do not 
                         hesitate to contact me using below form either.
                     </p>
-                    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    {/*<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />*/}
                     <div className='contact-form'>
                         <form ref={refForm} onSubmit={sendEmail}>
-                            <ul>
+                           
                                 <li className='half'>
                                     <input
                                     type='text'
@@ -100,7 +100,7 @@ const Contact = () => {
                                     value='Send'
                                 />
                                 </li>
-                            </ul>
+                            
                         </form>
                     </div>
                 </div>

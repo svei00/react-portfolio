@@ -81,13 +81,13 @@
     }
  
     p {
-        font-style: 13px;
+        font-size: 13px;
         color: #fff;
         font-family: Tahoma, Geneva, Verdana, sans-serif;
         text-align: justify;
         text-indent: 20px;
         font-weight: 300;
-        min-width: fit-content;
+        max-width: fit-content;
         animation: pulse 1s;
 
         &:nth-of-type(1) {
