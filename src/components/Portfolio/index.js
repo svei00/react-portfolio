@@ -48,7 +48,7 @@ const Portfolio = () => {
                             <div className='image-box' key={idx}>
                                 <img 
                                     src={port.image}            // Was cover in mock
-                                    classname="portfolio-image"
+                                    className='portfolio-image'
                                     alt="portfolio"
                                 />
                                 <div className='content'>
