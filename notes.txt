@@ -19,9 +19,13 @@
     "singleQuote": false
 16. Change the name of App.css to App.scss and change the import on App.js
 17. Add assest folder.
+18. For SEO (Meta data) use react-helmet.
+    Install npm i react-helmet or via yarn: yarn add react-helmet
 
 // References
 https://codesandbox.io/s/br6fy // Similar to Sloboba
 https://7zm9j.csb.app/works    // Similar as above
 https://rp2ms.csb.app/#/skills // Interesting one, but too simple
 https://madox2.github.io/react-tagcloud/ library 
+https://search.google.com/test/mobile-friendly // To test SEO
+https://www.youtube.com/watch?v=OGoPhwK_P_Q // Helmet SEO Meta data

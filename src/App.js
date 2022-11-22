@@ -7,10 +7,18 @@ import Contact from './components/Contact';
 import Portfolio from './components/Portfolio';
 import Dashboard from './components/Dashboard';
 import Skills from './components/Skills';
+import { Helmet } from 'react-helmet';
 
 function App() {
   return (
     <>
+    <Helmet>
+      <title>Ivan E. Villanueva | Portfolio</title>
+      <meta 
+        name='description'
+        content='Hire Professional Freelancer &amp; React Developer. Building animations and interactive experiences, hi-end solutions, website maintenance &amp; security'
+      />
+    </Helmet>
     <Routes>
       <Route path='/' element={<Layout />} >
         <Route index element={<Home />} />

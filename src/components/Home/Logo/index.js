@@ -42,7 +42,7 @@ const Logo = () => {
             <img className='solid-logo1' ref={solidLogoRef} src={logoESV} alt='Excel SolutionsV' />
             <img className='solid-logo2' ref={solidLogoRef} src={logoESV} alt='Excel SolutionsV' />
             
-            <svg 
+            {/* <svg 
                 width='1264px'
                 height='458px'
                 version='1.2'
@@ -116,7 +116,7 @@ const Logo = () => {
                     <path ref={outlineLogoRef} d="M1374.83,382.95c-5.5,1.65-7.19,5.53-7.07,11,.23,9.99,.38,20.01-.05,29.99-.25,5.77,4.36,10.36,10.12,10.12,10.31-.42,20.67-.42,30.99,0,5.77,.24,10.36-4.36,10.12-10.12-.42-10.31-.42-20.67,0-30.99,.24-5.77-4.36-10.34-10.12-10.12-11.15,.41-22.33,.12-33.49,.12" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
                     <path ref={outlineLogoRef} d="M1460.32,387.45c-5.5,1.65-7.21,5.52-7.06,11,.24,8.99,.39,18.01-.05,26.99-.28,5.77,4.35,10.39,10.12,10.12,9.31-.44,18.67-.44,27.99,0,5.77,.27,10.39-4.35,10.12-10.12-.44-9.31-.44-18.67,0-27.99,.27-5.77-4.35-10.37-10.12-10.12-10.15,.43-20.33,.12-30.49,.12" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
                 </g>
-            </svg> 
+            </svg>  */}
             
         </div>
     )
