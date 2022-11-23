@@ -28,4 +28,4 @@ https://7zm9j.csb.app/works    // Similar as above
 https://rp2ms.csb.app/#/skills // Interesting one, but too simple
 https://madox2.github.io/react-tagcloud/ library 
 https://search.google.com/test/mobile-friendly // To test SEO
-https://www.youtube.com/watch?v=OGoPhwK_P_Q // Helmet SEO Meta data
+https://www.youtube.com/watch?v=OGoPhwK_P_Q // Helmet SEO Meta data 

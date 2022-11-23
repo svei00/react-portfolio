@@ -18,6 +18,10 @@ function App() {
         name='description'
         content='Hire Professional Freelancer &amp; React Developer. Building animations and interactive experiences, hi-end solutions, website maintenance &amp; security'
       />
+      <meta 
+        name='keywords'
+        content='Portfolio, React Developer, Java, Android Studio, Javascript'
+      />
     </Helmet>
     <Routes>
       <Route path='/' element={<Layout />} >

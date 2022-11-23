@@ -7,6 +7,7 @@ import windowLogo from '../../assets/images/LogoExcelWindow.png'
 import { getDocs, collection } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 
 const Portfolio = () => {
@@ -42,6 +43,15 @@ const Portfolio = () => {
     const renderPortfolio = (portfolio) => {
         return (
             <div className='images-container'>
+                <Helmet>
+                    <title>Portfolio | Ivan E. Villanueva</title>
+                    <meta 
+                        name='descriprion' content='Bilingual Software Engineer'
+                    />
+                    <meta 
+                        name='keywords' content='Software Engineer, Bilingual, English, Spanish'
+                    />
+                </Helmet>
                 {
                     portfolio.map((port, idx) => {
                         return (

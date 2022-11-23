@@ -2,8 +2,9 @@ import './index.scss';
 import AnimatedLetters from '../AnimatedLetters';
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngular, faCss3, faGitAlt, faHtml5, faJsSquare, faNode, faReact } from '@fortawesome/free-brands-svg-icons';
+import { /* faAngular,*/ faCss3, faGitAlt, faHtml5, faJsSquare, faNode, faReact } from '@fortawesome/free-brands-svg-icons';
 import Loader from 'react-loaders';
+import { Helmet } from 'react-helmet';
 
 const About = () => {
 
@@ -22,6 +23,13 @@ const About = () => {
     return (
         <>
         <div className='container about-page'>
+            <Helmet>
+                <title>About Me | Ivan E. Villanueva</title>
+                <meta 
+                    name='description'
+                    content='Ivan E. Villanueva Fullstack developer in San Bernardino California'
+                />
+            </Helmet>
             <div className='text-zone'>
                 <h1>
                     <AnimatedLetters 
