@@ -4,6 +4,7 @@ import AnimatedLetters from '../AnimatedLetters';
 import { useEffect, useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { Helmet } from 'react-helmet';
 
 const Contact = () => {
     const [letterClass, setLetterclass] = useState('text-animate');
@@ -43,6 +44,15 @@ const Contact = () => {
     return (
         <>
             <div className='container contact-page'>
+                <Helmet>
+                    <title>Contact | Ivan E. Villanueva</title>
+                    <meta 
+                        name='descriprion' content='Software Engineer in Inland Empire Area'
+                    />
+                    <meta 
+                        name='keywords' content='Software Engineer, San Bernardino, Riverside, Rialto, Colton, Inland Empire, California'
+                    />
+                </Helmet>
                 <div className='text-zone'>
                     <h1>
                         <AnimatedLetters

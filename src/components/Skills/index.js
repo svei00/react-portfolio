@@ -3,6 +3,7 @@ import Loader from 'react-loaders';
 import AnimatedLetters from '../AnimatedLetters';
 import './index.scss';
 import { TagCloud } from 'react-tagcloud';
+import { Helmet } from 'react-helmet';
 
 
 const Skills = () => {
@@ -64,6 +65,15 @@ const Skills = () => {
     return (
         <>
         <div className='container skills-page'>
+            <Helmet>
+                <title>Skills | Ivan E. Villanueva</title>
+                <meta 
+                    name='descriprion' content='Software Engineer in Inland Empire Area'
+                />
+                <meta 
+                    name='keywords' content='Microsoft Excel, Javascript, React, HTML, CSS, Java, C#, C++, Python'
+                />
+            </Helmet>
             <div className='text-zone'>
                 <h1>
                     <AnimatedLetters
