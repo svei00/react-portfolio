@@ -13,14 +13,32 @@ function App() {
   return (
     <>
     <Helmet>
-      <title>Ivan E. Villanueva | Portfolio</title>
+      <title>Ivan E. Villanueva | Fullstack Developer | JavaScript | Freelancer</title>
       <meta 
         name='description'
         content='Hire Professional Freelancer &amp; React Developer. Building animations and interactive experiences, hi-end solutions, website maintenance &amp; security'
       />
-      <meta 
-        name='keywords'
-        content='Portfolio, React Developer, Java, Android Studio, Javascript'
+    
+      <meta
+        property="og:title"
+        content="Fullstack Developer | JavaScript | Freelancer"
+      />
+      <meta
+        property="og:description"
+        content="Hire Professional Freelancer &amp; React Developer. Building animations and interactive experiences, hi-end solutions, website maintenance &amp; security"
+      />
+      <meta
+        property="og:site_name"
+        content="Fullstack Developer | JavaScript | Freelancer"
+      />
+      <meta name="twitter:card" content="summary" />
+      <meta
+        name="twitter:description"
+        content="Hire Professional Freelancer &amp; React Developer. Building animations and interactive experiences, hi-end solutions, website maintenance &amp; security"
+      />
+      <meta
+        name="twitter:title"
+        content="Fullstack Developer | JavaScript | Freelancer"
       />
     </Helmet>
     <Routes>
