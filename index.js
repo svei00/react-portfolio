@@ -1,0 +1,14 @@
+import './src/App';
+import './src/firebase';
+import './src/components/About/index';
+import './src/components/AnimatedLetters/index';
+import './src/components/Contact/index';
+import './src/components/Dashboard/home';
+import './src/components/Dashboard/index';
+import './src/components/Home/Logo/index';
+import './src/components/Home/index';
+import './src/components/Layout/index';
+import './src/components/Login/index';
+import './src/components/Portfolio/index';
+import './src/components/Sidebar/index';
+import './src/components/Skills/index';

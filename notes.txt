@@ -21,11 +21,72 @@
 17. Add assest folder.
 18. For SEO (Meta data) use react-helmet.
     Install npm i react-helmet or via yarn: yarn add react-helmet
+19. Deploy via Netlify with command line (CLI)
+    a. Install Webpack via npm: npm i --save-dev webpack webpack-cli or via yarn yarn add webpack webpack-cli
+    b. Create a file in root called webpack.config.js
+    c. Install the following configuration.
+        const path = require('path')
+        const HtmlWebpackPlugin = require('html-webpack-plugin')
+        const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+        const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+        const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+        const TerserPlugin = require("terser-webpack-plugin");
+        const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+
+        module.exports = {
+            entry: ['./index.js'],
+            output: {
+                filename: '[name].[contenthash].js',
+                path: path.resolve(__dirname, "dist"),
+                assetModuleFilename: 'assets/[hash][ext][query]'
+            },
+            plugins: [
+                new MiniCssExtractPlugin({ filename: "[name].[hash].css" }),
+                new CleanWebpackPlugin(),
+                new HtmlWebpackPlugin({ template: './index.html' })
+            ],
+            module: {
+                rules: [
+                    {
+                        test: /\.html$/,
+                        use: ["html-loader"]
+                    },
+                    {
+                        test: /\.css$/i,
+                        use: [
+                            {
+                                loader: MiniCssExtractPlugin.loader,
+                                options: {},
+                            },
+                            'css-loader',
+                        ],
+                    },
+                    {
+                        test: /\.(svg|png|jpg|gif)$/,
+                        type: 'asset/resource'
+                    }
+                ],
+            },
+            optimization: {
+                minimizer: [
+                    new CssMinimizerPlugin(),
+                    new TerserPlugin()
+                ]
+            },
+
+        }
+    d. Install dependecies:
+       npm i --save-dev html-webpack-plugin clean-webpack-plugin mini-css-extract-plugin mini-css-extract-plugin  mini-css-extract-plugin terser-webpack-plugin css-minimizer-webpack-plugin
+    e. Create a file in root called index.js and import all the javascript files
 
 // References
-https://codesandbox.io/s/br6fy // Similar to Sloboba
-https://7zm9j.csb.app/works    // Similar as above
-https://rp2ms.csb.app/#/skills // Interesting one, but too simple
-https://madox2.github.io/react-tagcloud/ library 
-https://search.google.com/test/mobile-friendly // To test SEO
-https://www.youtube.com/watch?v=OGoPhwK_P_Q // Helmet SEO Meta data 
+*
+*
+*
+* https://codesandbox.io/s/br6fy // Similar to Sloboba
+* https://7zm9j.csb.app/works    // Similar as above
+* https://rp2ms.csb.app/#/skills // Interesting one, but too simple
+* https://madox2.github.io/react-tagcloud/ library 
+* https://search.google.com/test/mobile-friendly // To test SEO
+* https://www.youtube.com/watch?v=OGoPhwK_P_Q // Helmet SEO Meta data
+* https://www.academia-x.com/products/herramientas-frontend/categories/2148185847/posts/2149982621 
