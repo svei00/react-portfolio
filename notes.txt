@@ -76,8 +76,12 @@
 
         }
     d. Install dependecies:
-       npm i --save-dev html-webpack-plugin clean-webpack-plugin mini-css-extract-plugin mini-css-extract-plugin  mini-css-extract-plugin terser-webpack-plugin css-minimizer-webpack-plugin
+       npm i --save-dev html-webpack-plugin clean-webpack-plugin mini-css-extract-plugin mini-css-extract-plugin  mini-css-extract-plugin terser-webpack-plugin css-minimizer-webpack-plugin css-loader html-loader
     e. Create a file in root called index.js and import all the javascript files
+    f. Into index.js file import all the CSS files too.
+    g. On package.json scripts write: 
+       - "build-webpack": "webpack --mode production"
+       - then in the terminal npm run build-webpack
 
 // References
 *
@@ -89,4 +93,5 @@
 * https://madox2.github.io/react-tagcloud/ library 
 * https://search.google.com/test/mobile-friendly // To test SEO
 * https://www.youtube.com/watch?v=OGoPhwK_P_Q // Helmet SEO Meta data
-* https://www.academia-x.com/products/herramientas-frontend/categories/2148185847/posts/2149982621 
+* https://www.academia-x.com/products/herramientas-frontend/categories/2148185847/posts/2149982621
+* https://webpack.js.org/plugins/css-minimizer-webpack-plugin/

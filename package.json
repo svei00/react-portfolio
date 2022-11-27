@@ -30,6 +30,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "build-webpack": "webpack --mode production",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -52,7 +53,9 @@
   },
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.7.2",
     "css-minimizer-webpack-plugin": "^4.2.2",
+    "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.7.0",
     "prettier": "2.7.1",
