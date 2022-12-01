@@ -84,9 +84,10 @@
        - then in the terminal npm run build-webpack
 
 // References
-*
-*
-*
+* https://www.youtube.com/watch?v=ESHaail1eGc&t=0s
+* https://www.youtube.com/watch?v=I2TNlHVJ9KQ
+* https://www.youtube.com/watch?v=YnHsgQkY6Z4
+* https://www.youtube.com/watch?v=3yD6Mwx6i0Q&t=2s
 * https://codesandbox.io/s/br6fy // Similar to Sloboba
 * https://7zm9j.csb.app/works    // Similar as above
 * https://rp2ms.csb.app/#/skills // Interesting one, but too simple
@@ -95,3 +96,5 @@
 * https://www.youtube.com/watch?v=OGoPhwK_P_Q // Helmet SEO Meta data
 * https://www.academia-x.com/products/herramientas-frontend/categories/2148185847/posts/2149982621
 * https://webpack.js.org/plugins/css-minimizer-webpack-plugin/
+* https://stackoverflow.com/questions/63414434/react-serve-s-build-the-term-serve-is-not-recognized-as-the-name-of-a-cmdlet
+* https://stackoverflow.com/questions/56694075/react-app-showing-page-with-404-the-requested-path-could-not-be-found-when-usi
