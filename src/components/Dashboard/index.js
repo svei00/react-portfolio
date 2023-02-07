@@ -16,7 +16,7 @@ const Dashboard = () => {
                 setUser(null);
             }
         })
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className="dashboard">
