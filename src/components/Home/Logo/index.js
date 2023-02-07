@@ -1,13 +1,13 @@
 import './index.scss';
 import logoESV from '../../../assets/images/LogoExcelTrim.png'
-import { useEffect, useRef } from 'react';
+import { /*useEffect,*/ useRef } from 'react';
 // import gsap from 'gsap'
 // import DrawSVGPlugin from 'gsap-trial/DrawSVGPlugin'
 
 
 const Logo = () => {
     const bgRef = useRef();
-    const outlineLogoRef = useRef();
+    // const outlineLogoRef = useRef();
     const solidLogoRef = useRef();
 
     // useEffect(() => {

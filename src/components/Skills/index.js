@@ -96,7 +96,7 @@ const Skills = () => {
                     Here's my <span className='boldText'><a className='links' 
                     href='https://www.linkedin.com/in/ivan-e-villanueva-26253157/'>
                     Linkedin</a></span> where you can see more details.  Also you can 
-                    check-out my Resume <span className='boldText'><a className='links' href=''>
+                    check-out my Resume <span className='boldText'><a className='links' href='/'>
                     Here</a></span> or feel free visiting one of my blog posts.
                 </p>
             </div>
