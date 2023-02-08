@@ -8,6 +8,7 @@ import Portfolio from './components/Portfolio';
 import Dashboard from './components/Dashboard';
 import Skills from './components/Skills';
 import { Helmet } from 'react-helmet';
+import Rating from './components/Projects/Rating';
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
         <Route path='skills' element={<Skills />} />
         <Route path='contact' element={<Contact />} />
         <Route path='dashboard' element={<Dashboard />} />
+        <Route path='rating' element={<Rating/>} />
       </Route >
     </Routes>
     </>
