@@ -100,3 +100,5 @@
 * https://stackoverflow.com/questions/56694075/react-app-showing-page-with-404-the-requested-path-could-not-be-found-when-usi
 * https://stackoverflow.com/questions/55840294/how-to-fix-missing-dependency-warning-when-using-useeffect-react-hook // Disable exhaustive-deps
 * https://www.youtube.com/watch?v=fQIerHqB71w // Star Rating
+* https://medium.com/programming-essentials/how-to-create-a-star-rating-component-with-react-hooks-1b31b98df99a // Star Rating React
+* https://dev.to/eveporcello/refactoring-the-starrating-component-with-react-hooks-5c79 // Star Rating React

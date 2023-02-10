@@ -1,36 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react';
 import './index.scss';
 // import stars from './scripts';
 
-const Rating = () => {
+const Star = ({
+    selected = false, 
+    onClick = f => f
+}) => (
+    <span className='star' onClick={onClick}>
+        {selected ? '★' : '☆'}
+    </span>
+);
 
- // Function
- const allStars = document.querySelectorAll('.star');
- let current_rating = document.querySelector('.current_rating');
+const Rating = ({totalStars=5}) => {
 
-    // console.log(allStars);                   // Test to check if the function works
-
-    allStars.forEach( (star, i) => {
-        star.onclick = function() {
-            // console.log(star);               // Test
-            // console.log(i + 1);              // Test
-            let current_star_level = i + 1;
-            current_rating.innerText = `${current_star_level} of 5`;
-            // console.log(current_star_level); // Test
-
-            allStars.forEach( (star, j) => {
-                // console.log(j + 1);          // Test
-                if (current_star_level >= j + 1) {
-                    star.innerHTML = '&#9733';
-                } else {
-                    star.innerHTML = '&#9734';
-                }
-            });
-        }
-    })
-
+  const [starsSelected, selectStar] = useState(0);
 
   return (
+    // Pure HTML Code
+    /*
     <div className='rating-body'>
         <h1>5 Star Rating</h1>
         <div className="star_rating">
@@ -40,11 +27,27 @@ const Rating = () => {
             <button className="star">&#9734;</button>
             <button className="star">&#9734;</button>
             <button className="star">&#9734;</button>
-            <p className='current_rating'>1 of 5</p>
+            <p className='current_rating'>0 of 5</p>
         </div>
     </div>
-  )
-}
+    */
+
+    <div className='rating-body'>
+        <h1>5 Star Rating</h1>
+        <div className='star_rating'>
+            <p>How was your Experience?</p>
+            {[...Array(totalStars)].map((n, i) =>
+                <Star 
+                    key={i}
+                    selected={i < starsSelected}
+                    onClick={() => selectStar(i + 1)}
+                />
+            )}
+            <p >{starsSelected} of {totalStars} stars</p>
+        </div>
+    </div>
+  );
+};
 
 // stars();
 
