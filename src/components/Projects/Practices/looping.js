@@ -41,3 +41,24 @@ function chessboard () {
     console.log(output);
 
 }
+
+function power(base, exp) {
+    let result = 1;
+    for(let i = 0; i < exp; i++){
+        result *= base;
+    }
+    return result;
+}
+
+function pine() {
+    let output = 8;
+    for(let i = 0; i < output; i++){
+        for(let j = output - 1; j > i; j--){
+            console.log('\xA0 \xA0');
+        }
+        for(let k = 0; k <= (i*2); k++){
+            console.log('^');
+        }
+        console.log('\n');
+    }
+}
