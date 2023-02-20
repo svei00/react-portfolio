@@ -71,3 +71,19 @@ function fizzbuzz2() {
         console.log(output || i);
     }
 }
+
+function min(a, b) {
+    return (a < b ) ? a : b;
+}
+
+function isEven (n) {
+    if(n === 0) {
+        return true;
+    } else if(n === 1){
+        return false;
+    } else if (n > 0) {
+        return isEven(n - 2);
+    } else {
+        return isEven(-n);
+    }
+}
