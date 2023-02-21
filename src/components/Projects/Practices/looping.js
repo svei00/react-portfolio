@@ -87,3 +87,17 @@ function isEven (n) {
         return isEven(-n);
     }
 }
+
+function countChar(string, ch){
+    let count = 0;
+    for(let i = 0; i <= string.length; i++){
+        if(string[i] === ch){
+            count += 1
+        }
+        console.log(count);
+    }
+}
+
+function countStr(string){
+    return countChar(string, 'B')
+}
