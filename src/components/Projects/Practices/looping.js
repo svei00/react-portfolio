@@ -90,14 +90,44 @@ function isEven (n) {
 
 function countChar(string, ch){
     let count = 0;
-    for(let i = 0; i <= string.length; i++){
+    for(let i = 0; i < string.length; i++){
         if(string[i] === ch){
             count += 1
         }
-        console.log(count);
     }
+    console.log(count);
 }
 
 function countStr(string){
     return countChar(string, 'B')
+}
+
+function range(start, end, step = start < end ? 1 : -1){
+    let array = [];
+    if(step > 0){
+        for(let i = start; i <= end; i += step){
+            array.push(i);
+        }
+    } else {
+        for(let i = start; i >= end; i += step){
+            array.push(i);
+        }
+    }
+    return array;
+}
+
+function sum(numbers){
+    let total = 0;
+    for(let number of numbers){
+        total += number;
+    }
+    return total;
+}
+
+function reverseArray(array){
+    output = [];
+    for(let i = array.length -1; i >= 0; i--){
+        output.push(array[i]);
+    }
+    return output;
 }
