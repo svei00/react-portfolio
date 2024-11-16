@@ -5,136 +5,119 @@
     position: initial;
     height: 100%;
     overflow: auto;
-
+  
     h1.page-title {
-        margin-left: 100px;
-        margin-top: 100px;
+      margin-left: 100px;
+      margin-top: 100px;
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #333;
     }
-
+  
     .images-container {
-        display: flex;
-        gap: 15px;
-        flex-wrap: wrap;
-        padding-bottom: 100px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      padding-bottom: 100px;
+      justify-content: center;
     }
-
-    // Image container
+  
     .image-box {
-        position: relative;
-        flex: 1 1 20%;
-        height: 400px;
-        overflow: hidden;
-        border-radius: 10px;
-        max-width: calc(25% - 10px);
-
-        .portfolio-image {
-            position: absolute;
-            z-index: 2;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .content {
-            position: absolute;
-            width: 100%;
-            z-index: 3;
-            padding: 10px 20px;
-            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-            background: linear-gradient(
-                180deg
-                rgba(0, 0, 0, 0.2) 0,
-                rgba(0, 0, 0, 1)
-            );
-            bottom: -70px;
-        }
-
-        .title {
-            margin-bottom: 0;
-            margin-top: 0;
-            color: #fff;
-            font-size: 24px;
-            font-weight: 500;
-            line-height: 24px;
-        }
-
-        .description {
-            font-size: 14px;
-            margin-bottom: 5px;
-            color: #fff;
-            font-weight: 700;
-        }
-
-        .btn {
-            margin-top: 30px;
-            margin-bottom: 10px;
-            padding: 0 23px;
-            height: 40px;
-            line-height: 34px;
-            border: 2px solid #00993F;
-            border-radius: 4px;
-            font-size: 14px;
-            color: #fff;
-            background: transparent;
-            font-weight: 700;
-            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            background: #00993F;
-        }
-
-        &:after {
-            content: '';
-            background: linear-gradient(180deg, #599DFB, #000);
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-            opacity: 0;
-        }
-
-        &:hover:after {
-            opacity: 0.85;
-        }
-
-        &:hover .content {
-            bottom: 0;
-            background: transparent;
-        }
-    }
-
-    .loginDashboard {
+      position: relative;
+      flex: 1 1 20%;
+      max-width: calc(25% - 10px);
+      height: 300px;
+      overflow: hidden;
+      border-radius: 10px;
+      background-color: #f5f5f5;
+      transition: transform 0.3s ease-in-out;
+  
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      }
+  
+      .portfolio-image {
         position: absolute;
-        right: 35px;
-        bottom: 0px;
-        width: 0.25%;
-        overflow: hidden;
-    }
-}
-
-@media screen and (max-width: 1200px) {
-    .container.portfolio-page {
+        z-index: 2;
         width: 100%;
-        padding: 20px;
-        box-sizing: border-box;
-
-        h1.page-title {
-            margin-left: 20px;
-            margin-top: 20px;
+        height: 100%;
+        object-fit: cover;
+      }
+  
+      .content {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        z-index: 3;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 1) 100%);
+        color: #fff;
+        padding: 15px;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+  
+        .title {
+          font-size: 1.25rem;
+          font-weight: bold;
+          margin: 0 0 5px;
         }
-
-        .image-box {
-            height: 200px;
-            max-width: calc(50% - 10px);
+  
+        .description {
+          font-size: 0.875rem;
+          line-height: 1.4;
         }
+  
+        .btn {
+          display: inline-block;
+          margin-top: 10px;
+          padding: 8px 16px;
+          background-color: #00993f;
+          color: #fff;
+          font-size: 0.875rem;
+          font-weight: bold;
+          text-align: center;
+          border-radius: 4px;
+          border: 2px solid #00993f;
+          cursor: pointer;
+          transition: background-color 0.3s ease-in-out;
+  
+          &:hover {
+            background-color: #00662a;
+          }
+        }
+      }
+  
+      &:hover .content {
+        opacity: 1;
+      }
     }
-    
-}
+  
+    @media screen and (max-width: 1200px) {
+      width: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+  
+      h1.page-title {
+        margin-left: 20px;
+        margin-top: 20px;
+      }
+  
+      .image-box {
+        max-width: calc(50% - 10px);
+        height: 200px;
+  
+        .content {
+          padding: 10px;
+        }
+      }
+    }
+  
+    .loginDashboard {
+      position: absolute;
+      right: 35px;
+      bottom: 0;
+      width: 0.25%;
+      overflow: hidden;
+    }
+  }
+  
