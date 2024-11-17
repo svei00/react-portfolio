@@ -1,83 +1,140 @@
-// Main Portfolio Container
-.portfolio-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); // Responsive grid
-    gap: 1.5rem; // Space between cards
-    padding: 2rem;
-    background-color: #01264b; // Dark blue background
-  
-    // Individual Portfolio Cards
-    .portfolio-card {
-      position: relative;
-      background-color: #ffffff; // White card background
-      border-radius: 0.75rem; // Rounded corners
-      overflow: hidden;
-      box-shadow: 0px 4px 10px rgba(49, 130, 223, 0.3); // Blue shadow (custom color)
-      transition: transform 0.3s, box-shadow 0.3s;
-  
-      &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0px 8px 20px rgba(49, 130, 223, 0.5); // More intense shadow on hover
-      }
-  
-      // Image Container
-      .image-container {
-        position: relative;
-        width: 100%;
-        padding-top: 56.25%; // Maintain 16:9 aspect ratio
-        overflow: hidden;
-  
-        img {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover; // Ensure images fit the container
-          transition: transform 0.3s;
-  
-          &:hover {
-            transform: scale(1.05); // Subtle zoom effect on hover
-          }
-        }
-      }
-  
-      // Card Content
-      .card-content {
-        padding: 1rem;
-        text-align: center;
-  
-        h3 {
-          font-size: 1.25rem;
-          color: #3182DF; // Custom blue color for titles
-          margin-bottom: 0.5rem;
-        }
-  
-        p {
-          font-size: 1rem;
-          color: #555555; // Neutral gray for description text
-        }
-  
-        // Action Buttons (if applicable)
-        .button-container {
-          margin-top: 1rem;
-  
-          a {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            background-color: #21B868; // Custom green for buttons
-            color: #ffffff; // White text
-            font-weight: bold;
-            text-decoration: none;
-            transition: background-color 0.3s;
-  
-            &:hover {
-              background-color: #1e9a5a; // Darker green on hover
-            }
-          }
-        }
-      }
+.portfolio-page {
+    padding-left: 100px;
+    padding-right: 50px;
+    width: calc(100% - 150px);
+    position: initial;
+    height: 100%;
+    overflow: auto;
+
+    h1.page-title {
+        margin-left: 100px;
+        margin-top: 100px;
     }
-  }
-  
+
+    .images-container {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        padding-bottom: 100px;
+    }
+
+    // Image container
+    .image-box {
+        position: relative;
+        flex: 1 1 20%;
+        height: 400px;
+        overflow: hidden;
+        border-radius: 10px;
+        max-width: calc(25% - 10px);
+
+        .portfolio-image {
+            position: absolute;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .content {
+            position: absolute;
+            width: 100%;
+            z-index: 3;
+            padding: 10px 20px;
+            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+            background: linear-gradient(
+                180deg
+                rgba(0, 0, 0, 0.2) 0,
+                rgba(0, 0, 0, 1)
+            );
+            bottom: -70px;
+        }
+
+        .title {
+            margin-bottom: 0;
+            margin-top: 0;
+            color: #fff;
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 24px;
+        }
+
+        .description {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .btn {
+            margin-top: 30px;
+            margin-bottom: 10px;
+            padding: 0 23px;
+            height: 40px;
+            line-height: 34px;
+            border: 2px solid #00993F;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #fff;
+            background: transparent;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            background: #00993F;
+        }
+
+        &:after {
+            content: '';
+            background: linear-gradient(180deg, #599DFB, #000);
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+            opacity: 0;
+        }
+
+        &:hover:after {
+            opacity: 0.85;
+        }
+
+        &:hover .content {
+            bottom: 0;
+            background: transparent;
+        }
+    }
+
+    .loginDashboard {
+        position: absolute;
+        right: 35px;
+        bottom: 0px;
+        width: 0.25%;
+        overflow: hidden;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .container.portfolio-page {
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+
+        h1.page-title {
+            margin-left: 20px;
+            margin-top: 20px;
+        }
+
+        .image-box {
+            height: 200px;
+            max-width: calc(50% - 10px);
+        }
+    }
+    
+}
