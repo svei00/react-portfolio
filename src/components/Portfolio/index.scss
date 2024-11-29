@@ -45,10 +45,14 @@
             &.portrait {
                 object-fit: cover;
                 transform: scale(1.1);
+                height: 100%;
+                width: 50%; // Make it fit only the first half when portrait
             }
 
             &.landscape {
                 object-fit: cover;
+                height: 100%;
+                width: 100%; // Make it fit the full width when landscape
             }
         }
 
