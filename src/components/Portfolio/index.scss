@@ -74,6 +74,9 @@
             font-size: 24px;
             font-weight: 600;
             line-height: 1.2;
+            text-align: center;
+    white-space: normal; // Prevents text from being squished in one line
+    word-spacing: 2px; // Adjust spacing between words
         }
 
         .description {
