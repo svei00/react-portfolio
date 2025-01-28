@@ -434,6 +434,107 @@
     fonts including the previously-broken `.ttf`, all images, all JS/CSS
     chunks) returned 200. Home is confirmed working end-to-end before
     continuing to the remaining four pages.
+47. Ported About (`src/components/about/`) and Skills
+    (`src/components/skills/`) using the same server-page/client-view
+    split as Home. Installed `@types/react-tagcloud` (the package itself
+    ships no types). About's meta description updated from "San Bernardino
+    California" to "Inland Empire, California" to match the regional
+    framing already established site-wide in Phase 1.
+48. **Real bug, not a bundler quirk: React 19 removed `defaultProps`
+    support for function components.** `react-tagcloud`'s `TagCloud` is a
+    plain function component that relies entirely on `defaultProps` for
+    `containerComponent` ('div'), `shuffle` (true), and `className`
+    ('tag-cloud') — none of which were ever passed explicitly in the
+    original CRA usage, because they didn't need to be under React 18.
+    Under React 19, `props.containerComponent` came through as `undefined`
+    (defaults silently no longer applied), so the library's own
+    `React.createElement(Container, ...)` call became
+    `React.createElement(undefined, ...)` — exactly React error #130,
+    "Element type is invalid ... got: undefined". This took real digging to
+    pin down: the error pointed at `TagCloud` and looked exactly like a
+    module-resolution/bundler interop bug (undefined import), so a lot of
+    the investigation went down that path first (dynamic import with
+    ssr:false, deep-path imports bypassing the package's index.js,
+    confirming via debug logging that the module namespace genuinely had a
+    working `TagCloud` getter at both server and client) before the actual
+    cause — defaultProps evaporating, not the import itself — became clear
+    from reading the package's compiled source directly. Fixed by passing
+    `containerComponent`, `shuffle`, and `className` explicitly as props
+    (the `@types/react-tagcloud` package doesn't declare
+    `containerComponent`, so it needs a narrow `as Record<string, unknown>`
+    spread to satisfy TypeScript). **Worth remembering for the rest of this
+    migration:** any other unmaintained pre-React-19 class-free component
+    library still in the dependency tree (`react-loaders` is a class
+    component, so it's not at risk the same way) could hit this same
+    failure mode if it leans on `defaultProps` — if a similarly-shaped
+    "element type is invalid" error shows up again, check for
+    `defaultProps` on a function component before assuming it's a bundler
+    problem.
+49. Also hit, unrelated to the above: the Claude Browser tool's
+    `read_console_messages` returned byte-identical stale output across
+    multiple navigations and even after closing the tab — turned out a
+    stray Next.js server process was still bound to port 3000 underneath a
+    fresh one (Windows `taskkill` needed the literal PID from `netstat`,
+    not a pgrep-style name match, which doesn't work the same way under
+    Git Bash). Confirmed the console tool was truly stale (it was showing
+    dev-only HMR/WebSocket log lines from a `next start` **production**
+    session, which doesn't run HMR at all) and resolved it by opening a
+    genuinely new browser tab (`tabs_create`) rather than trusting
+    `preview_start`'s tab reuse.
+50. Ported Portfolio (`src/components/portfolio/`, `src/types/project.ts`
+    for the shared `Project` type). `app/portfolio/page.tsx` is a Server
+    Component that imports `src/content/projects.json` directly and passes
+    it down as a prop — matches phase-2-plan.md §6 step 10's intent of
+    keeping the data-source boundary clean for the Phase 4 Sanity swap.
+    Removed the dead `.loginDashboard` SCSS rule (the Firebase dashboard
+    link it styled was deleted back in Phase 1).
+51. Verified EmailJS server-side REST sending before committing to the
+    route-handler architecture from phase-2-plan.md (the plan flagged this
+    as a required check): public docs list "Email API" as available on
+    every pricing tier including Free, and non-browser API access is a
+    togglable account setting, not a paid-only gate — reasonable confidence
+    from public sources, though not 100% certain without Svei's own
+    dashboard. Proceeding with the route handler; flagged the one
+    remaining unknown (the "Allow EmailJS API for non-browser
+    applications" toggle in Account > Security) as an action item for him.
+52. Ported Contact — the biggest page. `src/app/api/contact/route.ts`: a
+    Next.js Route Handler that posts to EmailJS's REST API server-side
+    using a private key read from `EMAILJS_PRIVATE_KEY` (never committed —
+    `.env.example` documents the four required vars), with a honeypot
+    field check and an in-memory 30-second per-IP throttle (handoff.md
+    S6). `contact-form.tsx`: real `<ul>` wrapping the `<li>` fields (fixes
+    the invalid markup from handoff.md §4.1), a visually-hidden `.sr-only`
+    `<label>` per input (new utility class in globals.scss — accessibility
+    fix, no visual change), a hidden honeypot field, and inline
+    success/error status text replacing the original `alert()` +
+    `window.location.reload(false)` (handoff.md Phase 2 step 4).
+    `contact-map.tsx`: `react-leaflet` 5, dynamically imported with
+    `ssr: false` from the client `contact-view.tsx` (dynamic-with-ssr:false
+    cannot be called from a Server Component — this is why the map isn't
+    imported directly in `app/contact/page.tsx`).
+53. Two real runtime bugs surfaced and fixed while verifying Contact in the
+    browser (both would have shipped broken otherwise):
+    - Leaflet's default marker icon resolves its image URLs relative to
+      the CSS file, which breaks under every bundler ("iconUrl not set in
+      Icon options"). The standard fix — importing the marker PNGs as JS
+      modules and pointing `L.Icon.Default.mergeOptions` at them — did not
+      resolve correctly here, seemingly because the images live inside
+      `node_modules/leaflet/dist/images/` rather than under `src/`. Fixed
+      by copying the three default marker images into
+      `public/leaflet/` (committed as static assets) and pointing
+      `iconUrl`/`iconRetinaUrl`/`shadowUrl` at plain `/leaflet/*.png`
+      paths instead.
+    - `@types/leaflet` and `@types/react-tagcloud` both had to be
+      installed separately — neither `leaflet` nor `react-tagcloud` ships
+      its own type declarations, and TypeScript's `strict: true` mode
+      fails the build on untyped imports rather than silently treating
+      them as `any`.
+    Uninstalled `@emailjs/browser` (the client-side EmailJS SDK) since
+    sending now happens through the route handler. `next build` produces
+    all 5 routes clean (`/`, `/about`, `/skills`, `/portfolio`, `/contact`
+    static; `/api/contact` correctly dynamic), and every page was checked
+    in the browser on a fresh tab with zero console errors. **Phase 2 step
+    6 (porting all five pages) is now complete.**
 42. Steps 2-3 (global styles + fonts): created `src/styles/fonts.ts` using
     `next/font/local` for the three custom fonts (Helvetica Neue, La Belle
     Aurore, Coolvetica), each exposed as a `--font-*` CSS variable rather
