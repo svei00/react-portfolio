@@ -197,3 +197,29 @@
     end up with two competing lockfiles (which would make Vercel's
     package-manager auto-detection unpredictable). Going forward, prefer
     `yarn` commands over `npm` in this repo when yarn is available locally.
+27. Process change mid-phase: per Svei's instruction, dropped the
+    branch-per-phase git workflow for now — the `phase-1-security-cleanup`
+    branch was merged straight into `main` (fast-forward, no divergence) and
+    deleted. Phase 1 work continues directly on `main` from here.
+28. Dead-weight removal pass: deleted the dead Netlify/Webpack pipeline
+    (`webpack.config.js`, root `index.js`, `public/_redirects`, the
+    `build-webpack` script, and all 9 webpack-only devDependencies:
+    clean-webpack-plugin, css-loader, css-minimizer-webpack-plugin,
+    html-loader, html-webpack-plugin, mini-css-extract-plugin,
+    terser-webpack-plugin, webpack, webpack-cli); uninstalled `gsap-trial`
+    and deleted `.npmrc` entirely (nothing left needs the GreenSock registry
+    now that the trial package is gone); deleted the `/rating` route and its
+    component (`src/components/Projects/Rating/`), the tutorial loop
+    exercises (`src/components/Projects/Practices/`), `src/Notes.txt`, root
+    `notes.txt`, CRA leftovers (`src/logo.svg`, `public/react-logo192.png`,
+    `public/react-logo512.png`, `public/react.ico`), the default
+    `src/App.test.js`, and the superseded `src/data/portfolio.json`.
+    `npm run build` verified clean after all removals. Re-ran `npm audit`
+    (temporary lockfile, not committed — this repo uses yarn.lock): 74
+    vulnerabilities remain (5 critical, 35 high, 19 moderate, 15 low), but
+    the earlier Firebase-only critical (`protobufjs`) is gone, and every
+    remaining critical (`@babel/traverse`, `form-data`, `shell-quote`,
+    `webpack`, `websocket-driver`) traces back to `react-scripts`
+    5's own build-time toolchain (webpack-dev-server et al), not runtime
+    code shipped to users. Matches handoff.md's expectation exactly — fully
+    resolved only by the Phase 2 Next.js migration, not chased further here.
