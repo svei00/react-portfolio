@@ -123,12 +123,12 @@ Severity legend: **[C]** critical · **[I]** important · **[N]** nice-to-have.
 
 ### 4.3 Node.js / Vercel migration — concrete plan
 Current state: no `engines` in `package.json`; Node version is whatever the Vercel dashboard
-says (VERIFY — likely 20.x, which Vercel is deprecating). Target: **Node 22 (LTS)**.
+says (VERIFY — likely 20.x, which Vercel is deprecating). Target: **Node 24 (LTS)**.
 
 Phase 1 steps (on the current CRA site, so the site stays deployable during the rebuild):
-1. In Vercel → Project → Settings → Build & Development → **Node.js Version → 22.x**.
-2. Add to `package.json`: `"engines": { "node": ">=22 <23" }`.
-3. Locally: install Node 22 (nvm-windows), `npm ci`/`npm i`, `npm run build`, confirm the
+1. In Vercel → Project → Settings → Build & Development → **Node.js Version → 24.x**.
+2. Add to `package.json`: `"engines": { "node": ">=24 <25" }`.
+3. Locally: install Node 24 (nvm-windows), `npm ci`/`npm i`, `npm run build`, confirm the
    build passes. Expectation: `react-scripts` 5 + dart-sass are Node-22-clean (the old
    OpenSSL flag was a react-scripts 4 problem). If anything breaks, it will be a transitive
    webpack plugin — record it in notes.md and solve, don't pin back to 20.
@@ -243,7 +243,7 @@ Node-version-sensitive at runtime (all client/edge-safe).
   1. Title: `Iván "Svei" Villanueva — Portfolio`, one-line description, **live link**
      (https://portfolio.excelsolutionsv.com — update if the domain changes with the rebrand).
   2. Tech stack list (truthful for the current phase; updated each phase).
-  3. Local dev: prerequisites (Node 22), install, run, build commands — matching reality,
+  3. Local dev: prerequisites (Node 24), install, run, build commands — matching reality,
      not CRA boilerplate.
   4. Deploy note: "Deploys to Vercel from `main`. Branch-per-phase workflow (see §11)."
   5. Pointer: "`notes.md` is the chronological build log; `handoff.md` is the rebuild spec."
@@ -255,7 +255,7 @@ Node-version-sensitive at runtime (all client/edge-safe).
 
 **Next.js 15+ (App Router) · TypeScript optional-but-recommended · SCSS Modules ·
 GSAP (free) + Lenis · Sanity CMS · EmailJS (kept) · react-leaflet only if the map survives ·
-Vercel, Node 22.**
+Vercel, Node 24.**
 
 Why Next.js over Vite/Astro here: SSG fixes the SEO/LCP problems (4.5, 4.8) natively on the
 existing Vercel account; route-level code splitting, `next/image`, `next/font`, Metadata API,
@@ -307,12 +307,12 @@ Branch: `phase-1-security-cleanup`
    from `index.html`, import Leaflet CSS from npm (S7, S8).
 6. Typo sweep (every string in 4.6 including `_blnak` and both `descriprion`s); rewrite the
    two meta descriptions as single honest sentences (no city spam).
-7. Node 22: Vercel dashboard setting + `engines` field + local build verification (§4.3).
+7. Node 24: Vercel dashboard setting + `engines` field + local build verification (§4.3).
 8. README quick rewrite per §4.11.
-**Exit criteria:** site deployed from main on Node 22 with zero Firebase code; `npm audit`
+**Exit criteria:** site deployed from main on Node 24 with zero Firebase code; `npm audit`
 shows no critical advisories (remaining highs must all be `react-scripts` transitives,
 documented in notes.md); no secrets in working tree; all listed typos gone.
-Commit: `git commit -m phase-1-security-cleanup-node-22-dead-code-removal`
+Commit: `git commit -m phase-1-security-cleanup-node-24-dead-code-removal`
 
 ### Phase 2 — Migration to Next.js (feature parity, no redesign yet)
 Branch: `phase-2-nextjs-migration`

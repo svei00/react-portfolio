@@ -223,3 +223,13 @@
     5's own build-time toolchain (webpack-dev-server et al), not runtime
     code shipped to users. Matches handoff.md's expectation exactly — fully
     resolved only by the Phase 2 Next.js migration, not chased further here.
+29. Node version correction: a Vercel build log Svei shared showed the actual
+    error — `Found invalid or discontinued Node.js Version: 18.x` (not 20.x
+    as handoff.md had guessed) — `Please set Node.js Version to 24.x`. Vercel
+    has moved its minimum past what handoff.md originally targeted (Node 22),
+    so every Node-version reference in handoff.md was corrected from 22 to
+    24. Added `"engines": { "node": ">=24 <25" }` to `package.json`. Local
+    Node here is already v24.18.0 and every build this session has run on
+    it cleanly, so no local action needed. Vercel dashboard still needs
+    Project Settings → Build & Development → Node.js Version set to 24.x —
+    that's a dashboard action only Svei can do.
