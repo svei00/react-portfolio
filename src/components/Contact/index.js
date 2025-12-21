@@ -4,6 +4,7 @@ import AnimatedLetters from '../AnimatedLetters';
 import { useEffect, useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 import { Helmet } from 'react-helmet';
 
 const Contact = () => {
@@ -46,8 +47,8 @@ const Contact = () => {
             <div className='container contact-page'>
                 <Helmet>
                     <title>Contact | Ivan E. Villanueva</title>
-                    <meta 
-                        name='descriprion' content='Software Engineer in Inland Empire Area'
+                    <meta
+                        name='description' content='Software Engineer in Inland Empire Area'
                     />
                     <meta 
                         name='keywords' content='Software Engineer, San Bernardino, Riverside, Rialto, Colton, Inland Empire, California'
@@ -117,16 +118,16 @@ const Contact = () => {
                 <div className='info-map'>
                     Iv&aacute;n E. Villanueva.
                     <br />
-                    United Stetes,
+                    United States,
                     <br />
-                    San Bernardino, CA. 92405.
+                    San Bernardino, CA.
                     <span>svei00@gmail.com</span>
                 </div>
                 <div className='map-wrap'>
-                    <MapContainer center={[34.13950, -117.30796]} zoom={15}>
+                    <MapContainer center={[34.1083, -117.2898]} zoom={11}>
                         <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
-                        <Marker position={[34.13950, -117.30796]}>
-                            <Popup>Iv&aacute;n lives here!!</Popup>
+                        <Marker position={[34.1083, -117.2898]}>
+                            <Popup>San Bernardino, CA</Popup>
                         </Marker>
                     </MapContainer>
                 </div>

@@ -233,3 +233,21 @@
     it cleanly, so no local action needed. Vercel dashboard still needs
     Project Settings → Build & Development → Node.js Version set to 24.x —
     that's a dashboard action only Svei can do.
+30. Contact page privacy fix (S4) + EmailJS/Leaflet cleanup (S7, S8):
+    replaced the exact home-coordinate map marker `[34.13950, -117.30796]`
+    (zoom 15, popup "Iván lives here!!") with San Bernardino's public
+    city-center coordinates `[34.1083, -117.2898]` at city-level zoom 11 and
+    a neutral "San Bernardino, CA" popup; dropped the zip code from the
+    on-page address text (now city-level only, no street/zip). Removed the
+    duplicate EmailJS CDN `<script>` + the malformed `emailjs.init` call
+    from `public/index.html` (npm's `@emailjs/browser`, already used in
+    Contact/index.js, is now the only EmailJS load). Removed the Leaflet
+    1.7.1 CDN stylesheet from `public/index.html` and imported
+    `leaflet/dist/leaflet.css` from the npm package (now 1.9.3, matching
+    installed `leaflet`/`react-leaflet`) directly in Contact/index.js.
+    Fixed two typos encountered in the same file while editing (`descriprion`
+    -> `description` meta attribute, `United Stetes` -> `United States`) —
+    the rest of the typo sweep (Sidebar's four `_blnak` instances, etc.) is
+    still a separate pending step. `npm run build` verified clean; CSS
+    bundle grew ~6KB since Leaflet's CSS is now bundled instead of loaded
+    externally, which is expected and desired (fewer external requests).
