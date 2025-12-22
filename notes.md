@@ -251,3 +251,16 @@
     still a separate pending step. `npm run build` verified clean; CSS
     bundle grew ~6KB since Leaflet's CSS is now bundled instead of loaded
     externally, which is expected and desired (fewer external requests).
+31. Typo sweep across all pages: fixed `descriprion` -> `description` in
+    Skills/index.js (Contact's copy was already fixed in the previous step);
+    `Skills & Experiencie` -> `Skills & Experience`, `experiencie` ->
+    `experience`, `Fron-end` -> `Front-end` (Skills); `knoledge` ->
+    (rewritten), `technologie` -> (rewritten), `enviroment` -> `outdoors`,
+    and `I can explode all my qualifications` -> `I can apply my skills
+    fully` (About — matches handoff.md's suggested rewrite exactly); all
+    four `target='_blnak'` -> `target='_blank'` in Sidebar (S9). Rewrote the
+    keyword-stuffed meta descriptions in `App.js` (the same city list
+    pasted twice into `description`, `og:description`, and
+    `twitter:description`) as one honest sentence: fullstack engineer in
+    the Inland Empire, California, building React apps. `npm run build`
+    verified clean.

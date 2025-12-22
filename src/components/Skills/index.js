@@ -67,8 +67,8 @@ const Skills = () => {
         <div className='container skills-page'>
             <Helmet>
                 <title>Skills | Ivan E. Villanueva</title>
-                <meta 
-                    name='descriprion' content='Software Engineer in Inland Empire Area'
+                <meta
+                    name='description' content='Software Engineer in Inland Empire Area'
                 />
                 <meta 
                     name='keywords' content='Microsoft Excel, Javascript, React, HTML, CSS, Java, C#, C++, Python'
@@ -78,7 +78,7 @@ const Skills = () => {
                 <h1>
                     <AnimatedLetters
                         letterClass={letterClass}
-                        strArray={'Skills & Experiencie'.split('')}
+                        strArray={'Skills & Experience'.split('')}
                         idx={15}
                     />
                 </h1>
@@ -89,8 +89,8 @@ const Skills = () => {
                 </p>
                 <p>
                     I'm a Software Engineer open to work in a full time position or as a Freelance.
-                    I have experiencie in Fron-end Web development, mobile development with Android
-                    and responsive web applications. 
+                    I have experience in Front-end Web development, mobile development with Android
+                    and responsive web applications.
                 </p>
                 <p>
                     Here's my <span className='boldText'><a className='links' 

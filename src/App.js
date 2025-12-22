@@ -13,18 +13,18 @@ function App() {
     <>
     <Helmet>
       <title>Ivan E. Villanueva | Fullstack Developer | JavaScript | Freelancer</title>
-      <meta 
+      <meta
         name='description'
-        content='Hire Professional Freelancer  &amp; Software Engineer &amp; San Bernardino &amp; Riverside &amp; Inland Empire &amp; Rialto &amp; Fontana &amp; Ontario   &amp; Software Engineer &amp; San Bernardino &amp; Riverside &amp; Inland Empire &amp; Rialto &amp; Fontana &amp; Ontario  &amp; React Developer. Building animations and interactive experiences, hi-end solutions, website maintenance &amp; security, webpack'
+        content='Fullstack software engineer in the Inland Empire, California, building React web apps, animations and interactive experiences.'
       />
-    
+
       <meta
         property="og:title"
         content="Fullstack Developer | JavaScript | Freelancer"
       />
       <meta
         property="og:description"
-        content="Hire Professional Freelancer  &amp; Software Engineer &amp; San Bernardino &amp; Riverside &amp; Inland Empire &amp; Rialto &amp; Fontana &amp; Ontario   &amp; Software Engineer &amp; San Bernardino &amp; Riverside &amp; Inland Empire &amp; Rialto &amp; Fontana &amp; Ontario  &amp; React Developer. Building animations and interactive experiences, hi-end solutions, website maintenance &amp; security, webpack"
+        content="Fullstack software engineer in the Inland Empire, California, building React web apps, animations and interactive experiences."
       />
       <meta
         property="og:site_name"
@@ -33,7 +33,7 @@ function App() {
       <meta name="twitter:card" content="summary" />
       <meta
         name="twitter:description"
-        content="Hire Professional Freelancer  &amp; Software Engineer &amp; San Bernardino &amp; Riverside &amp; Inland Empire &amp; Rialto &amp; Fontana &amp; Ontario   &amp; Software Engineer &amp; San Bernardino &amp; Riverside &amp; Inland Empire &amp; Rialto &amp; Fontana &amp; Ontario  &amp; React Developer. Building animations and interactive experiences, hi-end solutions, website maintenance &amp; security, webpack"
+        content="Fullstack software engineer in the Inland Empire, California, building React web apps, animations and interactive experiences."
       />
       <meta
         name="twitter:title"

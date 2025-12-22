@@ -51,7 +51,7 @@ const Sidebar = () => {
             <ul>
                 <li>
                     <a
-                    target='_blnak'
+                    target='_blank'
                     rel='noreferrer'
                     href='https://www.linkedin.com/in/ivan-e-villanueva-26253157/'
                     >
@@ -61,7 +61,7 @@ const Sidebar = () => {
                 </li>
                 <li>
                     <a
-                    target='_blnak'
+                    target='_blank'
                     rel='noreferrer'
                     href='https://github.com/svei00/'
                     >
@@ -71,7 +71,7 @@ const Sidebar = () => {
                 </li>
                 <li>
                     <a
-                    target='_blnak'
+                    target='_blank'
                     rel='noreferrer'
                     href='https://www.youtube.com/channel/UCbxQit2ZC4U1eUwdZVQkhwg'
                     >
@@ -81,7 +81,7 @@ const Sidebar = () => {
                 </li>
                 <li>
                     <a
-                    target='_blnak'
+                    target='_blank'
                     rel='noreferrer'
                     href='https://twitter.com/svei00'
                     >

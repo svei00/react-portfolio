@@ -40,16 +40,16 @@ const About = () => {
                 </h1>
                 <p>
                     I'm a hardworking and ambitious person who is looking for a job
-                    where I can explode all my qualifications in a IT company and 
-                    work with the latest technologies on challenging projects. 
+                    where I can apply my skills fully in an IT company and
+                    work with the latest technologies on challenging projects.
                 </p>
                 <p>
-                    I'm a confident with my knoledge and problem solving person
-                    also I can learn easily any new technologie.
+                    I'm a confident person with strong problem-solving skills
+                    who can learn any new technology easily.
                 </p>
                 <p>
-                    I'm a tech obsessed person who enjoys the enviroment I like to 
-                    take a walk through the woods, share time with my daughter, son 
+                    I'm a tech obsessed person who also enjoys the outdoors, I like to
+                    take a walk through the woods, share time with my daughter, son
                     and wife. We love to travel.
                 </p>
             </div>
