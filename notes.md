@@ -264,3 +264,14 @@
     `twitter:description`) as one honest sentence: fullstack engineer in
     the Inland Empire, California, building React apps. `npm run build`
     verified clean.
+32. Contact map refined per Svei's feedback: he no longer lives in San
+    Bernardino, so the map/address were updated to a general Southern
+    California framing instead of naming a specific city. Marker moved to a
+    neutral central-Inland-Empire point near Ontario, CA
+    `[34.0633, -117.6509]`, zoomed out further (zoom 9) to read as regional
+    rather than a home pin; popup changed to "Open to remote & Southern
+    California" (his pick, doubles as an availability signal); the
+    on-page address text below the form now reads "Southern California"
+    instead of a named city. Map itself stays (Svei confirmed keeping it,
+    just wanted it decoupled from any specific address). `npm run build`
+    verified clean.

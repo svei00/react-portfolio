@@ -120,14 +120,14 @@ const Contact = () => {
                     <br />
                     United States,
                     <br />
-                    San Bernardino, CA.
+                    Southern California.
                     <span>svei00@gmail.com</span>
                 </div>
                 <div className='map-wrap'>
-                    <MapContainer center={[34.1083, -117.2898]} zoom={11}>
+                    <MapContainer center={[34.0633, -117.6509]} zoom={9}>
                         <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
-                        <Marker position={[34.1083, -117.2898]}>
-                            <Popup>San Bernardino, CA</Popup>
+                        <Marker position={[34.0633, -117.6509]}>
+                            <Popup>Open to remote &amp; Southern California</Popup>
                         </Marker>
                     </MapContainer>
                 </div>
