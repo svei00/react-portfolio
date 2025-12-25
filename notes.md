@@ -298,3 +298,15 @@
     planned for — fully resolved only by dropping CRA in Phase 2 — the
     letter of the exit criterion just no longer matches reality typed a
     while back. Flagged to Svei rather than silently marking it done.
+35. Ran the full audit at Svei's request (temporary lockfile, discarded
+    after). Found one fixable issue that actually matters: `react-router-dom`
+    (a direct runtime dependency, shipped to the browser — unlike the 5
+    build-time-only criticals) had a high-severity XSS-via-open-redirect
+    advisory, fixed in `6.30.4`, which is within the existing `^6.3.0`
+    semver range. Bumped `package.json` to `"react-router-dom": "^6.30.4"`
+    and installed it — a normal semver-compatible dependency update, not a
+    `--force`/breaking change. `npm run build` verified clean; audit total
+    dropped from 74 to 73 vulnerabilities, the 35 highs dropped to 32. The 5
+    remaining criticals are unchanged and are all react-scripts build-time
+    toolchain (babel, form-data, shell-quote, webpack, websocket-driver) —
+    same conclusion as step 34, only resolved by the Phase 2 migration.
