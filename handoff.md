@@ -315,7 +315,16 @@ documented in notes.md); no secrets in working tree; all listed typos gone.
 Commit: `git commit -m phase-1-security-cleanup-node-24-dead-code-removal`
 
 ### Phase 2 — Migration to Next.js (feature parity, no redesign yet)
-Branch: `phase-2-nextjs-migration`
+
+> **See `phase-2-plan.md` at repo root — it supersedes this section.** An Opus
+> session on 2026-08-17 planned this phase in detail against the actual repo
+> and the current npm registry. Three things below are now out of date:
+> Next.js is 16, not 15; SCSS Modules are deferred to Phase 3 (reason in that
+> file's §4.1); and the branch workflow no longer applies — Svei moved to
+> working directly on `main`.
+
+Branch: ~~`phase-2-nextjs-migration`~~ (superseded — work on `main`, push only
+once the migration builds and passes a parity check)
 1. Scaffold Next.js 15 App Router in-place (new `src/app`), port pages 1:1 with current
    visuals; SCSS Modules; delete react-helmet (Metadata API per route).
 2. `next/image` for all images (re-export oversized PNGs), `next/font` for the (interim)

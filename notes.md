@@ -310,3 +310,50 @@
     remaining criticals are unchanged and are all react-scripts build-time
     toolchain (babel, form-data, shell-quote, webpack, websocket-driver) —
     same conclusion as step 34, only resolved by the Phase 2 migration.
+
+## Phase 2 — Architecture planning (Opus 5 session, 2026-08-17)
+
+36. Opus 5 session: planned the Next.js migration. No application code was
+    changed. Output is `phase-2-plan.md` at repo root — the implementation
+    spec for the Sonnet session that follows. Version targets were checked
+    against the live npm registry rather than taken from handoff.md, which
+    had drifted: Next.js is now **16.3.1** (handoff.md said 15), React
+    **19.2.8**, and `react-leaflet` must go to **5.x** because v4 does not
+    support React 19. Peer-dependency checks cleared `react-tagcloud`
+    (react >=16.8.0) and `react-loaders` (react >=15) for React 19 — both
+    only need to survive Phase 2 since Phase 3 retires them.
+37. Decisions settled with Svei during planning: (a) the port is written in
+    **TypeScript** — handoff.md had left this open as "optional but
+    recommended", and the codebase is small enough that the cost is minimal
+    while Phase 4 Sanity TypeGen benefits; (b) **EmailJS moves behind a
+    Next.js route handler** rather than staying client-side — handoff.md S6
+    called this optional, but the contact form is being rewritten in this
+    phase anyway, so keeping it client-side would mean writing the same form
+    twice. One VERIFY item attached: confirm EmailJS server-side REST
+    sending is free-tier before committing to it, with the client SDK as a
+    documented fallback.
+38. Deliberate deviation from handoff.md recorded in `phase-2-plan.md` §4.1:
+    **SCSS Modules are deferred from Phase 2 to Phase 3.** The survey found
+    that `src/components/Layout/index.scss` styles `.about-page`,
+    `.contact-page`, `.portfolio-page` and `.skills-page` — class names
+    applied in four *other* components' JSX — along with all their
+    descendant h1/p/.text-zone typography and the responsive block. CSS
+    Modules scoping breaks exactly that pattern, so converting during Phase
+    2 means hand-untangling shared typography and touching every className
+    in every file, in the same phase that swaps the framework, with a
+    visual-parity check that is hard to verify by eye. Since Phase 3
+    rewrites nearly all ~1,100 SCSS lines from scratch anyway (new palette,
+    type scale, and it retires the cube, Pacman loader, tag cloud and
+    sidebar), Modules written in Phase 2 would just be deleted one phase
+    later. Phase 2 therefore ports the stylesheets as global SCSS.
+39. Other findings folded into the plan rather than actioned now: only 6 of
+    the 22 files in `src/assets/images/` are actually referenced (the four
+    `Screenshot_*.jpg`, 291/118/84/55 KB, are entirely dead); the Helvetica
+    Neue `@font-face` declares `format('ttf')`, which is not a valid format
+    keyword, so that font is almost certainly not loading on the live site
+    today; and the `$primary-color`/`$secondary-color`/`$terciary-color`
+    variables in `App.scss` are dead — no component stylesheet references
+    them. Also flagged: since Svei dropped the branch-per-phase workflow,
+    the migration must be done locally and **not pushed until it builds and
+    passes a page-by-page parity check**, because Vercel auto-deploys every
+    push to `main` and a half-migrated repo is a broken live site.
