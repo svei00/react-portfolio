@@ -357,3 +357,99 @@
     the migration must be done locally and **not pushed until it builds and
     passes a page-by-page parity check**, because Vercel auto-deploys every
     push to `main` and a half-migrated repo is a broken live site.
+
+## Phase 2 — Implementation (Sonnet 5, working from phase-2-plan.md)
+
+40. Svei confirmed Vercel dashboard is now on Node 24.x (closes out the last
+    Phase 1 loose end).
+41. Step 1 (scaffold): installed `next@16`, `react@19`, `react-dom@19`,
+    `typescript`, `@types/node`, `@types/react`, `@types/react-dom`.
+    Uninstalled the CRA-only packages: `react-scripts`, `react-router-dom`,
+    `react-helmet`, `web-vitals`, and all three `@testing-library/*`
+    packages. Bumped `react-leaflet` to `^5.0.0` (v4 does not support React
+    19 — confirmed during planning) and `@fortawesome/react-fontawesome`
+    from the pinned `0.2.0` to `^3.5.0` (that package jumps straight from
+    0.2.x to 3.x, no 1.x/2.x releases — the `<FontAwesomeIcon>` API used in
+    this codebase, icon/color/size/className/onClick, is stable across that
+    jump). `package.json` scripts changed to `next dev` / `next build` /
+    `next start`; removed the CRA-specific `eslintConfig` block (referenced
+    `react-app`, which no longer exists) and the `eject` script. Removed the
+    now-superseded CRA entry files: `src/index.js`, `src/App.js`,
+    `src/reportWebVitals.js`, `src/setupTests.js`, `public/index.html`.
+    Added `tsconfig.json` (with the `@/*` -> `src/*` path alias),
+    `next-env.d.ts`, and a minimal `next.config.ts` (security headers land
+    in a later step, once every route exists to verify a CSP against).
+    **Expected state right now: the app does not build.** There is no
+    `app/` directory yet — that starts next chunk. This is intentional per
+    phase-2-plan.md §7.1: work happens locally and nothing gets pushed
+    until the full migration builds and passes parity (step 14).
+43. Steps 4-5 (root layout + Sidebar), plus the first real build checkpoint
+    (start of step 6, Home only): built `src/app/layout.tsx` (renders
+    Sidebar + the `.page`/`.tags` chrome that used to live in the CRA
+    `Layout` component, root `metadata` with title template + OG/Twitter
+    defaults), `src/components/sidebar/sidebar.tsx` (client component;
+    `usePathname()` replaces react-router's `NavLink`, and in the process
+    actually fixes the active-nav-icon highlight — the original used an
+    `activeclassname` prop that react-router-dom v6 removed years ago, so
+    it silently did nothing; hamburger/close icons became real
+    `<button>`s per handoff.md §4.9), and the Home page
+    (`src/components/home/home-view.tsx` + `logo.tsx`, `src/app/page.tsx`).
+    Images stay as plain `<img src={imported.src}>` for now — proper
+    `next/image` conversion is step 7, a separate pass across every page at
+    once for consistency.
+44. **Process note, worth remembering for the rest of Phase 2:** this
+    filesystem is case-insensitive (confirmed by direct test). The first
+    attempt at this step wrote the new lowercase `home/` and `sidebar/`
+    component files, then ran `rm -rf` on the old PascalCase `Home`/
+    `Sidebar` folders to clean up — but on a case-insensitive filesystem
+    those are *the same directory*, so the new files had been written into
+    the old folder the whole time, and the cleanup `rm -rf` deleted
+    everything, new work included. Caught immediately because the
+    subsequent build failed on "module not found," diffed against what
+    should have existed, and rebuilt both components from scratch (Home's
+    SCSS recovered from git history via `git show HEAD:...`, since it
+    predated this session; everything else was retyped). No data was lost
+    permanently, but the lesson stands for the four remaining pages
+    (About, Skills, Portfolio, Contact) which have the exact same
+    PascalCase-to-kebab-case rename ahead of them: **delete the old folder
+    before writing the new one, never after, whenever the names differ
+    only by case.**
+45. Two build-blocking issues fixed, neither anticipated in
+    phase-2-plan.md because they're specific to this exact toolchain
+    version: (a) TypeScript resolved to **7.0.2** — not 5.x — and TS 7
+    outright removed the `baseUrl` compiler option (the error names its own
+    fix: rely on `paths` alone, resolved relative to the tsconfig file,
+    with no `baseUrl` present). Removed it from `tsconfig.json`; the `@/*`
+    alias still resolves correctly. (b) `react-loaders`' bundled type
+    definitions mark `active: boolean` as a required prop on `<Loader>`,
+    even though the original untyped CRA usage (`<Loader type='pacman' />`)
+    never passed it. Added `active` explicitly in the new
+    `pacman-loader.tsx` wrapper to satisfy the type and preserve identical
+    always-on runtime behavior. Also fixed a Sass deprecation warning
+    (`#{$i / 10}` division outside `calc()`) in `animated-letters.scss`
+    using `math.div()` while touching that file.
+46. First verified build checkpoint: `next build` compiles clean, `/` is
+    statically generated, and `next start` was checked in the browser —
+    correct page title, zero console errors, every asset (both custom
+    fonts including the previously-broken `.ttf`, all images, all JS/CSS
+    chunks) returned 200. Home is confirmed working end-to-end before
+    continuing to the remaining four pages.
+42. Steps 2-3 (global styles + fonts): created `src/styles/fonts.ts` using
+    `next/font/local` for the three custom fonts (Helvetica Neue, La Belle
+    Aurore, Coolvetica), each exposed as a `--font-*` CSS variable rather
+    than trying to preserve the old literal family-name strings (that would
+    have required `next/font` to fake arbitrary global family names, which
+    it does not do). This also fixes the original `format('ttf')` bug on
+    the Helvetica Neue face (not a valid CSS format keyword — that font was
+    almost certainly never loading on the live CRA site). Created
+    `src/styles/globals.scss` from the old `src/index.css` + `src/App.scss`
+    — dropped the dead `.dashboard` rule (Firebase dashboard was removed in
+    Phase 1) and the three unused `$primary-color`/`$secondary-color`/
+    `$terciary-color` variables (nothing referenced them). `animate.css` and
+    the pacman loader's `.scss` move to JS imports in the root layout
+    (next chunk) instead of `@import '~loaders.css/...'`, since the
+    webpack-only `~` alias does not resolve under Turbopack. Updated all 6
+    literal `font-family: 'Coolvetica'` / `'coolvetica'` / `'La Belle
+    Aurore'` occurrences across `Home/index.scss` and `Layout/index.scss`
+    to reference the new CSS variables. Deleted `src/App.scss` and
+    `src/index.css`, fully absorbed into the new files.

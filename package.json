@@ -10,35 +10,22 @@
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
     "@fortawesome/free-brands-svg-icons": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
-    "@fortawesome/react-fontawesome": "0.2.0",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
+    "@fortawesome/react-fontawesome": "^3.5.0",
     "animate.css": "^4.1.1",
     "leaflet": "^1.9.3",
     "loaders.css": "^0.1.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-helmet": "^6.1.0",
-    "react-leaflet": "^4.0.2",
+    "next": "^16.3.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-leaflet": "^5.0.0",
     "react-loaders": "^3.0.1",
-    "react-router-dom": "^6.30.4",
-    "react-scripts": "^5.0.1",
     "react-tagcloud": "^2.3.1",
-    "sass": "^1.54.8",
-    "web-vitals": "^2.1.4"
+    "sass": "^1.54.8"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "browserslist": {
     "production": [
@@ -53,6 +40,10 @@
     ]
   },
   "devDependencies": {
-    "prettier": "2.7.1"
+    "@types/node": "^26.2.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "prettier": "2.7.1",
+    "typescript": "^7.0.2"
   }
 }

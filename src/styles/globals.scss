@@ -1,0 +1,48 @@
+// Global styles, ported from CRA's src/index.css + src/App.scss.
+// animate.css and the pacman loader are imported as JS imports in
+// app/layout.tsx instead of `@import '~loaders.css/...'` here, since the
+// webpack-only `~` alias prefix does not resolve under Turbopack.
+// The three custom @font-face fonts moved to src/styles/fonts.ts
+// (next/font/local) and are applied as CSS variables on <html> in the
+// root layout — referenced below as var(--font-...).
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  margin: 0;
+  font: 300 11px/1.4 var(--font-helvetica-neue), sans-serif;
+  color: #444;
+  background: #022c43;
+  overflow: hidden;
+  display: block;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media screen and (max-width: 1200px) {
+  body {
+    overflow: visible;
+  }
+}
+
+input,
+textarea {
+  font-family: var(--font-helvetica-neue);
+}
+
+.loader-active {
+  display: block;
+  position: absolute;
+  color: #ffd700;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  width: 50px;
+  height: 50px;
+  animation: fadeOut 1s 1s;
+  animation-fill-mode: forwards;
+}
