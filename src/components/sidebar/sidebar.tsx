@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -50,10 +51,8 @@ const Sidebar = () => {
   return (
     <div className="nav-bar">
       <Link className="logo" href="/">
-        {/* eslint-disable-next-line @next/next/no-img-element -- converted to next/image in a later Phase 2 step */}
-        <img src={LogoExW.src} alt="logo" />
-        {/* eslint-disable-next-line @next/next/no-img-element -- converted to next/image in a later Phase 2 step */}
-        <img className="sub-logo" src={logoIEVSsub.src} alt="Time has come to... S v e í" />
+        <Image src={LogoExW} alt="logo" sizes="24px" />
+        <Image className="sub-logo" src={logoIEVSsub} alt="Time has come to... S v e í" sizes="79px" />
       </Link>
 
       <nav className={showNav ? 'mobile-show' : ''}>

@@ -383,6 +383,25 @@
     `app/` directory yet — that starts next chunk. This is intentional per
     phase-2-plan.md §7.1: work happens locally and nothing gets pushed
     until the full migration builds and passes parity (step 14).
+42. Steps 2-3 (global styles + fonts): created `src/styles/fonts.ts` using
+    `next/font/local` for the three custom fonts (Helvetica Neue, La Belle
+    Aurore, Coolvetica), each exposed as a `--font-*` CSS variable rather
+    than trying to preserve the old literal family-name strings (that would
+    have required `next/font` to fake arbitrary global family names, which
+    it does not do). This also fixes the original `format('ttf')` bug on
+    the Helvetica Neue face (not a valid CSS format keyword — that font was
+    almost certainly never loading on the live CRA site). Created
+    `src/styles/globals.scss` from the old `src/index.css` + `src/App.scss`
+    — dropped the dead `.dashboard` rule (Firebase dashboard was removed in
+    Phase 1) and the three unused `$primary-color`/`$secondary-color`/
+    `$terciary-color` variables (nothing referenced them). `animate.css` and
+    the pacman loader's `.scss` move to JS imports in the root layout
+    (next chunk) instead of `@import '~loaders.css/...'`, since the
+    webpack-only `~` alias does not resolve under Turbopack. Updated all 6
+    literal `font-family: 'Coolvetica'` / `'coolvetica'` / `'La Belle
+    Aurore'` occurrences across `Home/index.scss` and `Layout/index.scss`
+    to reference the new CSS variables. Deleted `src/App.scss` and
+    `src/index.css`, fully absorbed into the new files.
 43. Steps 4-5 (root layout + Sidebar), plus the first real build checkpoint
     (start of step 6, Home only): built `src/app/layout.tsx` (renders
     Sidebar + the `.page`/`.tags` chrome that used to live in the CRA
@@ -535,22 +554,51 @@
     static; `/api/contact` correctly dynamic), and every page was checked
     in the browser on a fresh tab with zero console errors. **Phase 2 step
     6 (porting all five pages) is now complete.**
-42. Steps 2-3 (global styles + fonts): created `src/styles/fonts.ts` using
-    `next/font/local` for the three custom fonts (Helvetica Neue, La Belle
-    Aurore, Coolvetica), each exposed as a `--font-*` CSS variable rather
-    than trying to preserve the old literal family-name strings (that would
-    have required `next/font` to fake arbitrary global family names, which
-    it does not do). This also fixes the original `format('ttf')` bug on
-    the Helvetica Neue face (not a valid CSS format keyword — that font was
-    almost certainly never loading on the live CRA site). Created
-    `src/styles/globals.scss` from the old `src/index.css` + `src/App.scss`
-    — dropped the dead `.dashboard` rule (Firebase dashboard was removed in
-    Phase 1) and the three unused `$primary-color`/`$secondary-color`/
-    `$terciary-color` variables (nothing referenced them). `animate.css` and
-    the pacman loader's `.scss` move to JS imports in the root layout
-    (next chunk) instead of `@import '~loaders.css/...'`, since the
-    webpack-only `~` alias does not resolve under Turbopack. Updated all 6
-    literal `font-family: 'Coolvetica'` / `'coolvetica'` / `'La Belle
-    Aurore'` occurrences across `Home/index.scss` and `Layout/index.scss`
-    to reference the new CSS variables. Deleted `src/App.scss` and
-    `src/index.css`, fully absorbed into the new files.
+54. Step 7 (images to `next/image`): converted every remaining `<img>` to
+    `next/image` — the three Home hero letters (`priority`, since they're
+    the LCP element per phase-2-plan.md §6 step 7), the two absolutely
+    positioned Excel logo images in `Logo` (`fill`, matching the existing
+    `position: absolute; width: 100%` CSS exactly), the two Sidebar logos
+    (explicit `sizes` matching their small fixed CSS width so Next doesn't
+    fetch an oversized responsive breakpoint), and the dynamic Portfolio
+    project image (`fill`, with the original onError-swaps-to-fallback
+    behavior reimplemented as component state, since next/image doesn't
+    allow mutating `src` directly from an onError callback the way a plain
+    `<img>` does). Deleted the 22 unused files in `src/assets/images/` —
+    only 6 were ever referenced in code (confirmed by grep before
+    deleting): the three CRA/tutorial 3D letters, the two Excel logos, and
+    the sidebar sub-logo. That includes the four `Screenshot_*.jpg` files
+    (291/118/84/55 KB, entirely dead weight) and the unused `LogoExcelv2_*`
+    set. `next build` verified clean, and Home/Portfolio/Contact were all
+    re-checked in the browser — every image now resolves through Next's
+    `/_next/image` optimizer with zero console errors.
+55. Correction to this log itself: entry 42 (global styles + fonts) had
+    been appended at the end of the file instead of its correct
+    chronological position between 41 and 43 — an editing mistake within
+    this same session, not a rewrite of settled history, so fixed by
+    moving the block into place rather than left standing. Numbering 40-53
+    is now sequential with no gaps or duplicates.
+56. Step 11 (security headers): added `headers()` to `next.config.ts` —
+    HSTS, `X-Content-Type-Options: nosniff`,
+    `Referrer-Policy: strict-origin-when-cross-origin`,
+    `X-Frame-Options: DENY`, a restrictive `Permissions-Policy`, and CSP in
+    **report-only** mode (handoff.md S5, phase-2-plan.md §6 step 11 — moves
+    to enforcing in Phase 6 once report-only has run live with no
+    surprises). Deliberately no nonces: that would force every route
+    dynamic, defeating the static generation this migration exists to
+    deliver. Verified all headers present with `curl -I` against a real
+    `next start` server.
+57. Step 12 (SEO files): `app/robots.ts` (same permissive policy as the old
+    `public/robots.txt`, now actually pointing at a sitemap — it pointed at
+    none before, handoff.md §4.8), `app/sitemap.ts` (all 5 routes),
+    `app/manifest.ts` (the old `public/manifest.json` was untouched CRA
+    boilerplate — literally "short_name": "React App" — this is the first
+    real manifest the site has had), and `app/opengraph-image.tsx` using
+    `next/og` for a generated (not static-asset) branded image, since the
+    site has no finalized brand palette yet — that's Phase 3 — so this
+    uses the current live colors and is trivial to regenerate once the
+    real palette lands. Added `alternates.canonical` to all 5 pages.
+    Deleted the now-superseded `public/manifest.json` and
+    `public/robots.txt`. Verified all of `/robots.txt`, `/sitemap.xml`,
+    `/manifest.webmanifest`, and the response headers directly via curl
+    against a real server — all correct.

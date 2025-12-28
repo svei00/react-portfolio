@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import AnimatedLetters from '@/components/animated-letters/animated-letters'
 import PacmanLoader from '@/components/pacman-loader/pacman-loader'
 import type { Project } from '@/types/project'
@@ -14,8 +15,14 @@ const handleViewButtonClick = (url: string) => {
   window.open(url, '_blank')
 }
 
+const FALLBACK_IMAGE = '/path/to/fallback-image.png'
+
 const PortfolioView = ({ projects }: PortfolioViewProps) => {
   const [letterClass, setLetterClass] = useState('text-animate')
+  // Same fallback-on-error behavior as the original onError handler, just
+  // expressed as state since next/image doesn't allow mutating its src
+  // directly in an onError callback the way a plain <img> does.
+  const [failedImages, setFailedImages] = useState<Set<string>>(new Set())
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -37,15 +44,13 @@ const PortfolioView = ({ projects }: PortfolioViewProps) => {
           <div className="images-container">
             {projects.map((project) => (
               <div className="image-box" key={project.name}>
-                {/* eslint-disable-next-line @next/next/no-img-element -- converted to next/image in a later Phase 2 step */}
-                <img
-                  src={project.image}
+                <Image
+                  src={failedImages.has(project.image) ? FALLBACK_IMAGE : project.image}
                   className="portfolio-image"
                   alt={project.name || 'portfolio'}
-                  loading="lazy"
-                  onError={(e) => {
-                    e.currentTarget.src = '/path/to/fallback-image.png'
-                  }}
+                  fill
+                  sizes="(max-width: 1200px) 50vw, 25vw"
+                  onError={() => setFailedImages((prev) => new Set(prev).add(project.image))}
                 />
                 <div className="content">
                   <p className="title">{project.name}</p>

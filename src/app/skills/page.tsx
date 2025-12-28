@@ -4,6 +4,7 @@ import SkillsView from '@/components/skills/skills-view'
 export const metadata: Metadata = {
   title: 'Skills',
   description: 'Software engineer skills: Microsoft Excel, JavaScript, React, HTML, CSS, Java, C#, C++, Python.',
+  alternates: { canonical: '/skills' },
 }
 
 export default function SkillsPage() {

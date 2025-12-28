@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import AnimatedLetters from '@/components/animated-letters/animated-letters'
 import PacmanLoader from '@/components/pacman-loader/pacman-loader'
 import Logo from './logo'
@@ -41,16 +42,13 @@ const HomeView = () => {
             <span className={`${letterClass} _13`}>&apos;</span>
             <span className={`${letterClass} _14`}>m</span>
 
-            {/* eslint-disable-next-line @next/next/no-img-element -- converted to next/image in a later Phase 2 step */}
-            <img src={logoI.src} className="i" alt="" />
+            <Image src={logoI} className="i" alt="" priority />
             <AnimatedLetters letterClass={letterClass} strArray={NAME_I} idx={15} />
 
-            {/* eslint-disable-next-line @next/next/no-img-element -- converted to next/image in a later Phase 2 step */}
-            <img src={logoE.src} className="e" alt="" />
+            <Image src={logoE} className="e" alt="" priority />
             <AnimatedLetters letterClass={letterClass} strArray={NAME_E} idx={18} />
 
-            {/* eslint-disable-next-line @next/next/no-img-element -- converted to next/image in a later Phase 2 step */}
-            <img src={logoV.src} className="v" alt="" />
+            <Image src={logoV} className="v" alt="" priority />
             <AnimatedLetters letterClass={letterClass} strArray={NAME_V} idx={19} />
 
             <br />

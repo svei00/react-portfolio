@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: 'Portfolio',
   description: 'Bilingual Software Engineer',
   keywords: ['Software Engineer', 'Bilingual', 'English', 'Spanish'],
+  alternates: { canonical: '/portfolio' },
 }
 
 export default function PortfolioPage() {
