@@ -602,3 +602,64 @@
     `public/robots.txt`. Verified all of `/robots.txt`, `/sitemap.xml`,
     `/manifest.webmanifest`, and the response headers directly via curl
     against a real server — all correct.
+58. Step 13 (final cleanup): removed the empty leftover
+    `src/components/Projects/` directory (its contents were already
+    deleted in Phase 1) and the stale local `build/` folder from before
+    the migration (untracked — CRA's old output dir, harmless but dead).
+    Swept for remaining plain `<img>` tags, `console.log` debug leftovers,
+    and a stray `package-lock.json` — none found.
+59. **Sass was never actually bumped during this migration** —
+    phase-2-plan.md's verified target was 1.102.0, but `package.json`
+    still said `^1.54.8` through every step up to this point. Caught it
+    only via the `npm audit` re-run below: an outdated `sass@1.56.1`
+    pulled in `chokidar` → `braces`/`picomatch`, plus its own `immutable`
+    dependency, all 3 flagged high severity. Bumped `sass` to latest
+    (`^1.103.1`) directly rather than patching the transitives — `npm
+    audit` went from 3 high to **0 vulnerabilities, zero of any
+    severity**. `next build` re-verified clean after the bump.
+60. Step 14, full verification pass:
+    - `next build`: clean, all 10 routes present (5 pages + `/api/contact`
+      correctly dynamic + `/sitemap.xml` + `/robots.txt` +
+      `/manifest.webmanifest` + `/opengraph-image`, everything else static).
+    - Every one of the 5 pages hit fresh in the browser (`tabs_create` each
+      time, learned earlier this session that tab reuse serves stale
+      console history): zero console errors on all 5, only harmless
+      Next.js route-prefetch "preloaded but not used" warnings.
+    - Contact form tested end-to-end: filled and submitted, hit
+      `/api/contact`, correctly got a 500 with "Email service is not
+      configured" (expected — no `.env.local` in this environment) and
+      displayed it inline with **no crash and no `alert()`** — confirms
+      the whole client/server/error-state chain actually works, not just
+      that it compiles.
+    - `npm audit`: **0 vulnerabilities** (see step 59) — exceeds the "zero
+      critical, zero high" exit criterion.
+    - Compared against the live site (`portfolio.excelsolutionsv.com`,
+      still the pre-Phase-2 CRA build): same hero text, same structure,
+      confirms no content regression.
+    - Lighthouse mobile, run against both the new build and the live site
+      for a fair baseline comparison (both via `next start` locally / the
+      real live URL, not dev mode):
+      | | Live (pre-Phase-2) | This build |
+      |---|---|---|
+      | Performance | 75 | **82** |
+      | SEO | 100 | **100** |
+      | Accessibility | — | **94** |
+      | Best Practices | — | **100** |
+      | LCP | 6.4s | **4.3s** |
+      Real improvement, but performance lands at 82, short of the >=85
+      target in phase-2-plan.md §8. Root cause identified via Lighthouse's
+      LCP breakdown: the LCP element is the `<h2>` tagline, and ~4.2s of
+      its delay is `elementRenderDelay` — traced to the **original**
+      `animation-delay` choreography in `home.scss` (`h2 { animation:
+      fadeIn 1s 1.8s backwards }` stacked on the `.container`'s own 1s
+      delay). This CSS was ported byte-for-byte from the CRA source, not
+      something Phase 2 changed — and per phase-2-plan.md's own "no
+      redesign" mandate for this phase, it should not be changed here.
+      handoff.md §8.3 already plans to retire this entire staggered-fade
+      system in Phase 3's GSAP-based motion rework. **Recommendation:
+      accept 82 for Phase 2 and let Phase 3 close the gap** — chasing it
+      now would mean either redesigning the reveal animation (out of
+      scope) or fighting a metric that's structurally tied to a system
+      already scheduled for replacement.
+    **Phase 2 is functionally complete.** Per phase-2-plan.md §7.1, still
+    not pushed — that's Svei's call once he's reviewed this.
