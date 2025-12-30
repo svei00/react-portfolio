@@ -663,3 +663,79 @@
       already scheduled for replacement.
     **Phase 2 is functionally complete.** Per phase-2-plan.md §7.1, still
     not pushed — that's Svei's call once he's reviewed this.
+61. **Phase 3 planning session (Opus, 2026-08-21).** Produced
+    `phase-3-plan.md` at repo root — the plan of record for Phase 3,
+    superseding handoff.md §7 Phase 3 / §8 where the two disagree (§8 was
+    written before the repo was on Next.js 16 and before Svei picked his
+    reference portfolios). Phase 3 is divided into eight independently
+    deployable sub-phases (3.0 foundations → 3.7 audit).
+62. **Live-site incident found while planning, not previously recorded:
+    `portfolio.excelsolutionsv.com` does not serve this repository.** DNS
+    resolves to `75.2.60.5` (Netlify), the response carries
+    `Server: Netlify`, and the HTML body is the **pre-Phase-1 CRA build** —
+    it still contains the `unpkg.com/leaflet@1.7.1` CSS link (S8), the
+    `cdn.jsdelivr.net/@emailjs/browser` script tag with the inline
+    `emailjs.init(...)` key (S7), the keyword-stuffed meta description
+    (§4.6), the CRA `manifest.json`, and none of the Phase 2 security
+    headers. Phase 1 and Phase 2 are both pushed to `origin/main` but have
+    never reached a user — every security fix in both phases is currently
+    unshipped. There is no `.vercel/`, no `vercel.json` and no
+    `netlify.toml` in the repo, so neither host's config is under version
+    control. Svei's earlier Vercel failure ("didnt change the engine to
+    nextjs") is consistent with a Vercel project created while the repo was
+    still CRA: Vercel locks the Framework Preset at project-creation time
+    and does not re-detect it when the repo's framework changes, so a CRA
+    preset runs `react-scripts build` against a Next.js repo and fails.
+    Resolution (Svei's decision this session): **move to Vercel**, with the
+    dashboard steps written out in phase-3-plan.md §2. Netlify stays up but
+    unpublished for about a week after the DNS cutover.
+63. **VERIFY item (d) from handoff.md §12 closed: GSAP licensing
+    re-checked at implementation time.** `gsap@3.15.0` publishes under the
+    GSAP Standard "no charge" License, and **SplitText now ships inside the
+    free public npm package** — confirmed by inspecting the published
+    tarball's file list (`dist/SplitText.js`, `src/SplitText.ts`,
+    `types/split-text.d.ts` all present). The paid Club GreenSock tier Svei
+    originally feared (and which caused the `.npmrc` token leak, S1) no
+    longer exists. `lenis@1.3.26` is MIT, `@gsap/react@2.1.2` follows the
+    GSAP standard license. No private registry and no auth token is needed
+    for any of the Phase 3 motion stack.
+64. Decisions taken by Svei during the planning session, recorded so they
+    are not re-litigated: (a) **typography is Fraunces (display, variable —
+    its SOFT/WONK axes get animated during the hero reveal, which is the
+    deliberately non-derivative part of the design) + General Sans (body,
+    self-hosted from Fontshare)**; (b) **no under-construction page** — the
+    substitute is that every sub-phase must leave `main` deployable and
+    visually coherent, and the animated work he wanted goes into a branded
+    404/error page plus the Excel Lab "coming soon" tile instead; (c) move
+    hosting to Vercel; (d) add a **build stamp to the footer** (commit SHA
+    + build date, read server-side from `VERCEL_GIT_COMMIT_SHA`, falling
+    back to "local") so he can tell at a glance which build is actually
+    being served — this is what the Netlify incident above cost him.
+    Reference-portfolio calibration, in his ranking: Dennis Snellenberg
+    first (but explicitly not its big icons), Lusion second (the playful
+    hero type animation and featured-work reveal, not its WebGL), Cuberto
+    third (its project showcase is the model for the Excel Lab section),
+    Bruno Simon fourth and treated as the line not to cross. He raised
+    "don't be a copycat" twice unprompted, so phase-3-plan.md §6 makes it
+    an explicit take-the-principle / refuse-the-execution table.
+65. Design decision worth flagging because it shapes the whole sub-phase
+    ordering: **repaint first, rebuild second.** Sub-phase 3.0 repoints
+    every hardcoded colour and font in the *existing* stylesheets at the
+    new tokens before any layout changes, so the entire site becomes
+    navy/gold/cream in the new type in one commit while layouts stay put.
+    Every later sub-phase then upgrades one page. This is what makes "keep
+    the live site working while redesigning" true without an
+    under-construction page — there is never a commit where half the site
+    is tutorial-blue and half is brand-navy.
+66. Also settled during planning: **page transitions use React's
+    `<ViewTransition>`**, not the hand-rolled GSAP covering wipe that
+    handoff.md §8.3 imagined. Verified against the bundled Next 16 docs
+    (`node_modules/next/dist/docs/01-app/02-guides/view-transitions.md`):
+    it works in the App Router with no configuration, supports directional
+    `transitionTypes` on `<Link>` and shared-element morphs by `name`, and
+    degrades to an instant navigation where unsupported. The shared-element
+    morph is what gives the `/work` index → case-study navigation the
+    continuity effect Svei liked on Dennis's work page. One gotcha the docs
+    call out and the implementer must respect: the `enter`/`exit` wrapper
+    goes in each `page.tsx`, **never** in `layout.tsx`, because layouts
+    persist across navigation and so their enter/exit never fire.
