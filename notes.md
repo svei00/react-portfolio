@@ -739,3 +739,68 @@
     call out and the implementer must respect: the `enter`/`exit` wrapper
     goes in each `page.tsx`, **never** in `layout.tsx`, because layouts
     persist across navigation and so their enter/exit never fire.
+67. **Sub-phase 3.0 (foundations) implemented, Sonnet.** Per
+    phase-3-plan.md §3, this is the "repaint first" pass — new tokens and
+    fonts applied across the existing stylesheets, no layout changes.
+    - `src/styles/tokens.scss`: the palette (handoff §8.1), a 6-step fluid
+      type scale, a 4px spacing scale, motion timing tokens, and a z-index
+      scale, all as CSS custom properties on `:root`. Breakpoint values
+      moved here as Sass variables + mixins (`mobile`/`tablet`/`desktop`).
+    - Fonts replaced entirely: **Fraunces** (variable, `next/font/google`,
+      SOFT/WONK/opsz axes registered for the Home hero animation in 3.2)
+      for display, **General Sans** (variable woff2, self-hosted from
+      Fontshare under the ITF Free Font License — full text at
+      `licenses/general-sans-FFL.txt`) for body, loaded via
+      `next/font/local`. Deleted `CoolveticaRg-Regular.{woff,woff2}`,
+      `LaBelleAurore.{woff,woff2}` and `helvetica-neu.ttf` along with their
+      `fonts.ts` entries — confirmed via grep that nothing referenced them
+      after the repaint pass below.
+    - Global repaint: every hardcoded hex color across all 8 component
+      `.scss` files (sidebar, home, logo, about, skills, contact,
+      portfolio, animated-letters) plus `globals.scss`/`layout.scss`
+      repointed to the new tokens, and every `var(--font-coolvetica)` /
+      `var(--font-la-belle-aurore)` / `var(--font-helvetica-neue)`
+      repointed to `var(--font-display)` / `var(--font-body)`. Also
+      replaced the old ExcelSolutionsV blue/green (`#3182DF`, `#21B868`) in
+      `portfolio.scss`, which handoff.md §2.1 explicitly says must not
+      drive the new design. Verified after the pass: `grep -rnoE
+      "#[0-9A-Fa-f]{3,6}"` across `src/**/*.scss` returns only the values
+      inside `tokens.scss` itself plus one functional `#000` in a gradient
+      overlay (not a brand color).
+    - Deleted the decorative `<body>`/`<h1>`/`</html>` pseudo-element "code
+      tags" from `layout.tsx` and `layout.scss` (the `.tags`, `.top-tags`,
+      `.bottom-tag-html` rules and the `<h1>`/`<h1/>` `::before`/`::after`
+      content) — phase-3-plan.md §3 flags this as the single most
+      recognisable tutorial artefact in the markup.
+    - Motion plumbing installed: `gsap@3.15.0`, `@gsap/react@2.1.2`,
+      `lenis@1.3.26`, added with `yarn add` (not `npm install`) to keep
+      `yarn.lock` authoritative — npm install had generated a stray
+      `package-lock.json`, deleted before committing, same failure mode
+      notes.md entry 58 already swept for once. `src/lib/motion/`:
+      `gsap-setup.ts` (registers ScrollTrigger + SplitText exactly once,
+      client-only), `reduced-motion.ts` (the single site-wide
+      `gsap.matchMedia()` gate required by handoff §8.3/§4.9 — every future
+      animated component calls `registerMotion({ full, reduced })` against
+      this one shared instance rather than creating its own), and
+      `smooth-scroll-provider.tsx` (Lenis driven by the GSAP ticker rather
+      than its own rAF loop, wired to `ScrollTrigger.update`, and skipped
+      entirely — Lenis never even constructs — when
+      `prefers-reduced-motion: reduce` is set). Nothing animates yet; this
+      sub-phase only proves the plumbing loads and tree-shakes correctly.
+    - Vercel/Netlify DNS cutover is **not done** — that requires Svei's
+      hands in both dashboards per phase-3-plan.md §2 and is independent of
+      the code changes above. The build stamp (`src/lib/build-info.ts`,
+      rendered as a bare line bottom-right on every page) is in place so
+      the moment he does cut over, the live site visibly proves it.
+    - Verification: `next build` clean, all 11 routes present; `next
+      start` checked in the browser on all 5 pages fresh (`tabs_create`
+      each time, per the lesson in entry 49) — zero console errors on all
+      5; confirmed via computed styles in the browser that `body`
+      background/color resolve to the new navy/cream, `h1` resolves to
+      Fraunces, body text resolves to General Sans, and the build stamp
+      renders `local · <date>`; `<html>` carries a `lenis` class,
+      confirming Lenis initialized. `yarn audit`: **0 vulnerabilities**
+      (129 packages) — used yarn's audit since `npm audit` requires an
+      npm-generated lockfile this project intentionally doesn't have.
+    **Phase 3.0 is functionally complete**, pending Svei's Vercel dashboard
+    work from phase-3-plan.md §2 and his review before pushing.

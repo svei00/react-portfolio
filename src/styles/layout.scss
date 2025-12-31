@@ -6,23 +6,18 @@
     position: absolute;
 }
 
-.top-tags {
-    bottom: auto;
-    top: 35px;
-}
-
-.tags {
-    color: #00993F;
-    opacity: 0.6;
-    position: absolute;
-    bottom: 0;
-    left: 120px;
-    font-size: 18px;
-    font-family: var(--font-la-belle-aurore);
-}
-
-.bottom-tag-html {
-    margin-left: -20px;
+// Proves which deploy is actually live (notes.md entry 62). Deliberately
+// minimal here — folded into the designed footer in Phase 3.1.
+.build-stamp {
+    position: fixed;
+    bottom: var(--space-2);
+    right: var(--space-3);
+    margin: 0;
+    color: var(--muted);
+    opacity: 0.5;
+    font-size: var(--step--1);
+    font-family: var(--font-body);
+    z-index: var(--z-chrome);
 }
 
 .container {
@@ -40,50 +35,29 @@
     animation-delay: 1s;
 }
 
-.about-page, 
+.about-page,
 .contact-page,
 .portfolio-page,
 .skills-page {
         h1 {
-            font-size: 53px;
-            font-family: var(--font-coolvetica);
-            color: #599DFB;
+            // The decorative <h1>/<h1/> pseudo-element "code tags" that used
+            // to wrap this heading (rendered via ::before/::after) are gone
+            // as of Phase 3.0 — they were the single most recognisable
+            // tutorial artefact in the markup (phase-3-plan.md §3, 3.0).
+            font-size: var(--step-3);
+            font-family: var(--font-display);
+            color: var(--accent);
             font-weight: 400;
             margin-top: 0;
             position: relative;
-            margin-bottom: 40px;
+            margin-bottom: var(--space-6);
             left: 10px;
-
-        &:before {
-            content: '<h1>';
-            font-family: var(--font-la-belle-aurore);
-            color: #00993F;
-            font-size: 18px;
-            position: absolute;
-            margin-top: -10px;
-            left: -10px; 
-            opacity: 0.6;
-            line-height: 18px;          
-        }
-
-        &:after {
-            content: '<h1/>';
-            font-family: var(--font-la-belle-aurore);
-            color: #00993F;
-            font-size: 18px;
-            position: absolute;
-            left: -30px;
-            bottom: -20px;
-            margin-left: 20px; 
-            opacity: 0.6;
-            line-height: 18px;  
-        }
     }
- 
+
     p {
-        font-size: 13px;
-        color: #fff;
-        font-family: Tahoma, Geneva, Verdana, sans-serif;
+        font-size: var(--step-0);
+        color: var(--text);
+        font-family: var(--font-body);
         text-align: justify;
         text-indent: 20px;
         font-weight: 300;
@@ -113,10 +87,10 @@
         display: table-cell;
         max-height: 90%;
     }
-    
+
     .text-animate-hover {
         &:hover {
-            color: #00993F;
+            color: var(--accent);
         }
     }
 }

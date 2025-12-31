@@ -1,16 +1,16 @@
 .boldText {
-    color: #599DFB;
+    color: var(--accent);
     font-weight: bold;
     text-decoration: none;
 }
 
 .links {
-    color: #00993F;
+    color: var(--accent-soft);
     font-weight: bold;
     text-decoration: none;
 
     &:hover {
-        color: #599DFB;
+        color: var(--accent);
         text-transform: uppercase;
 
         &::after {

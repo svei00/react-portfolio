@@ -2,9 +2,10 @@
 // animate.css and the pacman loader are imported as JS imports in
 // app/layout.tsx instead of `@import '~loaders.css/...'` here, since the
 // webpack-only `~` alias prefix does not resolve under Turbopack.
-// The three custom @font-face fonts moved to src/styles/fonts.ts
-// (next/font/local) and are applied as CSS variables on <html> in the
-// root layout — referenced below as var(--font-...).
+// Fonts moved to src/styles/fonts.ts (Fraunces via next/font/google,
+// General Sans via next/font/local) and are applied as CSS variables on
+// <html> in the root layout — referenced below as var(--font-display) /
+// var(--font-body). Color values reference src/styles/tokens.scss.
 
 html {
   font-size: 62.5%;
@@ -12,9 +13,9 @@ html {
 
 body {
   margin: 0;
-  font: 300 11px/1.4 var(--font-helvetica-neue), sans-serif;
-  color: #444;
-  background: #022c43;
+  font: 300 11px/1.4 var(--font-body), sans-serif;
+  color: var(--text);
+  background: var(--bg);
   overflow: hidden;
   display: block;
   -webkit-font-smoothing: antialiased;
@@ -29,7 +30,7 @@ body {
 
 input,
 textarea {
-  font-family: var(--font-helvetica-neue);
+  font-family: var(--font-body);
 }
 
 // Visually hides content while keeping it in the accessibility tree —
@@ -50,7 +51,7 @@ textarea {
 .loader-active {
   display: block;
   position: absolute;
-  color: #ffd700;
+  color: var(--accent);
   left: 0;
   right: 0;
   margin: auto;

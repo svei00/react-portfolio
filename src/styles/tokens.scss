@@ -1,0 +1,101 @@
+// Design tokens — the single source of truth for color, type scale,
+// spacing and motion timing across the whole site. Change a value here
+// and it updates everywhere; nothing else in the codebase should hardcode
+// a hex color, a font name, a spacing number or an animation duration.
+//
+// Palette source: handoff.md §8.1 (Svei's navy/gold/silver seeds, refined
+// with pre-checked contrast pairs). Contrast notes:
+//   --text on --bg      ≈ 13:1  (AAA)  — safe for any text size
+//   --muted on --bg     ≈ 8:1   (AA+)  — safe for any text size
+//   --accent on --bg    ≈ 4.9:1        — fine for large text/accents,
+//                                         NEVER use gold for small body copy
+// Re-verify these against the final rendered pairs in Phase 6 (handoff.md
+// §7 Phase 6 exit criterion) — this comment is a starting point, not a
+// substitute for a real contrast checker on the shipped site.
+:root {
+  // ---- Color --------------------------------------------------------
+  --bg: #131f30; // page background (navy-950)
+  --surface: #1f3a5c; // cards, sections, raised panels
+  --accent: #b38e5d; // gold — CTAs, links, motion accents
+  --accent-soft: #c9a87a; // gold hover state / large-area tint
+  --muted: #b9c0c9; // silver — secondary text, rules, icons
+  --text: #f1ebdf; // cream — primary text
+
+  // Functional colors outside the brand palette (error states etc.) —
+  // kept separate from the five brand tokens above so a future palette
+  // change never accidentally recolors an error message.
+  --danger: #ff6b6b;
+
+  // ---- Typography -----------------------------------------------------
+  // Fraunces (display, variable — see src/styles/fonts.ts for the SOFT/WONK
+  // axis animation used on the Home hero) + General Sans (body).
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-general-sans);
+
+  // Fluid type scale. clamp(min, preferred-vw, max) so headings scale
+  // smoothly between mobile and desktop instead of jumping at breakpoints.
+  --step--1: clamp(0.8rem, 0.77rem + 0.15vw, 0.9rem); // fine print
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem); // body text
+  --step-1: clamp(1.25rem, 1.18rem + 0.35vw, 1.5rem); // small heading
+  --step-2: clamp(1.75rem, 1.6rem + 0.75vw, 2.25rem); // section heading
+  --step-3: clamp(2.5rem, 2.15rem + 1.75vw, 3.75rem); // page heading
+  --step-4: clamp(3.5rem, 2.8rem + 3.5vw, 5.5rem); // hero, large
+  --step-5: clamp(4.5rem, 3.3rem + 6vw, 8rem); // hero, largest
+
+  // ---- Spacing --------------------------------------------------------
+  // 4px base grid.
+  --space-1: 0.25rem; // 4px
+  --space-2: 0.5rem; // 8px
+  --space-3: 0.75rem; // 12px
+  --space-4: 1rem; // 16px
+  --space-5: 1.5rem; // 24px
+  --space-6: 2rem; // 32px
+  --space-7: 3rem; // 48px
+  --space-8: 4rem; // 64px
+  --space-9: 6rem; // 96px
+  --space-10: 8rem; // 128px
+  --space-11: 10rem; // 160px
+  --space-12: 12rem; // 192px
+
+  // ---- Motion -----------------------------------------------------------
+  // Every GSAP tween and CSS transition in the system should pull from
+  // these, so the whole site feels like one hand made it (handoff.md §8.3).
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --dur-fast: 0.2s;
+  --dur-base: 0.4s;
+  --dur-slow: 0.8s;
+
+  // ---- Layering -----------------------------------------------------
+  // A single z-index scale so the nav overlay, custom cursor and page
+  // transition layer never end up fighting each other by accident.
+  --z-base: 0;
+  --z-chrome: 10; // nav bar, footer
+  --z-overlay: 20; // mobile nav overlay, modals
+  --z-cursor: 30; // custom cursor follower
+  --z-transition: 40; // page transition layer
+}
+
+// Breakpoint values as Sass variables (not CSS custom properties — media
+// query conditions can't read custom properties, so these stay in Sass).
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1200px;
+
+@mixin mobile {
+  @media screen and (max-width: $breakpoint-mobile) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (max-width: $breakpoint-desktop) {
+    @content;
+  }
+}

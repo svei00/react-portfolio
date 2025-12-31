@@ -1,7 +1,10 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import Sidebar from '@/components/sidebar/sidebar'
-import { coolvetica, helveticaNeue, laBelleAurore } from '@/styles/fonts'
+import { buildInfo } from '@/lib/build-info'
+import SmoothScrollProvider from '@/lib/motion/smooth-scroll-provider'
+import { fraunces, generalSans } from '@/styles/fonts'
+import '@/styles/tokens.scss'
 import '@/styles/globals.scss'
 import '@/styles/layout.scss'
 import 'animate.css'
@@ -32,25 +35,22 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${helveticaNeue.variable} ${laBelleAurore.variable} ${coolvetica.variable}`}
-    >
+    <html lang="en" className={`${fraunces.variable} ${generalSans.variable}`}>
       <body>
-        <div className="App">
-          <Sidebar />
-          <div className="page">
-            <span className="tags top-tags">&lt;body&gt;</span>
-
-            {children}
-
-            <span className="tags bottom-tags">
-              &lt;/body&gt;
-              <br />
-              <span className="bottom-tag-html">&lt;/html&gt;</span>
-            </span>
+        <SmoothScrollProvider>
+          <div className="App">
+            <Sidebar />
+            <div className="page">
+              {children}
+              {/* Bare-line build stamp — proves which deploy is actually
+                  live (notes.md entry 62). Gets folded into the designed
+                  footer in Phase 3.1; this is deliberately minimal for now. */}
+              <p className="build-stamp">
+                {buildInfo.commit} · {buildInfo.builtAt}
+              </p>
+            </div>
           </div>
-        </div>
+        </SmoothScrollProvider>
       </body>
     </html>
   )

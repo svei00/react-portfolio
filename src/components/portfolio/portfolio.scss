@@ -26,13 +26,13 @@
         overflow: hidden;
         border-radius: 10px;
         max-width: calc(25% - 10px);
-        border: 2px solid #D4C19C;
+        border: 2px solid var(--accent-soft);
         transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-        box-shadow: 0 0 10px rgba(212, 193, 156, 0.3);
+        box-shadow: 0 0 10px rgba(179, 142, 93, 0.3);
         
         &:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(212, 193, 156, 0.5);
+            box-shadow: 0 0 20px rgba(179, 142, 93, 0.5);
         }
 
         .portfolio-image {
@@ -70,7 +70,7 @@
 
         .title {
             margin: 0 0 10px -20px;
-            color: #fff;
+            color: var(--text);
             font-size: 24px;
             font-weight: 600;
             line-height: 1.2;
@@ -82,7 +82,7 @@
         .description {
             font-size: 16px;
             margin: 0 0 15px 0;
-            color: #fff;
+            color: var(--text);
             font-weight: 400;
             line-height: 1.5;
             display: -webkit-box;
@@ -95,10 +95,10 @@
         .btn {
             display: inline-block;
             padding: 10px 25px;
-            border: 2px solid #21B868;
+            border: 2px solid var(--accent);
             border-radius: 4px;
             font-size: 14px;
-            color: #fff;
+            color: var(--text);
             background: transparent;
             font-weight: 600;
             transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -106,14 +106,14 @@
             
             &:hover {
                 transform: translateY(-3px);
-                background: #21B868;
-                box-shadow: 0 5px 15px rgba(33, 184, 104, 0.3);
+                background: var(--accent);
+                box-shadow: 0 5px 15px rgba(179, 142, 93, 0.3);
             }
         }
 
         &:after {
             content: '';
-            background: linear-gradient(180deg, #3182DF, #000);
+            background: linear-gradient(180deg, var(--accent), #000);
             position: absolute;
             left: 0;
             right: 0;
