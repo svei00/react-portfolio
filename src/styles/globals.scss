@@ -62,3 +62,28 @@ textarea {
   animation: fadeOut 1s 1s;
   animation-fill-mode: forwards;
 }
+
+// Page-transition crossfade, applied via the "page-fade" name from
+// src/components/motion/page-transition.tsx's <ViewTransition>. View
+// Transition pseudo-elements are generated on ::view-transition-old/new
+// and must be styled globally — they cannot live inside a CSS Module,
+// since they are not scoped to any single component's markup.
+::view-transition-old(.page-fade) {
+  animation: var(--dur-fast) var(--ease-in-out-quart) both page-fade-out;
+}
+
+::view-transition-new(.page-fade) {
+  animation: var(--dur-base) var(--ease-out-expo) both page-fade-in;
+}
+
+@keyframes page-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+  }
+}

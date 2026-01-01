@@ -804,3 +804,104 @@
       npm-generated lockfile this project intentionally doesn't have.
     **Phase 3.0 is functionally complete**, pending Svei's Vercel dashboard
     work from phase-3-plan.md §2 and his review before pushing.
+68. **Sub-phase 3.1 (chrome: nav, footer, page transitions, cursor)
+    implemented, Sonnet.** Per phase-3-plan.md §3.1.
+    - **Icon sidebar deleted entirely** (`src/components/sidebar/`) —
+      replaced by `src/components/nav-bar/nav-bar.tsx`: a slim fixed top
+      bar, text-only links (no icons, per Svei's stated dislike of the
+      Dennis Snellenberg reference's oversized iconography), a real
+      `<button>` hamburger (two plain bars, no FontAwesome), and a
+      full-screen mobile overlay with GSAP-staggered link reveal. The
+      overlay traps Tab focus while open (`src/components/motion/
+      focus-trap.ts`), closes on Escape, and returns focus to the
+      hamburger on close. Deleted the two images the old sidebar alone
+      referenced (`LogoExcelWindow.png`, `IvanEVillanueva.png` — confirmed
+      via grep nothing else used them) and the four FontAwesome packages'
+      old usage there (packages themselves left installed pending a 3.7
+      sweep, since nothing else currently imports them either).
+    - **New footer** (`src/components/footer/site-footer.tsx`): contact
+      CTA, social links with real accessible text (not icon-only), and
+      the build stamp moved here from the bare layout.tsx line added in
+      3.0. Shipped as a **fixed thin bar**, not the full tall CTA footer
+      phase-3-plan.md §3.1 describes — every existing page still uses the
+      pre-Phase-3 `position: absolute; height: 100%` layout scheme
+      (`.container` in layout.scss), and a normal-flow footer would
+      overlap or get clipped by that until each page's own layout is
+      rebuilt in 3.2-3.6. Documented as a deliberate, scoped-down choice in
+      site-footer.module.scss, not a silent shortcut.
+    - `layout.scss`'s shared `.container` rule adjusted (`top: 5% → 8%`,
+      `height: 90% → 84%`) and the ≤1200px breakpoint's `.page` rule got
+      `padding-top`/`padding-bottom`, so existing page content clears the
+      new fixed nav/footer bars — the smallest change that could keep
+      every existing page's layout intact while still not rendering under
+      the new chrome.
+    - **Page transitions**: confirmed React's `ViewTransition` (imported
+      from `'react'`) works under this Next 16 App Router build despite
+      the installed `react` package being stable 19.2.8, not canary — Next
+      resolves it internally for App Router builds, exactly as the
+      bundled docs claim. Built `src/components/motion/page-transition.tsx`
+      wrapping each page's content in `<ViewTransition enter="page-fade"
+      exit="page-fade" default="none">`, added to all 5 `page.tsx` files
+      (never to `layout.tsx` — layouts persist across navigation, so an
+      enter/exit boundary there would never fire, per the doc gotcha
+      already flagged in entry 66). CSS crossfade added globally in
+      `globals.scss` (`::view-transition-old/new(.page-fade)`), since View
+      Transition pseudo-elements cannot live inside a scoped CSS Module.
+      Directional nav-forward/nav-back transitions and the shared-element
+      image morph stay reserved for the Work index → case-study
+      navigation in Phase 3.3, where an actual hierarchy exists to signal
+      direction through — this flat top-level nav doesn't have one.
+    - **Custom cursor** (`src/components/motion/custom-cursor.tsx`): a
+      plain ring, not the Cuberto reference's blob (§6 anti-copycat
+      table), gated behind both `(pointer: fine)` and
+      `(prefers-reduced-motion: reduce)` checked directly rather than
+      through the shared gate (see next bullet for why the shared gate
+      needed its own fix first).
+    - **Magnetic link primitive** (`src/components/motion/
+      magnetic-link.tsx`) built as a reusable component for CTA buttons;
+      not yet wired into Home's or Contact's existing CTAs — that
+      composition is left for 3.2/3.6 respectively, to keep this
+      sub-phase scoped to chrome rather than pulling page redesign work
+      forward.
+    - **Real bug found and fixed in the 3.0 motion foundation:
+      `registerMotion()`'s single-condition `gsap.matchMedia()` call
+      never fired for the common case.** Discovered while testing the
+      mobile nav overlay: clicking the hamburger correctly flipped
+      component state (`body.style.overflow` changed to `'hidden'`) but
+      the overlay never visually appeared — its GSAP tween never started
+      at all. Isolated by loading gsap fresh from a CDN into the live page
+      and testing `matchMedia().add()` directly: **GSAP's matchMedia
+      object-conditions form only invokes the callback for keys whose
+      query is CURRENTLY true — it does not call the function with
+      `false` for a non-matching query**, unlike a plain
+      `window.matchMedia().matches` check. `reduced-motion.ts` had only
+      registered a `reduceMotion` key, so the callback silently never ran
+      at all whenever the user had no reduced-motion preference set (the
+      overwhelming majority of visitors) — every future component built
+      against this shared primitive (Home's hero in 3.2, every
+      ScrollTrigger reveal after that) would have silently never animated
+      for almost anyone. Fixed by registering both
+      `reduceMotion: '(prefers-reduced-motion: reduce)'` and
+      `noPreference: '(prefers-reduced-motion: no-preference)'` — the spec
+      guarantees exactly one of the two always matches, so the callback
+      now always fires. Verified against the real fix in the browser: the
+      mobile overlay now opens and closes correctly with its stagger
+      animation. **Worth remembering for the rest of Phase 3:** any future
+      `gsap.matchMedia()` usage needs the same two-key pattern, not a
+      single boolean condition.
+    - Verification: `next build` clean, all 11 routes present; `next
+      start` checked fresh in the browser on desktop (1280px, nav shows
+      all 5 text links, no icons) and mobile (375px, hamburger → overlay
+      → close, focus trap and Escape both confirmed) viewports; direct-
+      click navigation between Home and About confirmed the ViewTransition
+      crossfade fires with zero console errors; `yarn audit`: **0
+      vulnerabilities** (129 packages, unchanged from 3.0 — no new
+      dependencies added this sub-phase).
+    - Not touched this sub-phase, on purpose: Home's hero layout (the
+      `.text-zone { width: 40 }` invalid-unitless-value bug that vertically
+      stacks "Hi, I'm" into one character per line — confirmed via
+      computed styles to be a **pre-existing bug from the Phase 2 port**,
+      not something introduced here; it is squarely 3.2's job when
+      AnimatedLetters gets replaced entirely).
+    **Phase 3.1 is functionally complete**, pending Svei's review before
+    committing.

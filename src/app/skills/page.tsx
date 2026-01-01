@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import SkillsView from '@/components/skills/skills-view'
+import PageTransition from '@/components/motion/page-transition'
 
 export const metadata: Metadata = {
   title: 'Skills',
@@ -8,5 +9,9 @@ export const metadata: Metadata = {
 }
 
 export default function SkillsPage() {
-  return <SkillsView />
+  return (
+    <PageTransition>
+      <SkillsView />
+    </PageTransition>
+  )
 }

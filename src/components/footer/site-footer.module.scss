@@ -1,0 +1,67 @@
+@use '@/styles/tokens' as *;
+
+// Fixed, thin bar rather than a normal-flow footer. Every existing page
+// still uses the pre-Phase-3 `position: absolute; height: 100%` layout
+// scheme (src/styles/layout.scss's .container rule) — a full-height
+// content footer would overlap or get clipped by that until each page's
+// own layout is rebuilt (Phase 3.2-3.6). This uses the same fixed-bar
+// technique the build stamp already relied on, so it is reliable
+// regardless of what each individual page's CSS is doing underneath it.
+// Revisit once every page has a normal-flow, scrollable layout.
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-chrome);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-6);
+  background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
+}
+
+.ctaLink {
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--accent-soft);
+  }
+}
+
+.socialList {
+  display: flex;
+  gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  a {
+    font-family: var(--font-body);
+    font-size: var(--step--1);
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-out-expo);
+
+    &:hover,
+    &:focus-visible {
+      color: var(--accent);
+    }
+  }
+}
+
+.buildStamp {
+  margin: 0;
+  color: var(--muted);
+  opacity: 0.5;
+  font-size: var(--step--1);
+  font-family: var(--font-body);
+}

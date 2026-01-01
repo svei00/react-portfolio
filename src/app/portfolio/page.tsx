@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import PortfolioView from '@/components/portfolio/portfolio-view'
+import PageTransition from '@/components/motion/page-transition'
 import projects from '@/content/projects.json'
 
 export const metadata: Metadata = {
@@ -10,5 +11,9 @@ export const metadata: Metadata = {
 }
 
 export default function PortfolioPage() {
-  return <PortfolioView projects={projects} />
+  return (
+    <PageTransition>
+      <PortfolioView projects={projects} />
+    </PageTransition>
+  )
 }

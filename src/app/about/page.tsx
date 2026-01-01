@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import AboutView from '@/components/about/about-view'
+import PageTransition from '@/components/motion/page-transition'
 
 export const metadata: Metadata = {
   title: 'About Me',
@@ -8,5 +9,9 @@ export const metadata: Metadata = {
 }
 
 export default function AboutPage() {
-  return <AboutView />
+  return (
+    <PageTransition>
+      <AboutView />
+    </PageTransition>
+  )
 }

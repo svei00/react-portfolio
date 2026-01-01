@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
-import Sidebar from '@/components/sidebar/sidebar'
-import { buildInfo } from '@/lib/build-info'
+import NavBar from '@/components/nav-bar/nav-bar'
+import SiteFooter from '@/components/footer/site-footer'
+import CustomCursor from '@/components/motion/custom-cursor'
 import SmoothScrollProvider from '@/lib/motion/smooth-scroll-provider'
 import { fraunces, generalSans } from '@/styles/fonts'
 import '@/styles/tokens.scss'
@@ -39,16 +40,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <SmoothScrollProvider>
           <div className="App">
-            <Sidebar />
-            <div className="page">
-              {children}
-              {/* Bare-line build stamp — proves which deploy is actually
-                  live (notes.md entry 62). Gets folded into the designed
-                  footer in Phase 3.1; this is deliberately minimal for now. */}
-              <p className="build-stamp">
-                {buildInfo.commit} · {buildInfo.builtAt}
-              </p>
-            </div>
+            <NavBar />
+            <div className="page">{children}</div>
+            <SiteFooter />
+            <CustomCursor />
           </div>
         </SmoothScrollProvider>
       </body>

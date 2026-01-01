@@ -6,28 +6,16 @@
     position: absolute;
 }
 
-// Proves which deploy is actually live (notes.md entry 62). Deliberately
-// minimal here — folded into the designed footer in Phase 3.1.
-.build-stamp {
-    position: fixed;
-    bottom: var(--space-2);
-    right: var(--space-3);
-    margin: 0;
-    color: var(--muted);
-    opacity: 0.5;
-    font-size: var(--step--1);
-    font-family: var(--font-body);
-    z-index: var(--z-chrome);
-}
-
 .container {
     width: 100%;
     will-change: contents;
-    height: 90%;
+    height: 84%;
     min-height: 556px;
     position: absolute;
     opacity: 0;
-    top: 5%;
+    // Was top: 5% before Phase 3.1 — bumped so page content clears the new
+    // fixed NavBar (src/components/nav-bar) instead of rendering under it.
+    top: 8%;
     margin: 0 auto;
     z-index: 1;
     transform-style: preserve-3d;
@@ -98,6 +86,12 @@
 @media screen and (max-width: 1200px) {
     .page {
         position: initial;
+        // Content flows normally at this breakpoint (no absolute
+        // .container), so it needs its own clearance under the fixed
+        // NavBar and above the fixed footer bar, instead of relying on
+        // .container's top offset above.
+        padding-top: 80px;
+        padding-bottom: 60px;
     }
 
     .container {

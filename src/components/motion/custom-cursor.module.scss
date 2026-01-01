@@ -1,0 +1,17 @@
+@use '@/styles/tokens' as *;
+
+.ring {
+  position: fixed;
+  top: -12px;
+  left: -12px;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: var(--z-cursor);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out-expo);
+  mix-blend-mode: difference;
+}
