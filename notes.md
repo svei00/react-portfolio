@@ -905,3 +905,95 @@
       AnimatedLetters gets replaced entirely).
     **Phase 3.1 is functionally complete**, pending Svei's review before
     committing.
+69. **Sub-phase 3.2 (Home hero rebuild) implemented, Sonnet.** Per
+    phase-3-plan.md §3.2 — the "signature moment" sub-phase.
+    - **Confirmed and fixed the exact desktop bug Svei flagged** ("my name
+      looks pretty good in small screens but not in computer, is a mess"):
+      `.text-zone { width: 40 }` in the old `home.scss` (invalid unitless
+      value, present since the Phase 2 port) was computing to a literal
+      40px box, forcing "Hi, I'm Iván..." to wrap one character per line
+      on any wide viewport. Confirmed via `getBoundingClientRect()` before
+      touching anything. Fully resolved by this sub-phase's rewrite, not
+      patched — the whole hero markup that box contained is gone.
+    - **Retired from Home** (only from Home — these components are still
+      used by About/Contact/Portfolio/Skills and stay in the codebase
+      until their own later sub-phases): `AnimatedLetters`, the three
+      `3D-Letter-{I,E,V}.png` images, `Logo` (the Excel-logo swap-in
+      component, `src/components/home/logo.tsx`/`logo.scss`, deleted
+      outright since nothing else referenced it), and `PacmanLoader`.
+      Also deleted `src/assets/images/LogoExcelTrim.png` (the copy under
+      `src/assets/`, only ever used by the now-deleted `logo.tsx` — not
+      the same file as `public/portfolio/1/LogoExcelTrim.png`, which
+      `content/projects.json` still uses and stays).
+    - **New hero**: `src/components/home/home-view.tsx` rewritten around
+      `SplitText.create(nameEl, { type: 'chars', aria: 'auto' })` — the
+      `aria: 'auto'` option puts the real name in an `aria-label` on the
+      `<h1>` and marks every generated char span `aria-hidden`, closing
+      handoff.md §4.9 [C] (screen readers announce "Ivan E. Villanueva",
+      not one letter at a time). Verified in the browser:
+      `h1.getAttribute('aria-label')` returns the full name, 16
+      `aria-hidden` char spans present.
+    - **The signature effect**: Fraunces's SOFT/WONK variable-font axes
+      (registered in `src/styles/fonts.ts` back in 3.0) animate from
+      exaggerated values (`SOFT:100, WONK:1`) down to normal (`0, 0`) via
+      two GSAP-tweened CSS custom properties (`--soft`/`--wonk`) that
+      `font-variation-settings` in `home.module.scss` reads directly —
+      simpler and more reliable than trying to get GSAP's CSSPlugin to
+      interpolate the `font-variation-settings` string directly. Runs
+      alongside the SplitText char stagger. This is the deliberately
+      non-derivative piece of the whole redesign (phase-3-plan.md §6).
+    - Below the hero: a positioning-statement paragraph (the "software
+      engineer who builds better Excel tools than accountants" story
+      handoff.md §4.7 says is currently told nowhere — **draft copy,
+      needs Svei's review**, not yet approved), a "Selected work" teaser
+      linking to `/portfolio`, and a closing contact CTA — each a plain
+      ScrollTrigger opacity/y reveal, no pinning (the one site-wide pinned
+      sequence stays reserved for the Excel Lab intro in Phase 3.5).
+    - **Home moved off the shared `.container`/`.page` absolute-
+      positioning scheme** (`layout.scss`) — that scheme assumes one
+      full-viewport screen per page, which doesn't fit a page with
+      multiple scrollable sections. `home.module.scss` is a new, mobile-
+      first CSS Module using normal document flow instead. The other four
+      pages are unaffected — they still use the shared scheme until their
+      own sub-phases.
+    - **Real bug found and fixed during this sub-phase, not just the
+      hero-width one above**: the first draft of `home.module.scss`
+      added a `.fadeIn` marker class (used purely so `home-view.tsx` could
+      `querySelectorAll` the tagline/CTA for a post-hero fade-in) with
+      `display: contents` on it. Confirmed in the browser that this
+      collapsed `.heroTagline` and `.ctaButton`'s own `display` values
+      whenever combined with them (CSS Modules compile every class into
+      one shared stylesheet, and `.fadeIn` came later in file order, so it
+      won the cascade) — the tagline and CTA button rendered as one
+      run-on inline blob with no button chrome. Fixed by stripping
+      `display: contents` from the marker class entirely (kept only
+      `will-change: opacity, transform`, which cannot conflict with a
+      paired class's box model). Re-verified via `getBoundingClientRect()`
+      that the tagline and CTA now render as separate rows.
+    - Verification: `next build` clean; zero console errors confirmed in
+      the browser; DOM/ARIA structure and computed CSS state confirmed
+      correct via direct inspection (`getComputedStyle`,
+      `getBoundingClientRect`) — including that `gsap.set()` correctly
+      applies the exaggerated `--soft`/`--wonk` starting values, which
+      independently reconfirms the 3.1 `registerMotion` matchMedia fix
+      still holds here. **Could not visually screenshot-verify the actual
+      running reveal animation this session** — the browser tool's pane
+      stopped compositing frames partway through this sub-phase (a raw
+      `requestAnimationFrame` test timed out with "the pane is currently
+      hidden," independent of any app code, and persisted across a full
+      preview restart) — flagged transparently rather than silently
+      claimed as verified. The identical animation pattern
+      (`registerMotion` + a `gsap.timeline`) was already visually
+      confirmed working end-to-end in 3.1's mobile nav overlay before this
+      pane issue appeared, which is the basis for shipping this without a
+      live visual check; Svei should give the actual motion a look
+      himself before this is considered fully done. `yarn audit`: **0
+      vulnerabilities** (129 packages, unchanged — no new dependencies).
+    - Not touched, on purpose: the positioning-statement copy is a draft
+      and needs Svei's review before it's treated as final (per
+      phase-3-plan.md §3.4's copy-approval gate, applied here too since
+      this is public-facing copy); the actual About/Contact/Portfolio/
+      Skills pages, which still use AnimatedLetters/PacmanLoader/the old
+      layout scheme until their own sub-phases.
+    **Phase 3.2 is functionally complete**, pending Svei's visual review
+    of the live animation and his sign-off on the draft positioning copy.

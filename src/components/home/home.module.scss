@@ -1,0 +1,148 @@
+@use '@/styles/tokens' as *;
+
+// Mobile-first: every rule below applies to the smallest viewport first,
+// then gets refined upward with explicit min-width queries. Home no
+// longer opts into the shared .container/.page absolute-positioning
+// scheme from src/styles/layout.scss (that scheme assumes one
+// full-viewport screen per page, which doesn't fit a page with multiple
+// scrollable sections) — it flows normally instead.
+.home {
+  padding-top: 96px; // clears the fixed NavBar (src/components/nav-bar)
+  padding-bottom: 80px; // clears the fixed footer bar
+  padding-left: var(--space-5);
+  padding-right: var(--space-5);
+}
+
+.hero {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+// The name reveal target — see home-view.tsx for the SplitText +
+// variable-font-axis animation that runs on this element. --soft/--wonk
+// default to 0 (normal Fraunces) so the heading still renders correctly
+// if JS never runs (no-JS fallback, or the reduced-motion branch, which
+// also sets these to 0 explicitly).
+.heroName {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-5);
+  line-height: 1.05;
+  color: var(--text);
+  font-variation-settings: 'SOFT' var(--soft, 0), 'WONK' var(--wonk, 0);
+}
+
+.heroTagline {
+  margin: var(--space-4) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.ctaButton {
+  display: inline-block;
+  margin-top: var(--space-6);
+  padding: var(--space-3) var(--space-5);
+  width: fit-content;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  color: var(--accent);
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition:
+    background var(--dur-fast) var(--ease-out-expo),
+    color var(--dur-fast) var(--ease-out-expo);
+
+  &:hover,
+  &:focus-visible {
+    background: var(--accent);
+    color: var(--bg);
+  }
+}
+
+// JS-only marker class — home-view.tsx queries elements carrying this
+// class to fade them in after the hero name reveal finishes.
+// `will-change` is the only declaration: it hints the browser to prepare
+// a compositing layer for the upcoming opacity/transform tween, and
+// unlike a layout property (an earlier version used `display: contents`
+// here) it cannot fight whatever box model .heroTagline/.ctaButton
+// already declare when this class is combined with them.
+.fadeIn {
+  will-change: opacity, transform;
+}
+
+.statement {
+  max-width: 42rem;
+  margin: var(--space-10) auto;
+
+  p {
+    font-family: var(--font-body);
+    font-size: var(--step-1);
+    line-height: 1.6;
+    color: var(--text);
+  }
+}
+
+.workTeaser {
+  max-width: 42rem;
+  margin: var(--space-9) auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+
+  p {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--step--1);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+}
+
+.workLink {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  color: var(--accent);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out-expo);
+
+  &:hover,
+  &:focus-visible {
+    color: var(--accent-soft);
+  }
+}
+
+.closingCta {
+  max-width: 42rem;
+  margin: var(--space-10) auto var(--space-8);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    font-weight: 400;
+    color: var(--text);
+  }
+}
+
+@media (min-width: 768px) {
+  .home {
+    padding-left: var(--space-8);
+    padding-right: var(--space-8);
+  }
+
+  .hero {
+    min-height: 85vh;
+  }
+}
