@@ -997,3 +997,26 @@
       layout scheme until their own sub-phases.
     **Phase 3.2 is functionally complete**, pending Svei's visual review
     of the live animation and his sign-off on the draft positioning copy.
+70. **Follow-up fix, same session: the magnetic-button hover bug Svei
+    caught by hand ("hovering to Contact Me you remove the Contact Me").**
+    `MagneticLink` (built in 3.1, first used on Home's CTA in 3.2) called
+    `getBoundingClientRect()` fresh on every `pointermove` — but that
+    reflects the element's current VISUAL position, transform included,
+    not its original layout position. Once GSAP had already shifted the
+    button toward the cursor on one frame, the next frame measured the
+    already-shifted box, computed a new pull offset from THAT box's
+    center, and fed it back in: a compounding loop that flung the button
+    (and its "Contact Me" text) off toward a corner instead of settling
+    near the cursor. Confirmed visually once the Claude Browser tool's
+    pane (stuck mid-3.2, see entry 69) started compositing again this
+    turn. Fixed by measuring the bounding rect once on `pointerenter`
+    (while the element is still untransformed) and reusing that cached
+    rect for every move until `pointerleave`, instead of re-measuring
+    mid-transform. Re-verified in the browser: hovered and jiggled the
+    cursor across the button repeatedly, it stayed put and settled back
+    to `matrix(1,0,0,1,0,0)` (identity — no drift) on pointer leave, zero
+    console errors. Also used this working browser session to visually
+    confirm the rest of 3.2's hero (the SplitText/variable-axis name
+    reveal, single-line layout, boxed CTA, custom cursor ring) actually
+    renders correctly — closing the one open item from entry 69 (the
+    animation was structurally verified but not watched running).

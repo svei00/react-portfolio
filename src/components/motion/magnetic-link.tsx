@@ -34,11 +34,28 @@ export default function MagneticLink({ href, children, className }: MagneticLink
       },
     })
 
+    // getBoundingClientRect() reflects the element's current VISUAL
+    // position, transform included — not its original layout position.
+    // The first version of this component called it fresh on every
+    // pointermove, so once GSAP had already shifted the button toward the
+    // cursor, the next move measured that shifted box, computed a new
+    // offset from ITS center, and fed that back in — a compounding loop
+    // that flung the button (and its text) off toward a corner instead of
+    // settling near the cursor. Real bug, caught by Svei hovering the
+    // Home CTA. Fixed by measuring the rect once on pointerenter, while
+    // the element is still untransformed, and reusing that cached rect
+    // for every move until the pointer leaves.
+    let restBounds: DOMRect | null = null
+
+    function handlePointerEnter() {
+      if (!element) return
+      restBounds = element.getBoundingClientRect()
+    }
+
     function handlePointerMove(event: PointerEvent) {
-      if (!isFullMotion || !element) return
-      const bounds = element.getBoundingClientRect()
-      const relativeX = event.clientX - bounds.left - bounds.width / 2
-      const relativeY = event.clientY - bounds.top - bounds.height / 2
+      if (!isFullMotion || !restBounds) return
+      const relativeX = event.clientX - restBounds.left - restBounds.width / 2
+      const relativeY = event.clientY - restBounds.top - restBounds.height / 2
 
       // Pull is a fraction of the cursor's offset from center, not a 1:1
       // follow — this is what keeps the effect feeling magnetic rather
@@ -52,13 +69,16 @@ export default function MagneticLink({ href, children, className }: MagneticLink
     }
 
     function handlePointerLeave() {
+      restBounds = null
       gsap.to(element, { x: 0, y: 0, duration: 0.4, ease: 'elastic.out(1, 0.4)' })
     }
 
+    element.addEventListener('pointerenter', handlePointerEnter)
     element.addEventListener('pointermove', handlePointerMove)
     element.addEventListener('pointerleave', handlePointerLeave)
 
     return () => {
+      element.removeEventListener('pointerenter', handlePointerEnter)
       element.removeEventListener('pointermove', handlePointerMove)
       element.removeEventListener('pointerleave', handlePointerLeave)
     }
