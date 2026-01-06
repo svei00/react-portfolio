@@ -1,0 +1,193 @@
+@use '@/styles/tokens' as *;
+
+// Mobile-first, normal document flow — same reasoning as Home
+// (src/components/home/home.module.scss): a page with a real content
+// grid doesn't fit the old .container/.page absolute-positioning scheme.
+
+// ---- Index -------------------------------------------------------------
+.indexPage {
+  padding-top: 96px; // clears the fixed NavBar
+  padding-bottom: 80px; // clears the fixed footer bar
+  padding-left: var(--space-5);
+  padding-right: var(--space-5);
+}
+
+.indexHeading {
+  margin: 0 0 var(--space-7);
+  font-family: var(--font-display);
+  font-size: var(--step-4);
+  font-weight: 400;
+  color: var(--text);
+}
+
+.emptyState {
+  font-family: var(--font-body);
+  color: var(--muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+.tile {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.tileImageWrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--surface);
+}
+
+.tileImage {
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out-expo);
+
+  .tile:hover &,
+  .tile:focus-visible & {
+    transform: scale(1.04);
+  }
+}
+
+.tileCaption {
+  margin-top: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.tileTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  color: var(--text);
+}
+
+.tileTechStack {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+// ---- Detail --------------------------------------------------------
+.detailPage {
+  padding-top: 96px;
+  padding-bottom: 80px;
+  padding-left: var(--space-5);
+  padding-right: var(--space-5);
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.backLink {
+  display: inline-block;
+  margin-bottom: var(--space-5);
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--accent);
+  }
+}
+
+.detailImageWrap {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--surface);
+}
+
+.detailImage {
+  object-fit: cover;
+}
+
+.detailBody {
+  margin-top: var(--space-7);
+}
+
+.detailTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-4);
+  font-weight: 400;
+  color: var(--text);
+}
+
+.detailSummary {
+  margin: var(--space-3) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--step-1);
+  color: var(--muted);
+}
+
+.detailDescription {
+  margin: var(--space-5) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--text);
+  max-width: 42rem;
+}
+
+.techStackList {
+  margin: var(--space-6) 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+
+  li {
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid var(--muted);
+    border-radius: 999px;
+    font-family: var(--font-body);
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+}
+
+.detailLinks {
+  margin-top: var(--space-6);
+  display: flex;
+  gap: var(--space-5);
+}
+
+.detailLink {
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--accent-soft);
+  }
+}
+
+@media (min-width: 768px) {
+  .indexPage,
+  .detailPage {
+    padding-left: var(--space-8);
+    padding-right: var(--space-8);
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

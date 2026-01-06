@@ -147,7 +147,7 @@ const HomeView = () => {
 
       <section ref={workTeaserRef} className={styles.workTeaser}>
         <p>Selected work</p>
-        <MagneticLink href="/portfolio" className={styles.workLink}>
+        <MagneticLink href="/work" className={styles.workLink}>
           View my work →
         </MagneticLink>
       </section>

@@ -1020,3 +1020,70 @@
     reveal, single-line layout, boxed CTA, custom cursor ring) actually
     renders correctly — closing the one open item from entry 69 (the
     animation was structurally verified but not watched running).
+71. **Sub-phase 3.3 (Work index + case studies) implemented, Sonnet.**
+    Per phase-3-plan.md §3.3.
+    - **Route rename**: `/portfolio` → `/work`. Old route/component deleted
+      outright (`src/app/portfolio/`, `src/components/portfolio/`); a
+      permanent (308) redirect added in `next.config.ts` so no existing
+      link breaks — verified with `curl -I`. `sitemap.ts` updated to list
+      `/work` plus one entry per project's detail page (previously just
+      the 5 static routes). Nav link and Home's work-teaser link both
+      repointed from `/portfolio` to `/work`.
+    - **`src/content/projects.json` restructured to mirror the Phase 4
+      Sanity `project` schema exactly** (handoff.md §9: title, slug,
+      summary, description, coverImage+alt, gallery, techStack, liveUrl,
+      repoUrl, featured, orderRank) — `src/types/project.ts` updated to
+      match. `description` stays a plain string for now rather than faking
+      Portable Text blocks; Phase 4 is the only phase that should
+      introduce that shape, once a real Portable Text renderer exists.
+      Doing this restructure now, while there's only one project and no
+      component logic to break, means Phase 4 can be a data-source swap —
+      GROQ instead of this JSON file — with the Work components
+      untouched.
+    - **New index** (`src/components/work/work-index-view.tsx`): large
+      image tiles on a generous grid, hover reveal (CSS-only scale
+      transform, no JS) of title/tech-stack, no icons — the restrained
+      register Svei pointed at on cuberto.com's project showcase, not the
+      Dennis reference's bigger visual weight.
+    - **New detail route** `/work/[slug]`
+      (`src/components/work/work-detail-view.tsx`), statically generated
+      via `generateStaticParams` from the JSON file. Entered via a
+      **shared-element `<ViewTransition>` morph**: the cover image on the
+      index tile and the hero image on the detail page share the same
+      `name` (`work-image-${slug}`), so React morphs the same visual
+      element across the navigation instead of swapping pages instantly —
+      the Step 1 pattern from the bundled Next 16 docs
+      (`node_modules/next/dist/docs/01-app/02-guides/view-transitions.md`),
+      the same mechanism entry 66 already confirmed works in this
+      toolchain. This is the concrete answer to the continuity effect Svei
+      liked on Dennis Snellenberg's work page.
+    - **Retired from Portfolio/Work** (only from this page — still used by
+      About/Contact/Skills until their own sub-phases): `AnimatedLetters`,
+      `PacmanLoader`. Both components themselves stay in the codebase.
+    - **Open item, unresolved, needs Svei**: the index currently holds
+      **one** project (Excel Solutions). phase-3-plan.md §3.3 flags this
+      explicitly — a work page with one tile undercuts the whole story.
+      He needs to supply 2-4 more real projects (title, one-line summary,
+      what he built, stack, link, one image each) before this sub-phase
+      can be considered content-complete; the code/infrastructure side is
+      done and takes any number of additional entries with no further
+      changes.
+    - Verification: `next build` clean — `/work` and `/work/excel-
+      solutions` both statically generated; `curl -I /portfolio` confirmed
+      a real `308 Permanent Redirect` to `/work`; in the browser, zero
+      console messages of any kind (not even the usual harmless preload
+      warnings) on both the index and detail pages; clicking the project
+      tile navigated correctly to `/work/excel-solutions` with the right
+      title, and all detail-page content (summary, description, tech
+      stack pills, conditional live/repo links — `repoUrl` is `null` for
+      this project and correctly produced no "View source" link)
+      rendered right. **Did not get a screenshot of the shared-element
+      morph actually playing this session** — the same intermittent
+      Browser-tool pane-compositing issue from entries 69/70 recurred;
+      Svei should glance at the `/work` → `/work/excel-solutions`
+      transition himself to confirm the morph reads the way entry 66
+      intended. `yarn audit`: **0 vulnerabilities** (129 packages,
+      unchanged — no new dependencies).
+    **Phase 3.3 is functionally complete**, blocked on Svei's content
+    (additional projects) to be fully done, and pending his visual check
+    of the morph transition.

@@ -1,8 +1,18 @@
 [
   {
-    "name": "Excel Solutions",
-    "description": "React, JSX, Tailwind, Jest, Git",
-    "image": "/portfolio/1/LogoExcelTrim.png",
-    "url": "https://www.excelsolutionsv.com"
+    "title": "Excel Solutions",
+    "slug": "excel-solutions",
+    "summary": "A React web app for a small accounting-automation practice.",
+    "description": "Excel Solutions is the public site for Ivan's own accounting-automation practice, built with React and styled with Tailwind. It covers the front end for a business built on the same idea as this portfolio's Excel Lab section — real engineering practice applied to spreadsheet work accountants normally do by hand.",
+    "coverImage": {
+      "src": "/portfolio/1/LogoExcelTrim.png",
+      "alt": "Excel Solutions logo"
+    },
+    "gallery": [],
+    "techStack": ["React", "JSX", "Tailwind", "Jest", "Git"],
+    "liveUrl": "https://www.excelsolutionsv.com",
+    "repoUrl": null,
+    "featured": true,
+    "orderRank": 1
   }
 ]

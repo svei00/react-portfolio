@@ -11,13 +11,13 @@ import styles from './nav-bar.module.scss'
 // Replaces the old icon sidebar (Phase 3.1 — phase-3-plan.md §3.1 step 1).
 // Text links only, no icons: Svei specifically dislikes the oversized
 // icons on the Dennis Snellenberg reference this design otherwise takes
-// cues from. Route labels stay the current IA (Home/About/Portfolio/
-// Skills/Contact) — the /work rename and the Skills-into-About merge are
-// separate sub-phases (3.3 and 3.4) and should not be pulled forward here.
+// cues from. /portfolio became /work in Phase 3.3 (permanent redirect
+// lives in next.config.ts); the Skills-into-About merge is still a
+// separate sub-phase (3.4) and should not be pulled forward here.
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
-  { href: '/portfolio', label: 'Work' },
+  { href: '/work', label: 'Work' },
   { href: '/skills', label: 'Skills' },
   { href: '/contact', label: 'Contact' },
 ]

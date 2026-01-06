@@ -24,6 +24,18 @@ const CSP_DIRECTIVES = [
 ].join('; ')
 
 const nextConfig: NextConfig = {
+  // /portfolio became /work in Phase 3.3 — permanent redirect so no
+  // existing external link (search results, anything Svei shared before
+  // the rename) breaks.
+  async redirects() {
+    return [
+      {
+        source: '/portfolio',
+        destination: '/work',
+        permanent: true,
+      },
+    ]
+  },
   async headers() {
     return [
       {
