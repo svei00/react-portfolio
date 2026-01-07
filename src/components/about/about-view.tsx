@@ -32,8 +32,13 @@ const SKILL_GROUPS = [
     skills: ['Node.js', 'Express.js', 'Git', 'NPM', 'Webpack', 'Jest'],
   },
   {
-    label: 'Spreadsheets',
-    skills: ['Microsoft Excel'],
+    // Kept separate from "Languages" on purpose, per Svei's own concern:
+    // this portfolio site is TypeScript/Next.js, not Python, so Python
+    // can't sit in the same bucket as JS/TS without implying it was used
+    // to build this. It's real, just used elsewhere — data analysis work
+    // and the CFDI-App project (see despacho-contable-mx context).
+    label: 'Data & Automation',
+    skills: ['Python', 'Microsoft Excel'],
   },
 ]
 

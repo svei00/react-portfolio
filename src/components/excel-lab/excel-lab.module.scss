@@ -1,0 +1,116 @@
+@use '@/styles/tokens' as *;
+
+// Mobile-first, normal document flow — same pattern as Home/Work/About.
+.excelLabPage {
+  padding-top: 96px;
+  padding-bottom: 80px;
+  padding-left: var(--space-5);
+  padding-right: var(--space-5);
+}
+
+.intro {
+  max-width: 42rem;
+  margin: 0 auto var(--space-10);
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-4);
+  font-weight: 400;
+  color: var(--text);
+}
+
+.framingLine {
+  margin: var(--space-3) 0 var(--space-8);
+  font-family: var(--font-body);
+  font-size: var(--step-1);
+  color: var(--muted);
+}
+
+// Explicit min-height matters here: the pinned-scroll JS (excel-lab-view.tsx)
+// switches these steps from normal document flow to `position: absolute`
+// so they can crossfade in the same spot. Without a min-height on their
+// container, that switch would collapse it to 0px the instant JS runs,
+// causing a visible layout jump. The reduced-motion path never triggers
+// that switch, so this min-height just adds a little breathing room there
+// — it doesn't hurt the static, stacked reading order.
+.practiceSteps {
+  min-height: 10rem;
+}
+
+.practiceStep {
+  padding: var(--space-5) 0;
+  border-top: 1px solid rgba(185, 192, 201, 0.15); // var(--muted) at low opacity
+
+  &:first-child {
+    border-top: none;
+  }
+}
+
+.practiceLabel {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  color: var(--accent);
+}
+
+.practiceDetail {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.tile {
+  padding: var(--space-6);
+  border: 1px solid rgba(185, 192, 201, 0.2); // var(--muted) at low opacity
+  border-radius: 4px;
+}
+
+.tileBadge {
+  display: inline-block;
+  margin: 0 0 var(--space-3);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.tileTitle {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  color: var(--text);
+}
+
+.tileDescription {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  color: var(--muted);
+}
+
+@media (min-width: 768px) {
+  .excelLabPage {
+    padding-left: var(--space-8);
+    padding-right: var(--space-8);
+  }
+
+  .tiles {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

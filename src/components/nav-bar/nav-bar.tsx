@@ -16,8 +16,9 @@ import styles from './nav-bar.module.scss'
 // next.config.ts.
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
   { href: '/work', label: 'Work' },
+  { href: '/excel-lab', label: 'Excel Lab' },
+  { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ]
 

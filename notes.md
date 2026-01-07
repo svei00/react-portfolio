@@ -1195,3 +1195,81 @@
       `prop-types` and its own small dependency tree).
     **Phase 3.4 is functionally complete**, pending Svei's approval of the
     draft copy and a real headshot file.
+74. **Follow-up to sub-phase 3.4, same session: headshot guidance, Python
+    skill-honesty fix, and Work-image spec — all from a live conversation
+    with Svei, recorded in phase-3-plan.md §13 (new addendum section).**
+    - **Headshot**: Svei asked for an AI image-generation prompt to
+      create his headshot from scratch. Corrected the premise instead of
+      just answering it — a text-only prompt to Gemini/ChatGPT cannot
+      actually produce a photo that looks like a specific real person;
+      that only works from an uploaded reference photo. Recommended he
+      take 2-3 real photos himself (front + two 3/4 turns, eye-level, no
+      "bottom" angle — unflattering and not how headshots are shot) and
+      then use Gemini/ChatGPT's image-editing mode (upload + prompt) to
+      professionally relight/retouch the best one, keeping his actual
+      face unchanged. The site only needs one final image; the multiple
+      angles are just to have options.
+    - **Python skill-honesty fix**: Svei flagged, unprompted, that listing
+      Python under "Languages" in About's skills (next to JS/TS, the
+      actual stack this portfolio is built in) would misrepresent what
+      this site is built with — Python's real home is his data-analysis/
+      Excel-automation work and the CFDI-App project. Split it into its
+      own "Data & Automation" group (Python + Microsoft Excel) in
+      `about-view.tsx`'s `SKILL_GROUPS`, separate from "Languages".
+      `next build` re-verified clean after the change.
+    - **Work images**: confirmed with Svei that (a) he will pull the old
+      lost projects back from Firestore (see entry 72's Firebase lead —
+      his call to check before that data ages out or the project gets
+      cleaned up), (b) he needs to supply real screenshots himself for
+      every project including desktop apps and Python tools — Claude has
+      no way to generate or persist real image assets into this repo, and
+      (c) Phase 4's Sanity schema must carry a real `description` on
+      every image field (expected aspect ratio + what it should show), so
+      content entry in Sanity Studio is self-documenting rather than
+      needing a separate reference doc. Gave Svei the interim spec
+      directly (cover 4:3, detail hero 16:9, optional 2-4 gallery shots,
+      any ratio) so he has something concrete to shoot for right now,
+      before Phase 4 exists. All of this recorded in phase-3-plan.md §13
+      rather than only in this log, since it's a requirement Phase 4's
+      implementer needs to see directly, not dig out of chat history.
+    `yarn audit`: still 0 vulnerabilities (124 packages, unchanged).
+75. **Sub-phase 3.5 (Excel Lab designed placeholder) implemented,
+    Sonnet.** Per phase-3-plan.md §3.5 and handoff.md §10.
+    - New route `/excel-lab`, added to nav (Home → Work → Excel Lab →
+      About → Contact, matching the target IA in phase-3-plan.md §4) and
+      to `sitemap.ts`.
+    - **This is where the site's one allowed pinned ScrollTrigger sequence
+      lives** (handoff.md §8.3 permits exactly one, site-wide; every other
+      sub-phase's scroll reveals are plain opacity/y tweens, not pins).
+      The intro pins in place while three engineering-practice steps
+      (Versioning, Testing, Modular design — the handoff §10 framing line,
+      "a software engineer applying real engineering practice to
+      spreadsheets") crossfade in sequence, scrubbed directly to scroll
+      position rather than running on a timer.
+    - **Reduced-motion fallback is structural, not a skipped animation**:
+      all three steps exist in normal, stacked document flow in the JSX
+      from the start. Only the full-motion branch converts them to
+      `position: absolute` at runtime (so they can overlap for the
+      crossfade) — `gsap.context`'s `revert()` automatically undoes that
+      inline-style change if the media query ever flips. A reduced-motion
+      visitor never sees a pin at all; they scroll past three
+      already-visible steps like any other section. Same
+      `registerMotion()` gate as every other sub-phase, so this
+      automatically benefits from the 3.1 matchMedia fix (entry 68/69).
+    - Below the intro: three honestly-labeled "Coming soon" tiles (Tax
+      automation, Data pipelines, Reporting tools) — no fake content, no
+      fake links, matching the handoff §7 Phase 3 requirement that this
+      be "a designed placeholder... not a gap." Real case studies land in
+      Phase 5, authored in Sanity.
+    - Verification: `next build` clean; zero console errors in the
+      browser; confirmed ScrollTrigger actually created a real
+      `.pin-spacer` element (not just configured — actually pinned);
+      scrolled through the sequence via `window.scrollTo` and confirmed
+      via `innerText` that the crossfade progressed correctly (Versioning
+      → Testing mid-scroll, reaching Modular design further down) and
+      that the pin released cleanly, exposing the three coming-soon tiles
+      below; confirmed all three step elements exist in the DOM
+      regardless of motion branch (the reduced-motion structural
+      guarantee above). `yarn audit`: **0 vulnerabilities** (124
+      packages, unchanged — no new dependencies).
+    **Phase 3.5 is functionally complete.**

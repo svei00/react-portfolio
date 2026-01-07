@@ -525,3 +525,34 @@ phase-3-7-retire-deps-brand-marks-accessibility-audit
 
 Return to Opus if a sub-phase turns out to need a real design decision this plan
 did not settle.
+
+---
+
+## 13. Addendum — image spec for content, and Phase 4 CMS note
+
+Added 2026-08-26, mid-3.4/3.5, from a live conversation with Svei.
+
+**Work project images (until Phase 4 replaces JSON with Sanity):** every
+project needs a `coverImage` (4:3, the single best representative shot) and
+gets a matching detail hero (16:9, can be the same shot). `gallery[]` is
+optional, any aspect ratio, 2-4 supporting shots. Applies uniformly to web
+projects, desktop apps, and Python tools — a clean screenshot of the main
+window/output for the latter two.
+
+**Phase 4 Sanity schema requirement (do not lose this):** every image field
+on the `project` and `excelPiece` schemas must carry a real `description`
+in its `defineField` config explaining what the image should show and its
+expected aspect ratio (e.g. "Cover image, 4:3, the single best
+representative shot of the project") — visible to whoever is filling out
+Sanity Studio, so the content-entry step is self-documenting instead of
+requiring a separate reference doc. This was Svei's own request: "help me
+figure out what kind of images" should live in the CMS, at the point of
+entry, not just in project docs like this one.
+
+**Skill honesty note:** Python appears in About's skills as its own "Data &
+Automation" group, separate from "Languages" (JS/TS/PHP/SQL) — deliberately,
+since this portfolio site itself is TypeScript/Next.js, and Python must
+never read as if it were used to build it. Python's real home is data
+analysis work and the CFDI-App project. Any skill added in the future needs
+the same honesty check: which bucket does it honestly belong to, not just
+"is it true I know this."

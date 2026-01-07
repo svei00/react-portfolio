@@ -3,7 +3,7 @@ import projects from '@/content/projects.json'
 
 const BASE_URL = 'https://portfolio.excelsolutionsv.com'
 
-const STATIC_ROUTES = ['/', '/about', '/work', '/contact']
+const STATIC_ROUTES = ['/', '/about', '/work', '/excel-lab', '/contact']
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticEntries = STATIC_ROUTES.map((route) => ({
