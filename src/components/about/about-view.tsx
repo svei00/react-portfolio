@@ -1,75 +1,97 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCss3, faGitAlt, faHtml5, faJsSquare, faNode, faReact } from '@fortawesome/free-brands-svg-icons'
-import AnimatedLetters from '@/components/animated-letters/animated-letters'
-import PacmanLoader from '@/components/pacman-loader/pacman-loader'
-import './about.scss'
+import { useState } from 'react'
+import Image from 'next/image'
+import styles from './about.module.scss'
 
-const TITLE_LETTERS = ['A', 'b', 'o', 'u', 't', ' ', 'M', 'e']
+// About rewrite (phase-3-plan.md §3.4): retires AnimatedLetters,
+// PacmanLoader, and the rotating CSS cube — all three are named in
+// handoff.md's Phase 3 exit criteria as tutorial artifacts that must not
+// survive the redesign. Skills folds in here as typeset groups (below),
+// replacing the blinking tag cloud that used to be its own /skills page.
+//
+// **Copy status: DRAFT, not yet approved by Svei** — same
+// copy-approval gate as Home's positioning statement (notes.md entry 69).
+// The personal facts below (family, outdoors, travel, Inland Empire
+// California) carry forward from the pre-Phase-3 About copy Svei already
+// published; nothing new has been invented. Bilingual English/Spanish is
+// a real professional trait, not filler — it's why a chunk of his Excel
+// Solutions work covers CFDI/SAT workflows written for Mexican
+// accountants (see the excel-solutions entry in src/content/projects.json).
+const SKILL_GROUPS = [
+  {
+    label: 'Languages',
+    skills: ['JavaScript', 'TypeScript', 'PHP', 'SQL'],
+  },
+  {
+    label: 'Frontend',
+    skills: ['React', 'React Native', 'HTML5', 'CSS3', 'TailwindCSS', 'Bootstrap'],
+  },
+  {
+    label: 'Backend & Tools',
+    skills: ['Node.js', 'Express.js', 'Git', 'NPM', 'Webpack', 'Jest'],
+  },
+  {
+    label: 'Spreadsheets',
+    skills: ['Microsoft Excel'],
+  },
+]
 
 const AboutView = () => {
-  const [letterClass, setLetterClass] = useState('text-animate')
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLetterClass('text-animate-hover')
-    }, 3000)
-
-    return () => {
-      clearTimeout(timer)
-    }
-  }, [])
+  // No real headshot exists in this repo yet (the only face photo it
+  // ever had, IvanEVillanueva.png, was deleted in Phase 3.1 as dead
+  // weight from the old sidebar sub-logo — before this face-photo slot
+  // existed). Rather than let a 404'd <Image> show a broken-image icon,
+  // this hides the image on error and lets the styled placeholder frame
+  // show through until Svei supplies a real file at this path.
+  const [imageFailed, setImageFailed] = useState(false)
 
   return (
-    <>
-      <div className="container about-page">
-        <div className="text-zone">
-          <h1>
-            <AnimatedLetters letterClass={letterClass} strArray={TITLE_LETTERS} idx={15} />
-          </h1>
-          <p>
-            I&apos;m a hardworking and ambitious person who is looking for a job
-            where I can apply my skills fully in an IT company and
-            work with the latest technologies on challenging projects.
-          </p>
-          <p>
-            I&apos;m a confident person with strong problem-solving skills
-            who can learn any new technology easily.
-          </p>
-          <p>
-            I&apos;m a tech obsessed person who also enjoys the outdoors, I like to
-            take a walk through the woods, share time with my daughter, son
-            and wife. We love to travel.
-          </p>
+    <div className={styles.aboutPage}>
+      <div className={styles.intro}>
+        <div className={styles.photoFrame}>
+          {!imageFailed && (
+            <Image
+              src="/about/ivan-headshot.jpg"
+              alt="Ivan E. Villanueva"
+              fill
+              sizes="(max-width: 768px) 100vw, 40vw"
+              className={styles.photo}
+              onError={() => setImageFailed(true)}
+            />
+          )}
         </div>
 
-        <div className="stage-cube-cont">
-          <div className="cubespinner">
-            <div className="face1">
-              <FontAwesomeIcon icon={faNode} color="#339933" />
-            </div>
-            <div className="face2">
-              <FontAwesomeIcon icon={faHtml5} color="#F06529" />
-            </div>
-            <div className="face3">
-              <FontAwesomeIcon icon={faCss3} color="#28A4D9" />
-            </div>
-            <div className="face4">
-              <FontAwesomeIcon icon={faJsSquare} color="#EFD81D" />
-            </div>
-            <div className="face5">
-              <FontAwesomeIcon icon={faReact} color="#5ED4F4" />
-            </div>
-            <div className="face6">
-              <FontAwesomeIcon icon={faGitAlt} color="#EC4D28 " />
-            </div>
-          </div>
+        <div className={styles.introText}>
+          <h1 className={styles.heading}>About</h1>
+          <p>
+            I&apos;m a fullstack software engineer based in the Inland Empire, California — and
+            for years before that, I was the person accountants called when a spreadsheet needed
+            to do more than a spreadsheet is supposed to do.
+          </p>
+          <p>
+            I work fluently in English and Spanish, which is also why a chunk of my Excel work
+            covers CFDI and SAT workflows written specifically for Mexican accountants.
+          </p>
+          <p>
+            Outside of code, I&apos;m a husband and father who&apos;s happiest on a walk through
+            the woods or planning the next family trip.
+          </p>
         </div>
       </div>
-      <PacmanLoader />
-    </>
+
+      <div className={styles.skills}>
+        <h2 className={styles.skillsHeading}>Skills</h2>
+        <div className={styles.skillGroups}>
+          {SKILL_GROUPS.map((group) => (
+            <div key={group.label} className={styles.skillGroup}>
+              <p className={styles.skillGroupLabel}>{group.label}</p>
+              <p className={styles.skillGroupList}>{group.skills.join(' · ')}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   )
 }
 

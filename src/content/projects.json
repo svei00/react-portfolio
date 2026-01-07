@@ -2,17 +2,33 @@
   {
     "title": "Excel Solutions",
     "slug": "excel-solutions",
-    "summary": "A React web app for a small accounting-automation practice.",
-    "description": "Excel Solutions is the public site for Ivan's own accounting-automation practice, built with React and styled with Tailwind. It covers the front end for a business built on the same idea as this portfolio's Excel Lab section — real engineering practice applied to spreadsheet work accountants normally do by hand.",
+    "summary": "A bilingual Excel tutorials and automation blog for accountants.",
+    "description": "Excel Solutions publishes step-by-step tutorials on formulas, automation, and data analysis for accountants and professionals, including CFDI and SAT workflows written specifically for Mexican accountants. Content spans automation, security, data analysis, data entry, visualization, and Python. Same throughline as this portfolio's Excel Lab section: real engineering practice applied to spreadsheet problems accountants normally solve by hand.",
     "coverImage": {
       "src": "/portfolio/1/LogoExcelTrim.png",
       "alt": "Excel Solutions logo"
     },
     "gallery": [],
-    "techStack": ["React", "JSX", "Tailwind", "Jest", "Git"],
+    "techStack": ["React", "Vite", "Google Analytics", "AdSense"],
     "liveUrl": "https://www.excelsolutionsv.com",
     "repoUrl": null,
     "featured": true,
     "orderRank": 1
+  },
+  {
+    "title": "Pura Vida Vallarta Tours",
+    "slug": "pura-vida-vallarta",
+    "summary": "A bilingual tour-curation site for Puerto Vallarta and Bahia de Banderas.",
+    "description": "Pura Vida Vallarta Tours curates the best tours and experiences around Bahia de Banderas so visitors do not have to guess which operator is worth booking. Bilingual (Spanish/English), video previews for each tour, and WhatsApp-based booking instead of a traditional checkout flow, matching how the target audience actually books travel in the region.",
+    "coverImage": {
+      "src": "/portfolio/2/pura-vida-vallarta-cover.jpg",
+      "alt": "Pura Vida Vallarta Tours homepage hero"
+    },
+    "gallery": [],
+    "techStack": ["Next.js", "React"],
+    "liveUrl": "https://pura-vida-vallarta.com",
+    "repoUrl": null,
+    "featured": true,
+    "orderRank": 2
   }
 ]

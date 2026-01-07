@@ -1,0 +1,115 @@
+@use '@/styles/tokens' as *;
+
+// Mobile-first, normal document flow — same reasoning as Home and Work
+// (they don't fit the old .container/.page absolute-positioning scheme
+// once a page has more than one screen's worth of content).
+.aboutPage {
+  padding-top: 96px;
+  padding-bottom: 80px;
+  padding-left: var(--space-5);
+  padding-right: var(--space-5);
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.photoFrame {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  max-width: 20rem;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.photo {
+  object-fit: cover;
+}
+
+.introText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 38rem;
+
+  p {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    line-height: 1.6;
+    color: var(--text);
+  }
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-4);
+  font-weight: 400;
+  color: var(--text);
+}
+
+.skills {
+  margin-top: var(--space-9);
+}
+
+.skillsHeading {
+  margin: 0 0 var(--space-5);
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 400;
+  color: var(--text);
+}
+
+.skillGroups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 38rem;
+}
+
+.skillGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid rgba(185, 192, 201, 0.15); // var(--muted) at low opacity
+}
+
+.skillGroupLabel {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.skillGroupList {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  color: var(--muted);
+}
+
+@media (min-width: 768px) {
+  .aboutPage {
+    padding-left: var(--space-8);
+    padding-right: var(--space-8);
+  }
+
+  .intro {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--space-8);
+  }
+
+  .photoFrame {
+    max-width: 22rem;
+    flex-shrink: 0;
+  }
+}

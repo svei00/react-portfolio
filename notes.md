@@ -1087,3 +1087,111 @@
     **Phase 3.3 is functionally complete**, blocked on Svei's content
     (additional projects) to be fully done, and pending his visual check
     of the morph transition.
+72. **Follow-up to sub-phase 3.3, same session: the "one project"
+    open item partially resolved, and a real Firebase data-loss lead
+    surfaced.** Svei mentioned the live site used to show several
+    projects that disappeared "once you messed up with Firebase." Checked
+    the record: notes.md entry 25 (Phase 1) confirms `projects.json` was
+    seeded with only "the one confirmed-real entry" when Firebase was
+    removed, and handoff.md finding S2's remediation ("after migration,
+    disable/delete the Firebase project") was never confirmed done —
+    Firestore rules were locked to deny-all (entry 24), but **the Firebase
+    project `portfolio-dashboard-c2761` itself was never confirmed
+    deleted**. Told Svei directly: the old project entries may still be
+    sitting in that Firestore database, recoverable from the Firebase
+    console, and he should check there before doing anything further to
+    that project.
+    - Browsed both of Svei's real live sites to draft accurate entries
+      rather than inventing descriptions — and caught that the entry
+      written in 3.3 for Excel Solutions was already wrong: it described
+      "a public site for an accounting-automation practice," but the live
+      site (excelsolutionsv.com) is actually a bilingual Excel-tutorials
+      blog (formulas, automation, CFDI/SAT workflows for Mexican
+      accountants; categories include Automation, Data Analysis, Data
+      Entry, Python) monetized with Google AdSense — built with React on
+      Vite (confirmed via the `assets/index-[hash].js` bundle naming
+      pattern, not React+Tailwind+Jest as the original pre-Firebase-
+      removal data claimed). Corrected the entry to match reality.
+    - Added a second real entry: **Pura Vida Vallarta Tours**
+      (pura-vida-vallarta.com) — a bilingual (ES/EN) tour-curation site
+      for Puerto Vallarta/Bahía de Banderas, WhatsApp-based booking, 6
+      curated tours with video previews. Confirmed built on Next.js via
+      its `_next/static` bundle paths and a Turbopack-named chunk.
+    - **Open item, needs Svei**: `coverImage.src` for the new Pura Vida
+      entry points at `/portfolio/2/pura-vida-vallarta-cover.jpg`, which
+      does not exist yet — Next does not validate local public-path
+      image existence at build time (confirmed: `next build` still
+      compiles clean), so this will 404 in the browser until Svei adds a
+      real screenshot or logo asset at that path. Both descriptions above
+      are drafts inferred from the live sites, not from Svei directly —
+      same copy-approval gate as Home's positioning statement (entry 69)
+      and About's upcoming rewrite (3.4): **treat as draft, not final,
+      until he confirms the framing is accurate.** He also mentioned
+      having "some others" projects to add — still open, no content
+      supplied yet for those.
+73. **Sub-phase 3.4 (About rewrite + retire /skills) implemented,
+    Sonnet.** Per phase-3-plan.md §3.4.
+    - **`/skills` deleted entirely** — route, component, and
+      `react-tagcloud`/`@types/react-tagcloud` uninstalled. Permanent
+      (308) redirect `/skills → /about` added in `next.config.ts`,
+      verified with `curl -I`. `sitemap.ts` and the nav both updated (nav
+      now lists exactly Home/About/Work/Contact — confirmed via
+      `read_page` at desktop width). Skills content folds into About as
+      four typeset groups (Languages, Frontend, Backend & Tools,
+      Spreadsheets) — same skill values Svei's original list already had,
+      just regrouped and no longer a blinking, non-reduced-motion-aware
+      tag cloud.
+    - **Retired from About** (only from this page — Contact still uses
+      them until 3.6): `AnimatedLetters`, `PacmanLoader`, and **the
+      rotating CSS cube** (`.stage-cube-cont`/`.cubespinner`) — all three
+      named in handoff.md's Phase 3 exit criteria as tutorial artifacts
+      that must not survive. About moved off the shared `.container`/
+      `.page` absolute-positioning scheme onto a new mobile-first CSS
+      Module (`about.module.scss`), same pattern as Home and Work.
+    - **Real dependency bug found while removing `react-tagcloud`**:
+      uninstalling it also removed `prop-types` from `node_modules` —
+      `react-loaders` (still used by `PacmanLoader` on About/Contact)
+      `require`s `prop-types` directly in its bundled dist file despite
+      never declaring it as a real dependency, only an unmet peer
+      dependency (visible as a yarn warning since at least 3.0's install,
+      ignored until now). It had been getting `prop-types` for free this
+      whole time as `react-tagcloud`'s own transitive dependency —
+      removing tagcloud silently pulled the rug out from under an
+      unrelated component. `next build` failed immediately with "Module
+      not found: Can't resolve 'prop-types'", pointing straight at
+      `pacman-loader.tsx` → `contact-view.tsx`. Fixed by adding
+      `prop-types` as an explicit direct dependency. **Worth remembering
+      for 3.7's dependency cleanup**: `react-loaders` has this same
+      hidden-dependency risk baked in for as long as it stays in the
+      project.
+    - **Copy rewrite (DRAFT, not yet approved by Svei)**: replaced the
+      generic job-seeker filler ("hardworking and ambitious," "apply my
+      skills fully") with a version connecting the real Excel-automation/
+      web-engineering throughline, bilingual English/Spanish (a real
+      professional trait — it's why the excel-solutions project entry
+      covers CFDI/SAT content for Mexican accountants), and the existing
+      family/outdoors/travel facts carried forward unchanged from the
+      pre-Phase-3 copy (nothing new invented). Flagged explicitly in the
+      component's own comment as draft, same governance as Home's
+      positioning statement (entry 69).
+    - **Face photo**: no real headshot asset exists anywhere in this repo
+      (confirmed via search — the only face photo it ever had,
+      `IvanEVillanueva.png`, was deleted in 3.1 as dead weight from the
+      old sidebar sub-logo, before this face-photo slot existed). Built
+      the layout with a real `<Image>` pointed at
+      `/about/ivan-headshot.jpg` plus an `onError` handler that removes
+      the broken image and leaves a styled placeholder frame, rather than
+      a broken-image icon — same fallback pattern Phase 2 already
+      established for Portfolio's project images. **Needs Svei**: a real
+      headshot file at that path.
+    - Verification: `next build` clean (11 routes, `/skills` gone from
+      the route list); `curl -I /skills` confirmed a real 308 to `/about`;
+      in the browser, zero console errors, exactly 4 nav links confirmed
+      present (Home/About/Work/Contact — Skills fully gone); the missing-
+      photo placeholder confirmed working correctly — the `<img>` tag is
+      removed from the DOM after its (expected) failed load, no broken-
+      image icon shown; `yarn audit`: **0 vulnerabilities** (124 packages
+      — down from 129, net of removing tagcloud and its types and adding
+      `prop-types` and its own small dependency tree).
+    **Phase 3.4 is functionally complete**, pending Svei's approval of the
+    draft copy and a real headshot file.
