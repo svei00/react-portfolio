@@ -26,3 +26,10 @@ yarn-error.log*
 
 # this repo standardizes on yarn.lock, not npm's lockfile
 package-lock.json
+
+# Raw Firebase Firestore export (recovered old portfolio entries, Phase 3
+# content-recovery work) — a working reference for pulling real project
+# data into src/content/projects.json, not something the app reads at
+# build or run time. Keeping the raw export out of the public repo since
+# it's scratch data, not a maintained source of truth.
+/data

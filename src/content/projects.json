@@ -3,13 +3,13 @@
     "title": "Excel Solutions",
     "slug": "excel-solutions",
     "summary": "A bilingual Excel tutorials and automation blog for accountants.",
-    "description": "Excel Solutions publishes step-by-step tutorials on formulas, automation, and data analysis for accountants and professionals, including CFDI and SAT workflows written specifically for Mexican accountants. Content spans automation, security, data analysis, data entry, visualization, and Python. Same throughline as this portfolio's Excel Lab section: real engineering practice applied to spreadsheet problems accountants normally solve by hand.",
+    "description": "Excel Solutions publishes step-by-step tutorials on formulas, automation, and data analysis for accountants and professionals, including CFDI and SAT workflows written specifically for Mexican accountants. Content spans automation, security, data analysis, data entry, visualization, and Python. A full MERN application (MongoDB, Express, React, Node.js) under the hood, not just a static blog. Same throughline as this portfolio's Excel Lab section: real engineering practice applied to spreadsheet problems accountants normally solve by hand.",
     "coverImage": {
       "src": "/portfolio/1/LogoExcelTrim.png",
       "alt": "Excel Solutions logo"
     },
     "gallery": [],
-    "techStack": ["React", "Vite", "Google Analytics", "AdSense"],
+    "techStack": ["React", "Node.js", "Express", "MongoDB", "Vite"],
     "liveUrl": "https://www.excelsolutionsv.com",
     "repoUrl": null,
     "featured": true,
@@ -19,16 +19,80 @@
     "title": "Pura Vida Vallarta Tours",
     "slug": "pura-vida-vallarta",
     "summary": "A bilingual tour-curation site for Puerto Vallarta and Bahia de Banderas.",
-    "description": "Pura Vida Vallarta Tours curates the best tours and experiences around Bahia de Banderas so visitors do not have to guess which operator is worth booking. Bilingual (Spanish/English), video previews for each tour, and WhatsApp-based booking instead of a traditional checkout flow, matching how the target audience actually books travel in the region.",
+    "description": "Pura Vida Vallarta Tours curates the best tours and experiences around Bahia de Banderas so visitors do not have to guess which operator is worth booking. Bilingual (Spanish/English), video previews for each tour, and WhatsApp-based booking instead of a traditional checkout flow, matching how the target audience actually books travel in the region. Content is managed through Sanity, the same CMS this portfolio moves to in Phase 4.",
     "coverImage": {
       "src": "/portfolio/2/pura-vida-vallarta-cover.jpg",
       "alt": "Pura Vida Vallarta Tours homepage hero"
     },
     "gallery": [],
-    "techStack": ["Next.js", "React"],
+    "techStack": ["Next.js", "React", "Sanity", "Leaflet"],
     "liveUrl": "https://pura-vida-vallarta.com",
-    "repoUrl": null,
+    "repoUrl": "https://github.com/svei00/tours-web",
     "featured": true,
     "orderRank": 2
+  },
+  {
+    "title": "Bloom Aquatics",
+    "slug": "bloom-aquatics",
+    "summary": "A family business tracker for a small aquatic-plants and supplies shop.",
+    "description": "A business tracker built for a family-run shop selling aquatic plants, secondhand articles, and supplies — inventory, sales, and day-to-day operations in one tool instead of scattered notebooks and spreadsheets.",
+    "coverImage": {
+      "src": "/portfolio/3/bloom-aquatics-cover.jpg",
+      "alt": "Bloom Aquatics business tracker screenshot"
+    },
+    "gallery": [],
+    "techStack": ["React", "Vite", "Express", "SQLite"],
+    "liveUrl": null,
+    "repoUrl": null,
+    "featured": true,
+    "orderRank": 3
+  },
+  {
+    "title": "La Estancia de Lupita",
+    "slug": "la-estancia-de-lupita",
+    "summary": "A travel content site for Riviera Nayarit destinations.",
+    "description": "An earlier React project — a travel site highlighting Riviera Nayarit destinations (La Peñita, Punta de Mita, Puerto Vallarta, the Marietas Islands) for a bungalow rental business.",
+    "coverImage": {
+      "src": "/portfolio/4/la-estancia-de-lupita-cover.jpg",
+      "alt": "La Estancia de Lupita homepage screenshot"
+    },
+    "gallery": [],
+    "techStack": ["React", "EmailJS"],
+    "liveUrl": "https://travel.excelsolutionsv.com",
+    "repoUrl": null,
+    "featured": false,
+    "orderRank": 4
+  },
+  {
+    "title": "Cover Studio",
+    "slug": "cover-studio",
+    "summary": "A Python desktop app for generating branded cover images.",
+    "description": "A desktop GUI (PySide6) for generating 16:9 cover images for Excel Solutions content: a background photo, a color band, a title, and an accent that wraps around it. Live preview updates as you adjust color, geometry, typography, and canvas; drag-to-reposition on the preview itself; saved presets for repeatable designs.",
+    "coverImage": {
+      "src": "/portfolio/5/cover-studio-cover.jpg",
+      "alt": "Cover Studio desktop app screenshot"
+    },
+    "gallery": [],
+    "techStack": ["Python", "PySide6"],
+    "liveUrl": null,
+    "repoUrl": null,
+    "featured": false,
+    "orderRank": 5
+  },
+  {
+    "title": "FrutiApp",
+    "slug": "frutiapp",
+    "summary": "An Android app that teaches kids basic math.",
+    "description": "An Android app that teaches kids basic arithmetic — addition, subtraction, and similar operations — through simple, guided exercises.",
+    "coverImage": {
+      "src": "/portfolio/6/frutiapp-cover.jpg",
+      "alt": "FrutiApp screenshot"
+    },
+    "gallery": [],
+    "techStack": ["Java", "Android"],
+    "liveUrl": null,
+    "repoUrl": "https://github.com/svei00/v51_Frutiapp",
+    "featured": false,
+    "orderRank": 6
   }
 ]

@@ -1273,3 +1273,97 @@
       guarantee above). `yarn audit`: **0 vulnerabilities** (124
       packages, unchanged — no new dependencies).
     **Phase 3.5 is functionally complete.**
+77. **Follow-up, same session: content recovery from Firestore export +
+    repo survey, four new Work projects added, two existing entries
+    corrected with better-verified data.**
+    - Svei used a separate Claude Chrome-extension session to pull a real
+      export of the old Firestore `portfolio` collection (10 documents)
+      into `data/firestore-portfolio-export.json` (renamed from
+      `portfoliodata.json` for clarity — Svei authorized renaming without
+      asking) plus `data/REBUILDNOTES.md` documenting the schema and known
+      data-quality issues. Confirms the Firebase-recovery lead from entry
+      72 was right: the old entries were still sitting in Firestore.
+      **Added `/data` to `.gitignore`** per Svei's explicit instruction —
+      this is a raw scratch export for pulling content from, not something
+      the app reads at build/run time, and not meant for the public repo.
+    - **Verified every URL before trusting it**, rather than copying the
+      export in blind: `curl` + DNS resolution confirmed
+      `cogs.excelsolutionsv.com` and `bbs.excelsolutionsv.com` no longer
+      resolve at all (subdomains gone), and
+      `ecommerce-7gfd.onrender.com` timed out even after a 45s retry
+      (Render free-tier cold-start ruled out). **Not added**: "Croquetas
+      el Kilo" (dead Render link), "COGS" (dead subdomain), "BBs+ Babies
+      Dreams" (dead subdomain), "VideoMedia" (the export itself flags its
+      URL field as corrupt — a pasted chat message, not a link), and "5
+      Star Rating" (this is the old `/rating` route Phase 1 already
+      deleted as dead tutorial cruft per handoff.md's dead-code-removal
+      list — not a real standalone project to resurrect). All five need
+      Svei's input (a real current link, or a decision to drop them) before
+      they could honestly go on the site.
+    - Svei separately named **Bloomaquatics** as a project never on any
+      prior version of the portfolio, live only as a local repo at
+      `D:\repos\bloomaquatics`, and authorized scanning his whole
+      `D:\repos\` folder for any other React/web project or Python
+      program worth adding (explicit exception: skip `hello_world`).
+      Surveyed the folder (30+ repos) and inspected the clearest
+      candidates' `package.json`/README before writing anything, rather
+      than guessing from folder names:
+      - **Bloom Aquatics** (`bloomaquatics` repo) — a family business
+        tracker for a small aquatic-plants/secondhand-goods shop. React +
+        Vite frontend, Express + SQLite backend (read directly from its
+        `package.json` and README).
+      - **Cover Studio** (`cover_studio` repo) — a Python/PySide6 desktop
+        GUI that generates the 16:9 branded cover images for Excel
+        Solutions blog content (background photo + color band + title +
+        an "L" accent, live preview, drag-to-reposition, saved presets).
+        Real content pulled from its README.
+      - **La Estancia de Lupita** (found via the Firestore export, not
+        the repo survey) — confirmed live and genuinely distinct from
+        Pura Vida Vallarta (different business: a Riviera Nayarit
+        bungalow-rental travel content site, not a tour-booking service),
+        confirmed CRA-era React via its `main.[hash].js` bundle naming.
+      - **FrutiApp** — a kids'-math Android app; GitHub repo verified to
+        exist and reachable, GitHub's own language detection confirms
+        Java (consistent with "Android app," corroborating the original
+        Firestore description).
+    - **Corrected two existing entries with better-verified data,
+      superseding earlier guesses from browsing alone**: Excel Solutions'
+      `techStack` updated from a Vite-only guess to the real stack —
+      confirmed from its actual source repo (`blogExcelSolutionsV`,
+      package name `mern-blog`) that it is a full MERN application
+      (MongoDB/Express/React/Node.js), not just a React frontend. Pura
+      Vida Vallarta's `repoUrl` filled in
+      (`https://github.com/svei00/tours-web`, confirmed via that repo's
+      own git remote) and `techStack` expanded to include Sanity and
+      Leaflet, both confirmed present in `tours-web`'s real
+      `package.json` (`next-sanity`, `@sanity/image-url`, `leaflet`).
+    - **Flagged to Svei, not added**: `ecaproyectos-crm` — a real repo
+      found in the survey, but it is client work for a named third party
+      (Sergio, ECA Proyectos, a construction company's internal CRM/ERP);
+      needs Svei's explicit go-ahead on what's safe to describe publicly
+      before it goes anywhere near the portfolio, same caution culture as
+      the "no real client data" rule for Excel Lab (handoff.md §10).
+      "Sales System" from the Firestore export also flagged rather than
+      added outright: its description says "Android App" but its
+      linked repo's name (`PHP_PDO_MySQL_LoginRegistrator`) suggests PHP —
+      GitHub's own language detection actually says Java for that repo,
+      which supports the Android framing, but the mismatch between the
+      description and the repo's own name is real and needs Svei to
+      confirm before publishing a specific stack claim. The CFDI/
+      accounting-automation Python tools also visible in the repos survey
+      (CFDI-app, CFDI_Conceptos_Extractor, importar_xml_a_contabilidad,
+      etc.) were deliberately NOT added to Work — recommended they wait
+      for Phase 5's proper Excel Lab case-study treatment (Problem →
+      Solution → Outcome, per handoff.md §10) instead of being listed as
+      plain Work entries now, to avoid undercutting the presentation
+      they're due.
+    - `src/content/projects.json` now has **6 projects** (up from 2);
+      every new `coverImage.src` points at a `public/portfolio/N/`
+      path that does not exist yet — same pattern as Pura Vida Vallarta's
+      still-pending cover (entry 72), all flagged for Svei per the image
+      spec already recorded in phase-3-plan.md §13.
+    - Verification: `next build` clean — all 6 project detail pages
+      statically generated; confirmed in the browser (`curl` + a fresh
+      page load) that all four new titles render on `/work`; zero
+      console errors; `yarn audit`: **0 vulnerabilities** (124 packages,
+      unchanged).
