@@ -80,6 +80,22 @@
     "orderRank": 5
   },
   {
+    "title": "Croquetas el Kilo",
+    "slug": "croquetas-el-kilo",
+    "summary": "An e-commerce site for pet food, sold by weight.",
+    "description": "An e-commerce site selling pet food (Purina among the brands carried), rebuilt on Next.js and deployed on Vercel — its original Render-hosted version had gone offline before this rebuild.",
+    "coverImage": {
+      "src": "/portfolio/7/croquetas-el-kilo-cover.jpg",
+      "alt": "Croquetas el Kilo homepage screenshot"
+    },
+    "gallery": [],
+    "techStack": ["Next.js", "React"],
+    "liveUrl": "https://croquetas.excelsolutionsv.com",
+    "repoUrl": null,
+    "featured": false,
+    "orderRank": 7
+  },
+  {
     "title": "FrutiApp",
     "slug": "frutiapp",
     "summary": "An Android app that teaches kids basic math.",
@@ -93,6 +109,6 @@
     "liveUrl": null,
     "repoUrl": "https://github.com/svei00/v51_Frutiapp",
     "featured": false,
-    "orderRank": 6
+    "orderRank": 8
   }
 ]

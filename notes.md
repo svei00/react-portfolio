@@ -1367,3 +1367,105 @@
       page load) that all four new titles render on `/work`; zero
       console errors; `yarn audit`: **0 vulnerabilities** (124 packages,
       unchanged).
+78. **Follow-up, same session: real desktop-scroll bug found and fixed,
+    plus Croquetas el Kilo recovered with a new live URL.**
+    - **Svei reported "In the work page I cannot scroll down."** Root
+      cause: `body { overflow: hidden; }` in `globals.scss`, unconditional
+      above 1200px width (only overridden to `visible` under a
+      `max-width: 1200px` media query) — a leftover from the CRA-era
+      full-viewport `.container`/`.page` scheme where each page was
+      locked to exactly 100vh and body-level scrolling was never needed.
+      Home (3.2), Work (3.3), About (3.4), and Excel Lab (3.5) all moved
+      to normal, taller-than-one-screen document flow in their own
+      sub-phases, but this rule was never updated to match — it has been
+      silently blocking real mouse-wheel/trackpad scrolling on every one
+      of those four pages at desktop widths since 3.2. It only became
+      unmissable on `/work` once Croquetas/Bloom Aquatics/etc. pushed the
+      page past one screen's height (entry 76's four additions).
+      **Worth being honest about**: this session's own browser-based
+      verification never caught it, because `window.scrollTo()` (a direct
+      JS API call, used throughout entries 69-76 to work around the
+      Browser tool's intermittent pane-compositing issue) bypasses the
+      same CSS block that blocks a real scroll-wheel gesture — the
+      verification method itself had a blind spot matching exactly the
+      bug it was supposed to catch. Fixed by removing `overflow: hidden`
+      from `body` outright (and its now-redundant `max-width: 1200px`
+      override) rather than re-scoping it — Contact is the only page
+      still on the legacy full-viewport scheme, and nothing in
+      `contact.scss` depends on body-level overflow being hidden.
+      Confirmed via `getComputedStyle(document.body).overflow` that it
+      now resolves to `visible`. **Could not force a real scroll-wheel
+      gesture through the Browser tool this turn** (the pane-compositing
+      issue from entries 69-71 recurred, blocking the screenshot the
+      `scroll` action requires first) — the fix is a straightforward,
+      well-understood CSS removal and the computed-style check confirms
+      it applied, but Svei should confirm the actual scroll himself since
+      he has working pane access this session.
+    - **Croquetas el Kilo recovered with a new URL**: the Firestore
+      export's `ecommerce-7gfd.onrender.com` link (flagged dead in entry
+      76) has been replaced by a rebuild at
+      `https://croquetas.excelsolutionsv.com`, confirmed live and now on
+      Next.js + Vercel (bundle path confirmed via `curl`, page content
+      confirmed via the browser — "Croquetas el Kilo," pet food,
+      "Powered by Purina"). Added as project #7 in `projects.json`.
+      **Confirmed correct** (Svei asked directly): La Estancia de
+      Lupita's `liveUrl` is exactly `https://travel.excelsolutionsv.com`,
+      matching what he linked.
+    - Verification: `next build` clean, 7 project detail pages generated;
+      zero console errors on `/work`; `yarn audit`: **0 vulnerabilities**
+      (124 packages, unchanged).
+79. **Sub-phase 3.6 (Contact restyle, retire map) implemented, Sonnet.**
+    Per phase-3-plan.md §3.6.
+    - **Map retired**, per the plan's own recommendation: after the Phase
+      2 fix that stripped the exact street address (handoff.md S4), a
+      city-level Leaflet map communicated nothing a typeset location line
+      doesn't already say. Removed `leaflet`, `react-leaflet`,
+      `@types/leaflet`, the three committed marker PNGs
+      (`public/leaflet/`), the `contact-map.tsx` component, and the
+      `https://*.tile.openstreetmap.org` CSP `img-src` allowance. This is
+      a reversible presentation decision, not a data-loss one — if Svei
+      wants it back later, nothing here prevents that.
+    - **Retired from Contact** (last page using either): `AnimatedLetters`
+      and `PacmanLoader` — both are now gone from every page in the site,
+      closing out the last two items on handoff.md's Phase 3 "must not
+      survive" list.
+    - **Form hardening untouched**: the Phase 2 route handler, honeypot,
+      30s throttle, real `<label>`s (`sr-only`), and inline success/error
+      status are all exactly as they were — this sub-phase only changed
+      how `contact-form.tsx` references styles (moved from global
+      classnames in the now-deleted `contact.scss` to a real CSS Module,
+      `contact.module.scss`, matching every other rebuilt page).
+    - **Contact moved off the legacy `.container`/`.page` scheme** — it
+      was the last page still on it. Confirmed via `grep` across every
+      `.tsx` file that nothing references `.container`, `.about-page`,
+      `.contact-page`, `.portfolio-page`, or `.skills-page` anymore, so
+      that entire dead rule set was deleted from `layout.scss` outright
+      rather than left as confusing unused CSS.
+    - **Follow-on cleanup, not just Contact's own file**: with every page
+      now on normal document flow, `.page` in `layout.scss` (still
+      applied by `layout.tsx` around every route's `{children}`) no
+      longer needed to be `position: absolute; height: 100%` with a
+      mobile-only override back to normal flow — every page's own CSS
+      Module already provides `padding-top`/`padding-bottom` clearance at
+      every width now. Simplified `.page` to a plain block-level rule.
+      This also removes what had become a **redundant, double-stacked
+      padding bug at ≤1200px widths**: each page's own module was already
+      applying its clearance unconditionally, while `.page`'s old
+      mobile-only media query was independently adding a second,
+      different padding-top/padding-bottom on top of it.
+    - Verification: `next build` clean, 7 project pages + all 5 top-level
+      routes generated; in the browser (a fresh tab, after the previous
+      one's console log turned out to be carrying stale entries from a
+      server-restart race — confirmed via `curl`/`netstat` that the
+      server was actually up throughout, and a fresh tab showed zero
+      errors), confirmed zero console errors on Home, About, Work, Excel
+      Lab, and Contact — the full sweep, not just the page directly
+      touched this sub-phase, specifically to catch any regression from
+      the `layout.scss` cleanup. Confirmed via `read_page` that every
+      form field, the honeypot, the submit button, and the `mailto:` link
+      are present and correctly labeled. `yarn audit`: **0
+      vulnerabilities** (119 packages — down from 124, net of removing
+      leaflet/react-leaflet/@types/leaflet and their own dependency
+      trees).
+    **Phase 3.6 is functionally complete.** Every page in the site is now
+    off the legacy CRA-era layout scheme.

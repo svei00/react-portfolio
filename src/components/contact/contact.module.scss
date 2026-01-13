@@ -1,0 +1,158 @@
+@use '@/styles/tokens' as *;
+
+// Mobile-first, normal document flow — same pattern as Home/Work/About/
+// Excel Lab. Contact was the last page still on the legacy .container/
+// .page absolute-positioning scheme (src/styles/layout.scss); it moves
+// off that here.
+.contactPage {
+  padding-top: 96px;
+  padding-bottom: 80px;
+  padding-left: var(--space-5);
+  padding-right: var(--space-5);
+}
+
+.intro {
+  max-width: 42rem;
+  margin: 0 auto var(--space-8);
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-4);
+  font-weight: 400;
+  color: var(--text);
+}
+
+.intro p {
+  margin: var(--space-3) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+// ---- Location (replaces the retired Leaflet map — see contact-view.tsx
+// for why) --------------------------------------------------------------
+.locationInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.locationName {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  color: var(--text);
+}
+
+.locationCity {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  color: var(--muted);
+}
+
+.locationEmail {
+  margin-top: var(--space-1);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  color: var(--accent);
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--accent-soft);
+  }
+}
+
+// ---- Form ---------------------------------------------------------
+.contactForm {
+  width: 100%;
+
+  ul {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  input[type='text'],
+  input[type='email'],
+  textarea {
+    width: 100%;
+    border: 1px solid rgba(185, 192, 201, 0.2); // var(--muted) at low opacity
+    border-radius: 4px;
+    background: var(--surface);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    padding: var(--space-3) var(--space-4);
+    box-sizing: border-box;
+
+    &:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+  }
+
+  textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+}
+
+.flatButton {
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  letter-spacing: 0.05em;
+  padding: var(--space-3) var(--space-5);
+  cursor: pointer;
+  transition:
+    background var(--dur-fast) var(--ease-out-expo),
+    color var(--dur-fast) var(--ease-out-expo);
+
+  &:hover:not(:disabled),
+  &:focus-visible {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.formStatus {
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+}
+
+.formStatusSuccess {
+  color: var(--accent);
+}
+
+.formStatusError {
+  color: var(--danger);
+}

@@ -16,17 +16,26 @@ body {
   font: 300 11px/1.4 var(--font-body), sans-serif;
   color: var(--text);
   background: var(--bg);
-  overflow: hidden;
   display: block;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media screen and (max-width: 1200px) {
-  body {
-    overflow: visible;
-  }
-}
+// `overflow: hidden` used to sit here unconditionally above 1200px width,
+// carried over from the CRA-era full-viewport .container/.page scheme
+// where each page was locked to exactly 100vh and body scroll was never
+// needed. Home (3.2), Work (3.3), About (3.4), and Excel Lab (3.5) all
+// moved to normal, taller-than-one-screen document flow since then, so
+// that rule was silently blocking real mouse-wheel/trackpad scrolling on
+// every one of those pages at desktop widths — caught by Svei on /work
+// once it had enough projects to make the missing scroll unmissable.
+// Verifying this in the browser with window.scrollTo() (a direct API
+// call) didn't catch it, because that bypasses the CSS block the same
+// way it bypasses normal scroll-wheel input; only a real scroll gesture
+// exposes it. Contact is the only page still on the legacy scheme
+// (About/Portfolio/Skills all moved off it in their own sub-phases), and
+// nothing in contact.scss depends on body-level overflow being hidden,
+// so this is removed outright rather than re-scoped to one page.
 
 input,
 textarea {

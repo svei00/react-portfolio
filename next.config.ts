@@ -14,7 +14,10 @@ const CSP_DIRECTIVES = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://*.tile.openstreetmap.org",
+  // OpenStreetMap tile allowance removed in Phase 3.6 — the Leaflet
+  // contact map was retired (see notes.md), so nothing loads map tiles
+  // anymore.
+  "img-src 'self' data: blob:",
   "font-src 'self'",
   "connect-src 'self' https://api.emailjs.com",
   "frame-ancestors 'none'",

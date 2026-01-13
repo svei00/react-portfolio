@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, type FormEvent } from 'react'
+import styles from './contact.module.scss'
 
 type SubmitState = 'idle' | 'sending' | 'success' | 'error'
 
@@ -64,16 +65,16 @@ const ContactForm = () => {
   }
 
   return (
-    <div className="contact-form">
+    <div className={styles.contactForm}>
       <form onSubmit={handleSubmit}>
         <ul>
-          <li className="half">
+          <li className={styles.half}>
             <label className="sr-only" htmlFor="contact-name">
               Name
             </label>
             <input id="contact-name" type="text" name="name" placeholder="Name" required />
           </li>
-          <li className="half">
+          <li className={styles.half}>
             <label className="sr-only" htmlFor="contact-email">
               Email
             </label>
@@ -99,18 +100,18 @@ const ContactForm = () => {
           <li>
             <input
               type="submit"
-              className="flat-button"
+              className={styles.flatButton}
               value={state === 'sending' ? 'Sending…' : 'Send'}
               disabled={state === 'sending' || throttled}
             />
           </li>
           {state === 'success' && (
-            <li role="status" className="form-status form-status-success">
+            <li role="status" className={`${styles.formStatus} ${styles.formStatusSuccess}`}>
               Message sent — thank you!
             </li>
           )}
           {state === 'error' && (
-            <li role="alert" className="form-status form-status-error">
+            <li role="alert" className={`${styles.formStatus} ${styles.formStatusError}`}>
               {errorMessage}
             </li>
           )}
