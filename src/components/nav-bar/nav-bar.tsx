@@ -93,7 +93,15 @@ const NavBar = () => {
 
   return (
     <header className={styles.navBar}>
-      <Link href="/" className={styles.wordmark} aria-label="Ivan E. Villanueva, home">
+      {/* No aria-label here on purpose — WCAG 2.5.3 (Label in Name)
+          requires a control's accessible name to contain its visible
+          text, so a voice-control user saying "click Iván" can actually
+          activate it. The visible "Iván." text is already a fine
+          accessible name on its own (this is the only wordmark link on
+          the page, so there's no ambiguity to resolve with a longer
+          label) — caught by a real Lighthouse best-practices audit in
+          Phase 3.7, not a hypothetical. */}
+      <Link href="/" className={styles.wordmark}>
         Iván<span className={styles.wordmarkAccent}>.</span>
       </Link>
 

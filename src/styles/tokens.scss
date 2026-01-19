@@ -3,15 +3,28 @@
 // and it updates everywhere; nothing else in the codebase should hardcode
 // a hex color, a font name, a spacing number or an animation duration.
 //
-// Palette source: handoff.md §8.1 (Svei's navy/gold/silver seeds, refined
-// with pre-checked contrast pairs). Contrast notes:
-//   --text on --bg      ≈ 13:1  (AAA)  — safe for any text size
-//   --muted on --bg     ≈ 8:1   (AA+)  — safe for any text size
-//   --accent on --bg    ≈ 4.9:1        — fine for large text/accents,
-//                                         NEVER use gold for small body copy
-// Re-verify these against the final rendered pairs in Phase 6 (handoff.md
-// §7 Phase 6 exit criterion) — this comment is a starting point, not a
-// substitute for a real contrast checker on the shipped site.
+// Palette source: handoff.md §8.1 (Svei's navy/gold/silver seeds).
+// Contrast re-verified in Phase 3.7 with a real WCAG relative-luminance
+// calculation (not an estimate) against every text color actually paired
+// with a background anywhere in the codebase at the time:
+//   --text on --bg          13.97:1  (AAA)
+//   --text on --surface      9.73:1  (AAA)
+//   --muted on --bg           9.04:1  (AAA)
+//   --muted on --surface      6.30:1  (AA)
+//   --accent on --bg          5.48:1  (AA — passes for body-size text too,
+//                                       better than the earlier ~4.9
+//                                       estimate this comment used to carry)
+//   --accent-soft on --bg     7.40:1  (AAA)
+//   --danger on --bg          5.98:1  (AA)
+// --accent and --danger both FAIL AA (3.82:1 / 4.16:1) against --surface —
+// confirmed via `grep` that nothing in the codebase currently pairs either
+// of them with a --surface background (every --surface usage today is an
+// image-container background, never text), so this is not a live
+// violation, but it is a real constraint: never set --accent or --danger
+// text on a --surface background without re-checking contrast first.
+// Re-verify again in Phase 6 (handoff.md §7 exit criterion) against
+// whatever the final rendered pairs are then — new components between now
+// and Phase 6 could introduce a pairing this comment doesn't know about.
 :root {
   // ---- Color --------------------------------------------------------
   --bg: #131f30; // page background (navy-950)

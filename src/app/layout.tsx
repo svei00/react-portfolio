@@ -8,8 +8,6 @@ import { fraunces, generalSans } from '@/styles/fonts'
 import '@/styles/tokens.scss'
 import '@/styles/globals.scss'
 import '@/styles/layout.scss'
-import 'animate.css'
-import 'loaders.css/src/animations/pacman.scss'
 
 const SITE_DESCRIPTION =
   'Fullstack software engineer in the Inland Empire, California, building React web apps, animations and interactive experiences.'
@@ -41,7 +39,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <SmoothScrollProvider>
           <div className="App">
             <NavBar />
-            <div className="page">{children}</div>
+            <main className="page">{children}</main>
             <SiteFooter />
             <CustomCursor />
           </div>

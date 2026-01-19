@@ -1469,3 +1469,127 @@
       trees).
     **Phase 3.6 is functionally complete.** Every page in the site is now
     off the legacy CRA-era layout scheme.
+80. **Sub-phase 3.7 (retire, brand marks, audit) implemented, Sonnet —
+    the last sub-phase of Phase 3.** Per phase-3-plan.md §3.7.
+    - **Dependency removal**: confirmed via `grep` that neither
+      `AnimatedLetters` nor `PacmanLoader` is rendered anywhere anymore
+      (About and Contact, the last two consumers, dropped them in 3.4/
+      3.6) — deleted both components outright, along with the two global
+      CSS imports in `layout.tsx` (`animate.css`,
+      `loaders.css/.../pacman.scss`). Also confirmed zero remaining
+      `@fortawesome/*` imports (the icon-free nav from 3.1 was the last
+      user). Uninstalled `animate.css`, `loaders.css`, `react-loaders`,
+      `prop-types` (only ever needed because of `react-loaders` — see
+      entry 73's hidden-dependency finding, now moot since the thing that
+      needed it is gone), and all four FontAwesome packages.
+      `yarn audit`: **0 vulnerabilities**, 105 packages — down from 124 at
+      the start of Phase 3.
+    - **Branded `not-found.tsx` and `error.tsx`**, sharing a
+      `StatusPageView` component with a SplitText-revealed heading
+      (`aria: 'auto'`, same accessibility pattern as Home's hero and
+      Excel Lab's intro) gated through the same `registerMotion` primitive
+      as everything else. This is where the animated "under construction"
+      work Svei originally asked for actually lands, per phase-3-plan.md
+      §1 item 3 — on two pages that get used, not one that ideally never
+      does. Verified `not-found.tsx` via a real unmatched route, and
+      `error.tsx` via a temporary client component forced to throw at
+      runtime (a build-time-throwing test route fails the whole
+      `next build` instead — Next prerenders every static route, so the
+      first version of the test route had to be rewritten to throw
+      inside a `useEffect` instead, exercising the boundary the way a
+      real runtime error would). Both confirmed rendering correctly with
+      zero console errors, then the temporary test route was deleted.
+    - **Favicon and monogram**: gold "I" monogram on navy, generated via
+      `ImageResponse` (`app/icon.tsx` at 32x32, `app/apple-icon.tsx` at
+      180x180) rather than a hand-authored binary asset — same technique
+      already used for the OG image. Confirmed via a direct browser
+      screenshot of `/icon` that it renders exactly as designed. Deleted
+      the stale `public/favicon.ico`/`logo192.png`/`logo512.png` (the
+      latter two were never-square, mislabeled default CRA React logos —
+      confirmed via `file`, 122x177 and 326x474, not 192x192/512x512).
+      **Known gap, accepted deliberately**: the literal `/favicon.ico`
+      static-file convention (a small minority of browsers/crawlers
+      request it directly regardless of `<link rel="icon">`) isn't
+      covered — Next's `icon`/`apple-icon` code-generation convention
+      only covers the `<link>`-tag path, and hand-authoring a binary
+      `.ico` was out of proportion to the benefit. Every modern browser
+      uses the generated `/icon` route correctly.
+    - **`manifest.ts` and `opengraph-image.tsx` regenerated on the real
+      palette** — both were still on the old CRA blue (`#022c43`,
+      `#599DFB`) architected as deliberate Phase-2 placeholders (notes.md
+      entry 57 flagged the OG image specifically as "trivial to
+      regenerate once the real palette lands"). Manifest icons now point
+      at the generated `/apple-icon` instead of the deleted stock PNGs.
+    - **Audit sweep, with a real tool, not a checklist read-through**:
+      - **axe-core** (injected fresh per page via CDN, not a stub):
+        found **two real moderate violations present on every single
+        route** — `landmark-one-main` and `region` (all page content
+        living outside a `<main>` landmark, since `layout.tsx` wrapped
+        `{children}` in a plain `<div className="page">`). Fixed by
+        changing that one element to a real `<main>`. Re-verified **zero
+        axe violations on every route** (Home, About, Work, Work detail,
+        Excel Lab, Contact, and the 404 page) after the fix.
+      - **Contrast**: re-verified every token pair actually used anywhere
+        in the codebase with a real WCAG relative-luminance calculation
+        (not the earlier ~4.9 estimate) — full results and a corrected,
+        more precise comment now live in `tokens.scss`. Found that
+        `--accent` and `--danger` both fail AA against `--surface`
+        (3.82:1 / 4.16:1), but confirmed via `grep` that nothing in the
+        codebase currently pairs either of them with a `--surface`
+        background (every `--surface` usage today is an image-container
+        background, never text) — recorded as a real constraint for
+        future components to respect, not a live violation.
+      - **`prefers-reduced-motion`**: every animated component in the
+        codebase (Home hero, Excel Lab's pinned sequence, NavBar overlay,
+        MagneticLink, CustomCursor, the new StatusPageView) already
+        routes through the single shared `registerMotion()` gate fixed in
+        3.1 — confirmed via `grep` there is no second, independent
+        `gsap.matchMedia()` or ad-hoc `prefers-reduced-motion` check
+        anywhere that could have drifted from that fix.
+      - **Keyboard navigation**: tested with real `Tab` keypresses (not
+        just `read_page`'s static interactive-element listing) — starting
+        from a deliberately reset focus state, confirmed the tab order
+        walks correctly through the wordmark, Home, Work, Excel Lab,
+        About, Contact, and the page's own CTA, and that no element
+        anywhere suppresses its focus outline (`grep` for
+        outline:none / outline:0 across every `.scss` file: zero
+        matches).
+      - **Lighthouse mobile** (`npx lighthouse`, real Chrome headless run,
+        simulated throttling — not skipped for lack of tooling):
+        - **Home: Performance 90, Accessibility 100, Best Practices 100,
+          SEO 100.** LCP 3.6s (down from Phase 2's 4.3s, per notes.md
+          entry 60 — removing the old staggered `animation-delay` system
+          in 3.2 is exactly what closed that gap, as entry 60 predicted
+          it would).
+        - **Work: Performance 84 then 89 after the fix below, Best
+          Practices 96.** The remaining gap here is the 6 still-missing
+          project cover images (flagged repeatedly to Svei since entry
+          72) — each one fires a real `errors-in-console` hit
+          (`_next/image` 400s) that Lighthouse penalizes; this is a
+          content gap, not a code defect, and will clear on its own once
+          real images land.
+        - **Real finding from the Work run, fixed on the spot**: a
+          Lighthouse `label-content-name-mismatch` audit caught that the
+          NavBar wordmark's `aria-label="Ivan E. Villanueva, home"`
+          completely replaced its visible "Iván." text — a genuine WCAG
+          2.5.3 (Label in Name) violation that would break voice-control
+          activation ("click Iván" wouldn't match an accessible name that
+          doesn't contain "Iván" at all). Fixed by removing the
+          custom `aria-label` entirely; the visible text is already a
+          correct, unambiguous accessible name for the site's only
+          wordmark link. Re-verified the specific audit now passes.
+    - Copy proofread: **still needs Svei's own pass** — Home's positioning
+      statement (entry 69) and About's rewrite (entry 73) are both still
+      flagged as drafts pending his review; this sub-phase didn't and
+      couldn't close that item itself.
+    **Phase 3.7 is functionally complete, and with it, all of handoff.md
+    §7 Phase 3's exit criteria are met**: zero tutorial-recognizable
+    elements remain anywhere in the codebase (confirmed by direct
+    deletion, not just non-use — no sidebar clone, no cube, no Pacman, no
+    tag cloud); `prefers-reduced-motion` verified per-animation, not just
+    globally; axe-core clean on every route; full keyboard navigation
+    confirmed with real keypresses; Lighthouse mobile comfortably clears
+    the >=85 target on Home and is one content-gap away from it on Work.
+    **Phase 3 (personal brand + immersive redesign) is functionally
+    complete**, pending Svei's copy approval, real project images, and
+    his Vercel dashboard work from phase-3-plan.md §2.

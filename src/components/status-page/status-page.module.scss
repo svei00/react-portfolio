@@ -1,0 +1,56 @@
+@use '@/styles/tokens' as *;
+
+.statusPage {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 96px var(--space-5) 80px;
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.code {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-5);
+  color: var(--accent);
+}
+
+.message {
+  margin: var(--space-4) 0 var(--space-6);
+  font-family: var(--font-body);
+  font-size: var(--step-1);
+  color: var(--muted);
+}
+
+.actionButton {
+  display: inline-block;
+  padding: var(--space-3) var(--space-5);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background var(--dur-fast) var(--ease-out-expo),
+    color var(--dur-fast) var(--ease-out-expo);
+
+  &:hover,
+  &:focus-visible {
+    background: var(--accent);
+    color: var(--bg);
+  }
+}
+
+@media (min-width: 768px) {
+  .statusPage {
+    padding-left: var(--space-8);
+    padding-right: var(--space-8);
+  }
+}

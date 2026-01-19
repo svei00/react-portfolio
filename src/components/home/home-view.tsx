@@ -9,10 +9,10 @@ import styles from './home.module.scss'
 // Home's hero name reveal — the "signature moment" phase-3-plan.md §3.2
 // asks for. Replaces AnimatedLetters + the three 3D letter images + the
 // Excel logo swap-in + the Pacman loader entirely (all four are named in
-// handoff.md's Phase 3 exit criteria as things that must not survive).
-// AnimatedLetters and PacmanLoader themselves stay in the codebase for
-// now — About/Contact/Portfolio/Skills still use them until their own
-// sub-phases (3.4/3.6/3.3) rebuild those pages.
+// handoff.md's Phase 3 exit criteria as things that must not survive —
+// AnimatedLetters and PacmanLoader themselves were deleted outright in
+// 3.7 once About and Contact, the last pages still using them, rebuilt
+// in 3.4/3.6).
 //
 // The reveal does two things at once on the name heading:
 //   1. SplitText breaks it into characters and staggers them in.
