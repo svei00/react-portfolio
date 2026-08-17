@@ -5,7 +5,6 @@ import Home from './components/Home';
 import About from './components/About';
 import Contact from './components/Contact';
 import Portfolio from './components/Portfolio';
-import Dashboard from './components/Dashboard';
 import Skills from './components/Skills';
 import { Helmet } from 'react-helmet';
 import Rating from './components/Projects/Rating';
@@ -49,7 +48,6 @@ function App() {
         <Route path='portfolio' element={<Portfolio />} />
         <Route path='skills' element={<Skills />} />
         <Route path='contact' element={<Contact />} />
-        <Route path='dashboard' element={<Dashboard />} />
         <Route path='rating' element={<Rating/>} />
       </Route >
     </Routes>

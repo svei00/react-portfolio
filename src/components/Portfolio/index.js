@@ -2,15 +2,12 @@ import React, { useEffect, useState } from "react"
 import Loader from "react-loaders"
 import AnimatedLetters from "../AnimatedLetters"
 import "./index.scss"
-import windowLogo from "../../assets/images/LogoExcelWindow.png"
-import { getDocs, collection } from "firebase/firestore"
-import { db } from "../../firebase"
-import { Link } from "react-router-dom"
+import projects from "../../content/projects.json"
 import { Helmet } from "react-helmet"
 
 const Portfolio = () => {
   const [letterClass, setLetterClass] = useState("text-animate")
-  const [portfolio, setPortfolio] = useState([])
+  const [portfolio] = useState(projects)
 
   // Animate letters on page load
   useEffect(() => {
@@ -21,19 +18,6 @@ const Portfolio = () => {
     return () => {
       clearTimeout(timer)
     }
-  }, [])
-
-  // Fetch portfolio data from Firebase
-  useEffect(() => {
-    const getPortfolio = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "portfolio"))
-        setPortfolio(querySnapshot.docs.map((doc) => doc.data()))
-      } catch (error) {
-        console.error("Error fetching portfolio data: ", error)
-      }
-    }
-    getPortfolio()
   }, [])
 
   const handleViewButtonClick = (url) => {
@@ -71,13 +55,6 @@ const Portfolio = () => {
           </div>
         </div>
       ))}
-      <Link to="/dashboard">
-        <img
-          className="loginDashboard"
-          src={windowLogo}
-          alt="Excel SolutionsV"
-        />
-      </Link>
     </div>
   )
 
