@@ -275,3 +275,26 @@
     instead of a named city. Map itself stays (Svei confirmed keeping it,
     just wanted it decoupled from any specific address). `npm run build`
     verified clean.
+33. Rewrote `README.md` per handoff.md 4.11: dropped all CRA boilerplate and
+    the garbled `carolina-portfolio` lines from wherever the repo was
+    originally cloned. New content: title, live link, truthful tech stack
+    (React 18/CRA today, Next.js migration flagged as planned), real local
+    dev commands using `yarn` (matching the yarn.lock-is-canonical decision
+    from step 26), a deploy note, and pointers to `handoff.md`/`notes.md`.
+    This closes out every Phase 1 task except the Vercel dashboard Node
+    version change, which only Svei can do.
+34. Phase 1 exit-criteria check against handoff.md §7: Firebase code is
+    fully gone (criterion met); no secrets in the working tree (criterion
+    met — `.npmrc` deleted); all listed typos fixed (criterion met). The
+    `npm audit` criterion needs a caveat — handoff.md expected "no critical
+    advisories" with only highs left over as react-scripts transitives, but
+    the current audit shows 5 criticals, and all 5 trace to react-scripts'
+    own build-time toolchain (babel, form-data, shell-quote, webpack,
+    websocket-driver), not to anything Phase 1 controls — the CVE landscape
+    for that toolchain has simply gotten worse since handoff.md was
+    written. Chasing this further on CRA means `npm audit fix --force`,
+    which handoff.md explicitly forbids (it downgrades react-scripts to
+    0.0.0). This is structurally the same situation handoff.md already
+    planned for — fully resolved only by dropping CRA in Phase 2 — the
+    letter of the exit criterion just no longer matches reality typed a
+    while back. Flagged to Svei rather than silently marking it done.
