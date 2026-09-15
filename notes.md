@@ -1593,3 +1593,38 @@
     **Phase 3 (personal brand + immersive redesign) is functionally
     complete**, pending Svei's copy approval, real project images, and
     his Vercel dashboard work from phase-3-plan.md §2.
+81. **LinkedIn URL updated + "aligned with LinkedIn" rule written down
+    (Opus, 2026-10-11).**
+    - Svei's LinkedIn is now **https://www.linkedin.com/in/ivan-e-villanueva**
+      (the old `/in/ivan-e-villanueva-26253157/` URL is retired). `grep`
+      across the repo found exactly one reference left in code, the
+      footer's social list (`site-footer.tsx`) — updated. The other two
+      historical references (old sidebar, old Skills page) were deleted in
+      3.1/3.4.
+    - Svei remembered the handoff saying the portfolio should be
+      "parallel" to his LinkedIn. **It never did** — `grep` of handoff.md
+      for LinkedIn/consistent/mirror found nothing. Added it as
+      handoff.md §2 decision 6 ("Aligned with LinkedIn"): LinkedIn is the
+      source of truth for career facts (titles, employers, dates,
+      education, certifications, headline); the site may go deeper but
+      must never contradict it; re-audit whenever About, skills, or Work
+      entries change.
+    - **The actual side-by-side comparison is blocked**: LinkedIn serves an
+      authwall to logged-out visitors (`curl` gets a 405, the browser pane
+      gets the sign-up wall), and signing in on Svei's behalf is off the
+      table. Needs Svei to either save his profile as a PDF into `data/`
+      (gitignored) or sign in himself in the browser pane.
+    - Claims on the site that the comparison has to check (inventoried
+      now so the audit is mechanical once the profile is readable):
+      job title "Fullstack Developer / Software Engineer" (Home hero, site
+      title, OG image, manifest, About/Excel Lab metadata); "fullstack
+      software engineer based in the Inland Empire, California" and "for
+      years before that, I was the person accountants called" (About);
+      bilingual English/Spanish (About); "open to full-time or freelance"
+      (Contact); every skill in About's five skill groups; all six Work
+      projects.
+    - Found and fixed while inventorying, independent of LinkedIn:
+      `/contact`'s metadata still had the city-keyword list
+      (Riverside/Rialto/Colton) that handoff.md §4.6/§4.8 called spam —
+      missed when the other pages' metadata was cleaned. Replaced with one
+      honest sentence, keywords removed. `next build` clean.

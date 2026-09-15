@@ -68,6 +68,16 @@
 4. **Excel section:** small and curated (2–3 strong pieces max), **visual-first with selective
    links; live files are acceptable** where they strengthen the story (see §10).
 5. **Stack:** migrate CRA → **Next.js (App Router) on Vercel** (see §5 for why).
+6. **Aligned with LinkedIn** (added 2026-10-11, Svei's instruction — this was never written
+   down before, despite being his intent all along). Profile:
+   **https://www.linkedin.com/in/ivan-e-villanueva** (the old `…-26253157/` URL is retired;
+   use this one everywhere). LinkedIn is the **source of truth for career facts** — job
+   titles, employers, dates, education, certifications, and the headline. The portfolio may
+   go *deeper* than LinkedIn (case studies, Excel Lab, motion, personality) but must never
+   *contradict* it: no title, skill, date or project claim on the site that LinkedIn doesn't
+   back up, and nothing on LinkedIn that the site states differently. Any copy change on
+   either side should be checked against the other. Re-audit whenever the About copy, the
+   skills list, or the Work entries change.
 
 ---
 

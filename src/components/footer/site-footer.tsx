@@ -11,7 +11,7 @@ import styles from './site-footer.module.scss'
 // site-footer.module.scss for why that has to wait until every page has a
 // normal-flow layout (Phase 3.2-3.6).
 const SOCIAL_LINKS = [
-  { href: 'https://www.linkedin.com/in/ivan-e-villanueva-26253157/', label: 'LinkedIn' },
+  { href: 'https://www.linkedin.com/in/ivan-e-villanueva', label: 'LinkedIn' },
   { href: 'https://github.com/svei00/', label: 'GitHub' },
   { href: 'https://www.youtube.com/channel/UCbxQit2ZC4U1eUwdZVQkhwg', label: 'YouTube' },
   { href: 'https://twitter.com/svei00', label: 'Twitter' },
