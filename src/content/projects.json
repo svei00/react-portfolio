@@ -3,7 +3,7 @@
     "title": "Excel Solutions",
     "slug": "excel-solutions",
     "summary": "A bilingual Excel tutorials and automation blog for accountants.",
-    "description": "Excel Solutions publishes step-by-step tutorials on formulas, automation, and data analysis for accountants and professionals, including CFDI and SAT workflows written specifically for Mexican accountants. Content spans automation, security, data analysis, data entry, visualization, and Python. A full MERN application (MongoDB, Express, React, Node.js) under the hood, not just a static blog. Same throughline as this portfolio's Excel Lab section: real engineering practice applied to spreadsheet problems accountants normally solve by hand.",
+    "description": "ExcelSolutionsV is the practice I founded in 2014 to help accountants in Mexico go beyond what commercial tax software offers, with custom data-extraction and automation tools. The blog publishes step-by-step tutorials on Excel and Python for tax professionals, including CFDI and SAT workflows, across automation, security, data analysis, data entry, and visualization. The current site is a MERN application (MongoDB, Express, React, Node.js); the first version, in 2019, was plain HTML, CSS, PHP, and SQL.",
     "coverImage": {
       "src": "/portfolio/1/LogoExcelTrim.png",
       "alt": "Excel Solutions logo"
@@ -19,7 +19,7 @@
     "title": "Pura Vida Vallarta Tours",
     "slug": "pura-vida-vallarta",
     "summary": "A bilingual tour-curation site for Puerto Vallarta and Bahia de Banderas.",
-    "description": "Pura Vida Vallarta Tours curates the best tours and experiences around Bahia de Banderas so visitors do not have to guess which operator is worth booking. Bilingual (Spanish/English), video previews for each tour, and WhatsApp-based booking instead of a traditional checkout flow, matching how the target audience actually books travel in the region. Content is managed through Sanity, the same CMS this portfolio moves to in Phase 4.",
+    "description": "Pura Vida Vallarta Tours curates the best tours and experiences around Bahia de Banderas so visitors do not have to guess which operator is worth booking. Bilingual (Spanish/English), video previews for each tour, and WhatsApp-based booking instead of a traditional checkout flow, matching how the target audience actually books travel in the region. Content is managed through Sanity.",
     "coverImage": {
       "src": "/portfolio/2/pura-vida-vallarta-cover.jpg",
       "alt": "Pura Vida Vallarta Tours homepage hero"

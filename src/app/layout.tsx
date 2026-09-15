@@ -10,24 +10,24 @@ import '@/styles/globals.scss'
 import '@/styles/layout.scss'
 
 const SITE_DESCRIPTION =
-  'Fullstack software engineer in the Inland Empire, California, building React web apps, animations and interactive experiences.'
+  'Software developer in Guadalajara, Mexico, automating accounting and tax workflows with Excel and Python, and building web apps with React and Next.js.'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://portfolio.excelsolutionsv.com'),
   title: {
-    default: 'Ivan E. Villanueva | Fullstack Developer',
+    default: 'Ivan E. Villanueva | Software Developer, Accounting Automation',
     template: '%s | Ivan E. Villanueva',
   },
   description: SITE_DESCRIPTION,
   openGraph: {
     type: 'website',
     siteName: 'Ivan E. Villanueva',
-    title: 'Ivan E. Villanueva | Fullstack Developer',
+    title: 'Ivan E. Villanueva | Software Developer, Accounting Automation',
     description: SITE_DESCRIPTION,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Ivan E. Villanueva | Fullstack Developer',
+    title: 'Ivan E. Villanueva | Software Developer, Accounting Automation',
     description: SITE_DESCRIPTION,
   },
 }

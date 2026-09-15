@@ -1628,3 +1628,53 @@
       (Riverside/Rialto/Colton) that handoff.md §4.6/§4.8 called spam —
       missed when the other pages' metadata was cleaned. Replaced with one
       honest sentence, keywords removed. `next build` clean.
+82. **LinkedIn audit completed and applied to the site (2026-10-11).**
+    Svei had a Chrome-extension Claude session read his LinkedIn profile
+    (logged-in, read-only) into `data/linkedin_profile_audit.md`
+    (gitignored). Audit findings, in order of weight:
+    - **Real contradictions**: LinkedIn headline is "Data Analyst | Excel &
+      Python Automation for Accounting & Finance Teams" (no title anywhere
+      says Fullstack or Software Engineer); LinkedIn location is
+      Guadalajara, Mexico (California appears nowhere); and the About copy
+      written in 3.4 ("for years before that, I was the person accountants
+      called") was an inference that LinkedIn contradicts: the Excel/
+      accounting work is **current** (ExcelSolutionsV Jul 2014 - present,
+      ECA Aug 2013 - present), and the profile adds 20+ years in
+      accounting/audit/tax (Deloitte, nine years at SAT up to department
+      head) that the site never mentioned.
+    - **Svei's decisions** (asked directly, not assumed): title =
+      "Software Developer · Accounting Automation"; location = Guadalajara,
+      Mexico. Recorded as handoff.md §2 decisions 6-7, which also
+      supersede §4.7's "web dev is the lead narrative" and soften decision
+      6 from "nothing LinkedIn doesn't back up" to "must not contradict;
+      unlisted-but-true goes on an add-to-LinkedIn list", per Svei's own
+      wording ("matchable and do not contradict", site must not depend on
+      LinkedIn).
+    - **Applied to the site**: site title/OG title/manifest/OG image
+      (layout.tsx, manifest.ts, opengraph-image.tsx), SITE_DESCRIPTION,
+      About metadata, Home tagline and positioning statement, Contact
+      intro (now "remote full-time, part-time, and contract", matching
+      LinkedIn's Open to Work) and location line ("Guadalajara, Mexico ·
+      Remote"; S4 privacy rule still city-level), About copy rewritten from
+      LinkedIn's own facts plus a new **Background** block (ECA 2013-,
+      ExcelSolutionsV 2014-, SAT 2005-2014, Deloitte 2004-2005; UnADM
+      software engineering degree, UdeG law with Mariano Otero Prize, UdeG
+      public accounting), and skills reordered with Data & Automation
+      first (added VBA, Power Query, SQLite, CFDI/XML, all LinkedIn-backed).
+      The Excel Solutions project entry now reads from LinkedIn's founding
+      story (founded 2014; v1 2019 HTML/CSS/PHP/SQL; current MERN).
+    - **Verified rather than trusted**: the audit questioned the MERN
+      claim, so checked the blog repo directly — `express` and `mongoose`
+      are real dependencies alongside React/Vite (my earlier claim rested
+      on a package name alone; now rests on the dependency list).
+    - **Also fixed**: Pura Vida's public project text said "the same CMS
+      this portfolio moves to in Phase 4" — internal build language leaking
+      onto the live site; removed.
+    - **LinkedIn side** (his hands): 12-item list saved to
+      `data/linkedin-fixes-todo.md` (gitignored): headline, open-to-work
+      titles, skills to add/delete, projects, experience wording,
+      GitHub link, certification, recommendations.
+    - Copy remains **DRAFT pending Svei's read** — About and Home now carry
+      more personal-history claims than before, all copied from LinkedIn
+      but still his to approve. `next build` clean; axe: 0 violations on
+      /about after the change.

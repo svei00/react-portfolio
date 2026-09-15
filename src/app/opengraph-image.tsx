@@ -6,7 +6,7 @@ import { ImageResponse } from 'next/og'
 // is that moment. Still no photo here (per phase-3-plan.md §5, the real
 // face belongs on the About page and eventually here too, once Svei
 // supplies a real headshot — this stays type-only until then).
-export const alt = 'Ivan E. Villanueva | Fullstack Developer'
+export const alt = 'Ivan E. Villanueva | Software Developer, Accounting Automation'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -28,8 +28,8 @@ export default function Image() {
         <div style={{ fontSize: 72, fontFamily: 'Georgia, "Times New Roman", serif' }}>
           Ivan E. Villanueva
         </div>
-        <div style={{ fontSize: 32, color: '#b38e5d', marginTop: 20, letterSpacing: 2 }}>
-          FULLSTACK DEVELOPER
+        <div style={{ fontSize: 28, color: '#b38e5d', marginTop: 20, letterSpacing: 2 }}>
+          SOFTWARE DEVELOPER · ACCOUNTING AUTOMATION
         </div>
       </div>
     ),

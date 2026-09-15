@@ -74,10 +74,22 @@
    use this one everywhere). LinkedIn is the **source of truth for career facts** — job
    titles, employers, dates, education, certifications, and the headline. The portfolio may
    go *deeper* than LinkedIn (case studies, Excel Lab, motion, personality) but must never
-   *contradict* it: no title, skill, date or project claim on the site that LinkedIn doesn't
-   back up, and nothing on LinkedIn that the site states differently. Any copy change on
-   either side should be checked against the other. Re-audit whenever the About copy, the
-   skills list, or the Work entries change.
+   *contradict* it: a title, date, location, employer or degree on the site must match
+   LinkedIn exactly. Things the site shows that LinkedIn simply doesn't list yet (extra
+   skills, newer projects) are **not** contradictions — they go on a "add to LinkedIn" list
+   instead of being cut. The site must also never *depend* on LinkedIn (no embeds, no
+   scraping); the match is maintained by hand. Re-audit whenever About copy, the skills
+   list, or Work entries change. First full audit: 2026-10-11 (source: a read-only export of
+   the profile saved as `data/linkedin_profile_audit.md`, gitignored).
+7. **Positioning and location, settled 2026-10-11 by the LinkedIn audit.** The audit found
+   the original portfolio contradicted LinkedIn on title (Fullstack Developer vs LinkedIn's
+   Data Analyst / Excel & Python automation), location (California vs Guadalajara) and
+   timeline (accounting work shown as "before", LinkedIn shows it as current). Svei's
+   answers: the title is **"Software Developer · Accounting Automation"** and the base is
+   **Guadalajara, Mexico (remote)**; the privacy rule from finding S4 still holds
+   (city-level only, never a street address). This supersedes §4.7's line that web dev is
+   "the lead narrative": the site now leads with accounting automation plus the software
+   that carries it, and the Work / Excel Lab split stays as built.
 
 ---
 

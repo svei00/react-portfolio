@@ -22,9 +22,9 @@ const ContactView = () => (
     <div className={styles.intro}>
       <h1 className={styles.heading}>Contact</h1>
       <p>
-        I&apos;m interested in full-time positions or freelance opportunities, especially
-        ambitious or large projects. If you have a different request or question, use the form
-        below.
+        I&apos;m open to remote full-time, part-time, and contract work in accounting
+        automation, data analysis, and software development. If you have a different request or
+        question, use the form below.
       </p>
     </div>
 
@@ -33,7 +33,7 @@ const ContactView = () => (
 
       <div className={styles.locationInfo}>
         <p className={styles.locationName}>Ivan E. Villanueva</p>
-        <p className={styles.locationCity}>Inland Empire, California</p>
+        <p className={styles.locationCity}>Guadalajara, Mexico · Remote</p>
         <a href="mailto:svei00@gmail.com" className={styles.locationEmail}>
           svei00@gmail.com
         </a>

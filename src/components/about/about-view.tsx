@@ -4,21 +4,49 @@ import { useState } from 'react'
 import Image from 'next/image'
 import styles from './about.module.scss'
 
-// About rewrite (phase-3-plan.md §3.4): retires AnimatedLetters,
-// PacmanLoader, and the rotating CSS cube — all three are named in
-// handoff.md's Phase 3 exit criteria as tutorial artifacts that must not
-// survive the redesign. Skills folds in here as typeset groups (below),
-// replacing the blinking tag cloud that used to be its own /skills page.
+// About rewrite (phase-3-plan.md §3.4), re-aligned with LinkedIn on
+// 2026-10-11 (handoff.md §2 decisions 6 and 7). Every career fact below —
+// titles, employers, dates, degrees, location — is copied from Svei's
+// LinkedIn profile (linkedin.com/in/ivan-e-villanueva), which is the
+// source of truth for them. The first draft of this copy inferred a
+// timeline ("for years before that, I was the person accountants called")
+// and a California location that LinkedIn contradicts; both are gone.
 //
-// **Copy status: DRAFT, not yet approved by Svei** — same
-// copy-approval gate as Home's positioning statement (notes.md entry 69).
-// The personal facts below (family, outdoors, travel, Inland Empire
-// California) carry forward from the pre-Phase-3 About copy Svei already
-// published; nothing new has been invented. Bilingual English/Spanish is
-// a real professional trait, not filler — it's why a chunk of his Excel
-// Solutions work covers CFDI/SAT workflows written for Mexican
-// accountants (see the excel-solutions entry in src/content/projects.json).
+// **Copy status: DRAFT, not yet approved by Svei** — same gate as Home's
+// positioning statement. The family/outdoors line carries forward from the
+// pre-Phase-3 About copy Svei already published.
+//
+// When LinkedIn changes (new role, new degree, a move), change it here in
+// the same sitting — this file should never say something LinkedIn doesn't.
+const BACKGROUND_GROUPS = [
+  {
+    label: 'Work',
+    items: [
+      'Accounting & Systems Consultant, ECA Estructura & Arquitectura · 2013 – present',
+      'Founder & Accounting Automation Developer, ExcelSolutionsV · 2014 – present',
+      'Department Head, Servicio de Administración Tributaria (SAT) · 2005 – 2014',
+      'Audit Associate, Deloitte · 2004 – 2005',
+    ],
+  },
+  {
+    label: 'Education',
+    items: [
+      'Ingeniería en Desarrollo de Software, UnADM · 2017 – 2021',
+      'Bachelor of Laws, Universidad de Guadalajara · Mariano Otero Prize',
+      'Public Accounting, Universidad de Guadalajara',
+    ],
+  },
+]
+
 const SKILL_GROUPS = [
+  {
+    // Listed first because it is what LinkedIn leads with. Kept separate
+    // from "Languages" on purpose (Svei's own concern): this portfolio is
+    // TypeScript/Next.js, so Python must not sit beside JS/TS and imply it
+    // built this site — it is used for the accounting-automation tools.
+    label: 'Data & Automation',
+    skills: ['Python', 'Microsoft Excel', 'VBA', 'Power Query', 'SQLite', 'CFDI / XML'],
+  },
   {
     label: 'Languages',
     skills: ['JavaScript', 'TypeScript', 'PHP', 'SQL'],
@@ -31,24 +59,13 @@ const SKILL_GROUPS = [
     label: 'Backend & Tools',
     skills: ['Node.js', 'Express.js', 'Git', 'NPM', 'Webpack', 'Jest'],
   },
-  {
-    // Kept separate from "Languages" on purpose, per Svei's own concern:
-    // this portfolio site is TypeScript/Next.js, not Python, so Python
-    // can't sit in the same bucket as JS/TS without implying it was used
-    // to build this. It's real, just used elsewhere — data analysis work
-    // and the CFDI-App project (see despacho-contable-mx context).
-    label: 'Data & Automation',
-    skills: ['Python', 'Microsoft Excel'],
-  },
 ]
 
 const AboutView = () => {
-  // No real headshot exists in this repo yet (the only face photo it
-  // ever had, IvanEVillanueva.png, was deleted in Phase 3.1 as dead
-  // weight from the old sidebar sub-logo — before this face-photo slot
-  // existed). Rather than let a 404'd <Image> show a broken-image icon,
-  // this hides the image on error and lets the styled placeholder frame
-  // show through until Svei supplies a real file at this path.
+  // No real headshot exists in this repo yet. Rather than let a 404'd
+  // <Image> show a broken-image icon, this hides the image on error and
+  // lets the styled placeholder frame show through until Svei supplies a
+  // real file at this path.
   const [imageFailed, setImageFailed] = useState(false)
 
   return (
@@ -70,18 +87,40 @@ const AboutView = () => {
         <div className={styles.introText}>
           <h1 className={styles.heading}>About</h1>
           <p>
-            I&apos;m a fullstack software engineer based in the Inland Empire, California — and
-            for years before that, I was the person accountants called when a spreadsheet needed
-            to do more than a spreadsheet is supposed to do.
+            I&apos;m a software developer based in Guadalajara, Mexico, working remotely. I turn
+            manual accounting and tax workflows into controlled, automated processes with Excel
+            and Python, and build the web apps around them with React and Next.js.
           </p>
           <p>
-            I work fluently in English and Spanish, which is also why a chunk of my Excel work
-            covers CFDI and SAT workflows written specifically for Mexican accountants.
+            I come to software from accounting: more than 20 years across audit, tax, and
+            consulting, including Deloitte México and nine years at Mexico&apos;s tax authority
+            (SAT), where I rose to department head. Since 2014 I have run ExcelSolutionsV,
+            building tools for accountants and teaching Excel and Python.
           </p>
           <p>
-            Outside of code, I&apos;m a husband and father who&apos;s happiest on a walk through
+            I work in English and Spanish, which is also why so much of my tooling covers CFDI and
+            SAT workflows for Mexican accountants.
+          </p>
+          <p>
+            Outside of work, I&apos;m a husband and father who&apos;s happiest on a walk through
             the woods or planning the next family trip.
           </p>
+        </div>
+      </div>
+
+      <div className={styles.skills}>
+        <h2 className={styles.skillsHeading}>Background</h2>
+        <div className={styles.skillGroups}>
+          {BACKGROUND_GROUPS.map((group) => (
+            <div key={group.label} className={styles.skillGroup}>
+              <p className={styles.skillGroupLabel}>{group.label}</p>
+              {group.items.map((item) => (
+                <p key={item} className={styles.skillGroupList}>
+                  {item}
+                </p>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
 

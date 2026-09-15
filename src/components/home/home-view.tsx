@@ -129,7 +129,7 @@ const HomeView = () => {
           Iván E. Villanueva
         </h1>
         <p className={`${styles.heroTagline} ${styles.fadeIn}`}>
-          Fullstack Developer / Software Engineer
+          Software Developer · Accounting Automation
         </p>
         <MagneticLink href="/contact" className={`${styles.ctaButton} ${styles.fadeIn}`}>
           Contact Me
@@ -138,10 +138,10 @@ const HomeView = () => {
 
       <section ref={statementRef} className={styles.statement}>
         <p>
-          I build web applications with React and Next.js — and before that, spent years
-          automating spreadsheets for accountants who needed better tools than a typical power
-          user could build. Same throughline either way: real engineering practice, wherever the
-          problem lives.
+          I turn manual accounting and tax workflows into controlled, automated processes with
+          Excel and Python, and build the web apps around them with React and Next.js. Twenty-plus
+          years in accounting, audit, and tax taught me the real problem is structural, not
+          technical: manual steps, rework, and no audit trail.
         </p>
       </section>
 

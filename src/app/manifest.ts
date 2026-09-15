@@ -9,7 +9,7 @@ import type { MetadataRoute } from 'next'
 // which matched the brand this site actually has now.
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Ivan E. Villanueva | Fullstack Developer',
+    name: 'Ivan E. Villanueva | Software Developer, Accounting Automation',
     short_name: 'Ivan Villanueva',
     start_url: '/',
     display: 'standalone',
