@@ -1678,3 +1678,46 @@
       more personal-history claims than before, all copied from LinkedIn
       but still his to approve. `next build` clean; axe: 0 violations on
       /about after the change.
+83. **Phase 4 planning session (Opus, 2026-10-11).** Produced
+    `phase-4-plan.md` — plan of record for the Sanity CMS phase, superseding
+    handoff.md §7 Phase 4 and §9 where they disagree (pointer added at the
+    top of handoff §7 Phase 4). Seven sub-phases, 4.0 → 4.6.
+    - **Svei's decisions**: English content only, but the schema is built
+      with per-language arrays so Spanish later is filling fields plus
+      routing, not a content migration (he asked whether that is "the same
+      build"; it isn't — schema-ready is ~10% extra now, an actually
+      bilingual site is a separate future phase). Separation rule: Work =
+      development not specific to accounting; Excel Lab = accounting, tax
+      and data automation in any language, including the Python tools.
+    - **ExcelSolutionsV research** (Svei asked for it): its `/projects` page
+      already describes the accounting tools as El problema / Qué hace / Lo
+      que lo hace distinto / Nota honesta / Herramientas — so `excelPiece`
+      mirrors it field for field, Excel Lab stays curated at 2-3 pieces
+      (handoff decision 4), and each piece links to its Spanish write-up.
+      Found three cross-site items for the other repo / Svei: ExcelSolutionsV
+      calls this portfolio "React y TypeScript" (it is Next.js); the
+      software-engineering degree reads 2023 there vs 2017-2021 study dates
+      on LinkedIn and here; and Crónicas del Vejerete is listed there but
+      missing from Work (added to the 4.3 seed).
+    - **Where the plan departs from handoff §9, and why** (the handoff says
+      the Sanity skill wins on Sanity specifics): standalone Studio deployed
+      to `*.sanity.studio` instead of embedded at `/studio` — an embedded
+      Studio would force the site's CSP open right before Phase 6 enforces
+      it, and Svei's own `tours-web` NOTES.md records three problems the
+      embedded route caused; `@sanity/client` directly instead of
+      `next-sanity` (whose peers pull Studio packages into the website);
+      `sanity-plugin-internationalized-array` instead of `{ en, es }`
+      objects (the skill rejects the object pattern, which is what
+      `tours-web` uses — do not copy it); Next 16's two-argument
+      `revalidateTag(tag, 'max')` (the skill's example uses the deprecated
+      one-argument form, confirmed in the bundled Next docs).
+    - **Two repo-config traps found in advance**: `.gitignore`'s
+      `package-lock.json` pattern would silently ignore
+      `studio/package-lock.json` (fix to `/package-lock.json`), and the root
+      `tsconfig.json` includes `**/*.ts`, so `studio` must be excluded
+      before the first Studio file lands.
+    - **Prerequisite carried forward**: the live domain still serves the old
+      Netlify build. Only 4.6 (webhook) needs a deployed URL, and the
+      `*.vercel.app` URL is enough.
+    - Svei is on Windows PowerShell: commands handed to him chain with `;`,
+      never `&&` (saved to memory; the plan says so in its header).

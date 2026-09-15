@@ -373,6 +373,13 @@ clean on all pages; copy proofread (zero typos, EN reviewed by Svei).
 Commit: `git commit -m phase-3-personal-brand-redesign-gsap-motion`
 
 ### Phase 4 — Sanity CMS
+
+> **See `phase-4-plan.md` at repo root — it supersedes this section and §9.**
+> Planned 2026-10-11 (Opus). Main departures: a standalone Studio instead of
+> one embedded at `/studio` (keeps the site's CSP and Lighthouse intact), field
+> localization via `sanity-plugin-internationalized-array` (English now, ready
+> for Spanish), and an `excelPiece` schema that mirrors ExcelSolutionsV's own
+> projects page.
 Branch: `phase-4-sanity-cms`
 Scope: §9. Projects + Excel pieces move from JSON to Sanity; ISR/webhook revalidation.
 **Exit criteria:** Svei can add/edit a project in Sanity Studio and see it live without
