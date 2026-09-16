@@ -1721,3 +1721,52 @@
       `*.vercel.app` URL is enough.
     - Svei is on Windows PowerShell: commands handed to him chain with `;`,
       never `&&` (saved to memory; the plan says so in its header).
+84. **Sub-phase 4.0 done (Studio scaffolded) + a security upgrade + the
+    About portrait (Sonnet, 2026-10-12).**
+    - **Studio**: project `b0kesagv` ("portfolio", dataset `production`,
+      public). Scaffolded into `studio/` with the clean template + TypeScript;
+      added `sanity-plugin-internationalized-array` and
+      `@sanity/language-filter`. `tsc --noEmit` clean and `sanity build`
+      succeeds. The three obstacles (wrong Sanity login — Gmail vs GitHub; the
+      first ID `c9ny14fn` turned out to belong to someone else's project; the
+      CLI failing from a Next.js repo root and needing a scratch-directory
+      scaffold) are recorded in phase-4-plan.md §8 so the next session doesn't
+      rediscover them. Repo prep from the plan also done: `.gitignore` now
+      ignores only the root `/package-lock.json` (so
+      `studio/package-lock.json` is tracked) and the root `tsconfig.json`
+      excludes `studio`. Studio `npm audit` shows 18 editor-tooling findings
+      (upstream, not shipped); the site's audit is separate.
+    - **Security: `yarn audit` went from 0 to 13 on its own** (3 critical)
+      because new Next.js advisories were published after the Aug 31 audit —
+      including RCE in `next/og` `ImageResponse` (used for our favicon/OG
+      image) and in the image optimizer, plus `sharp` and `source-map-js`.
+      Fixed with `yarn upgrade next sass` (Next 16.3.1 to 16.4.0, sharp
+      0.35.5, source-map-js 1.2.2) — back to **0 vulnerabilities**. Verified,
+      not assumed: clean build; all 6 pages, `/icon`, `/apple-icon`,
+      `/opengraph-image`, manifest, sitemap and the 404 respond correctly;
+      the image optimizer serves real files; `/portfolio` and `/skills`
+      still 308-redirect. Worth re-running `yarn audit` at the start of every
+      session — advisories land without any change on our side.
+    - **About portrait**: Svei's headshot saved at
+      `public/about/ivan-headshot.jpg` (1024x1024; the same portrait his
+      ExcelSolutionsV About page uses). Built the About page's signature
+      moment in GSAP: a 4:5 **arch frame**, a **gold outline that draws
+      itself** around it (stroke-dashoffset on a `pathLength=1` path — no
+      plugin), a clip-path wipe with the photo settling from a 1.25 zoom, one
+      gold sheen sweep, a text stagger, and, for a real mouse only, opposite
+      drift between photo and outline for depth. Gated through the shared
+      `registerMotion`; without JS or with reduced motion the finished CSS
+      state is simply shown. Deliberately NOT ExcelSolutionsV's flat circle
+      ring in blue/green (handoff §2: that palette must not drive this site,
+      and the two sites shouldn't read as one). Verified: build clean, axe 0
+      violations, outline `stroke-dashoffset: 0` after the animation, desktop
+      and 375px layouts screenshotted. The mid-animation frames themselves
+      were not captured (the pane only screenshots the settled state), so
+      Svei should watch it play once.
+    - **Found, not fixed**: (1) ExcelSolutionsV's About says "Zapopan, Jalisco",
+      the portfolio says "Guadalajara, Mexico" and LinkedIn says "Guadalajara
+      Mexico Metropolitan Area" — same metro area, but pick one wording for the
+      three surfaces. (2) On mobile the fixed footer bar overlaps page text at
+      the bottom of the viewport; it was kept fixed in 3.1 only until every page
+      was normal flow (site-footer.module.scss says so), which is now true, so
+      it can become a real in-flow footer.

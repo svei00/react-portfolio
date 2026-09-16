@@ -411,3 +411,32 @@ phase-4-4-excel-lab-from-sanity-detail-route
 phase-4-5-site-settings-drive-shared-copy
 phase-4-6-webhook-revalidation-retire-projects-json
 ```
+
+---
+
+## 8. Addendum — sub-phase 4.0 as actually executed (2026-10-12)
+
+- **Project:** `b0kesagv`, named "portfolio", dataset `production`, public.
+  `c9ny14fn` (given first) is **someone else's project** — it answers on
+  Sanity's public API but is not in Svei's account. Never use it.
+- **The login must match the one used on sanity.io/manage.** Svei's CLI was
+  logged in with GitHub while the project was created under his Gmail login
+  (Sanity treats them as two users). Fix: `npx sanity@latest logout` then
+  `npx sanity@latest login` with the right provider; confirm with
+  `npx sanity@latest projects list`.
+- **Scaffold in a neutral directory, then move it in.** Running
+  `sanity init` / `create-sanity` from the repo root fails with
+  `Failed to read "studio/package.json"` because the root is a Next.js app and
+  the CLI switches flows. Working recipe: scaffold into an empty folder
+  outside the repo with `sanity init --project b0kesagv --dataset production
+  --template clean --typescript --output-path studio --package-manager npm
+  --no-git --yes`, copy the folder (minus `node_modules`) to `<repo>/studio`,
+  then `npm install` inside it.
+- **Project ID is hard-coded** in `studio/sanity.config.ts` and
+  `studio/sanity.cli.ts` as the CLI generated it (it is not a secret). The plan's
+  `SANITY_STUDIO_*` env-var step is dropped; the website still reads
+  `NEXT_PUBLIC_SANITY_PROJECT_ID` (step 4.2).
+- **Studio `npm audit` shows 18 findings** (chokidar/braces/micromatch/js-yaml
+  inside Sanity's own CLI tooling). Editor-only, never shipped to visitors,
+  fixable only upstream; do not run `npm audit fix --force`. The site's own
+  `yarn audit` is the one that must stay at 0.

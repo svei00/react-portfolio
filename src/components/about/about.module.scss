@@ -16,18 +16,66 @@
   gap: var(--space-6);
 }
 
-.photoFrame {
+// ---- Portrait: arch frame + self-drawing gold outline ------------------
+// Animated in about-view.tsx (GSAP). Everything here is the *finished*
+// state, so with no JS or with prefers-reduced-motion the portrait simply
+// appears complete — the animation only ever plays toward this.
+//
+// The arch is a 4:5 box whose top corners are a true semicircle: radius
+// = half the width = 40% of the height (50% / 40% below). The outline SVG
+// uses the same 100x125 aspect and sits 4% outside on every side (equal
+// percentages scale both axes alike, so it stays concentric).
+.portrait {
   position: relative;
-  aspect-ratio: 1 / 1;
   width: 100%;
   max-width: 20rem;
-  border-radius: 4px;
+  aspect-ratio: 4 / 5;
+}
+
+.photoFrame {
+  position: absolute;
+  inset: 0;
   overflow: hidden;
+  border-radius: 50% 50% 4px 4px / 40% 40% 4px 4px;
   background: var(--surface);
 }
 
 .photo {
   object-fit: cover;
+}
+
+.outline {
+  position: absolute;
+  inset: -4%;
+  width: 108%;
+  height: 108%;
+  overflow: visible;
+  pointer-events: none;
+
+  path {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 0.55;
+    stroke-linecap: round;
+    // pathLength is set to 1 in the markup, so a dash of 1 is "the whole
+    // line"; GSAP animates the offset from 1 (hidden) to 0 (drawn).
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+// One soft gold sweep across the photo as it settles.
+.sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(201, 168, 122, 0.28) 50%, // var(--accent-soft)
+    transparent 65%
+  );
+  transform: translateX(-120%);
 }
 
 .introText {
@@ -108,7 +156,7 @@
     gap: var(--space-8);
   }
 
-  .photoFrame {
+  .portrait {
     max-width: 22rem;
     flex-shrink: 0;
   }
