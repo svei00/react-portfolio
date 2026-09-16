@@ -136,9 +136,15 @@ button text) stay in code — they are not content.
   (phase-3-plan.md §13 — Svei's request that the CMS explain itself at the
   point of entry).
 - Querying any localized field always goes through one GROQ pattern:
-  `coalesce(field[_key == $locale][0].value, field[_key == "en"][0].value)`
+  `coalesce(field[language == $locale][0].value, field[language == "en"][0].value)`
   with `$locale` fixed to `"en"` for now. Put it in one helper so Spanish later
   changes one constant.
+  **Corrected 2026-10-12:** this said `_key == $locale` (copied from the Sanity
+  skill's example, which is the old plugin v4 shape). Plugin v5 — the version
+  installed — stores `[{_key, language, value}]` with the language in a
+  `language` property, so a `_key` query would silently return nothing. Source:
+  `studio/node_modules/sanity-plugin-internationalized-array/README.md`,
+  "Shape of stored data" / "Querying data".
 
 ### 4.2 `project` — Work (development)
 
@@ -440,3 +446,28 @@ phase-4-6-webhook-revalidation-retire-projects-json
   inside Sanity's own CLI tooling). Editor-only, never shipped to visitors,
   fixable only upstream; do not run `npm audit fix --force`. The site's own
   `yarn audit` is the one that must stay at 0.
+
+## 9. Addendum — sub-phase 4.1 as executed (2026-10-12)
+
+- **Files** (all in `studio/`): `schemaTypes/documents/{project,excel-piece,site-settings}.ts`,
+  `schemaTypes/objects/{accessible-image,simple-block-content}.ts`,
+  `schemaTypes/helpers/localized-validation.ts`, `structure.ts`, and the
+  rewritten `sanity.config.ts` (i18n plugin with English default and Spanish
+  hidden by the language filter; `siteSettings` blocked from create/delete/
+  duplicate/unpublish and opened directly from the menu).
+- **Validation** is a pure, tested helper: English is required (Spanish alone is
+  rejected, an empty paragraph does not count as filled); length limits report
+  on the English item; every image needs English alt text; project cover
+  required; Excel pieces require an outcome metric and 1-3 images; URLs must be
+  https. 13 cases tested with a plain Node script.
+- **Incident:** the root of the repo briefly held an *embedded-Studio* scaffold
+  (`sanity.config.ts`, `sanity.cli.ts`, `src/app/studio/`, a next-sanity based
+  `src/sanity/`) that arrived through `git add -A` in the 4.0 commit and broke
+  `next build` (no Sanity packages at the root). Removed. Do not recreate it:
+  the plan's whole point is a standalone Studio. Also: hand Svei explicit
+  `git add <paths>` commands, never `git add -A`.
+- **Step 4.2 starts from nothing** in `src/sanity/` (the deleted scaffold's
+  `live.ts` used next-sanity's `defineLive`, which the plan rejects).
+  `.env.local` already has `NEXT_PUBLIC_SANITY_PROJECT_ID="b0kesagv"` and
+  `NEXT_PUBLIC_SANITY_DATASET="production"` — keep them, and add the same two to
+  `.env.example` and to Vercel.

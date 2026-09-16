@@ -1770,3 +1770,49 @@
       the bottom of the viewport; it was kept fixed in 3.1 only until every page
       was normal flow (site-footer.module.scss says so), which is now true, so
       it can become a real in-flow footer.
+85. **Sub-phase 4.1 done (schemas, structure, validation) + a build-breaking
+    scaffold removed (Sonnet, 2026-10-12).**
+    - **Content model built in `studio/`** exactly per phase-4-plan.md section
+      4: `project` (Work), `excelPiece` (Excel Lab, mirroring ExcelSolutionsV's
+      problem / what it does / what makes it different / honest note / tools),
+      `siteSettings` singleton (identity, Home, About background + skills,
+      Contact, links and SEO — the LinkedIn-aligned copy), plus
+      `accessibleImage` and `simpleBlockContent`. Every image field carries a
+      description with the aspect ratio and what to show; location says city
+      level only (finding S4); the skill-group field warns that Python must stay
+      out of the JS/TS group; Excel Lab images warn staged data only.
+      `structure.ts` opens Site settings directly and lists Work / Excel Lab by
+      their order field; `sanity.config.ts` blocks the singleton from
+      create/delete/duplicate/unpublish and hides Spanish by default.
+    - **Verified**: `tsc --noEmit` clean; `sanity schema validate` 0 errors, 0
+      warnings (so the plugin's localized types resolve); `sanity build`
+      succeeds; and the validation helper was unit-tested (13 cases, all
+      pass) — Spanish-only is rejected, an empty paragraph is not "filled in",
+      length errors land on the English item. Not yet exercised against a live
+      Studio with real documents (needs `npx sanity deploy` by Svei, then a
+      real entry).
+    - **Plan correction**: the plan (copying the Sanity skill's example) said
+      to query localized fields with `_key == $locale`. Plugin v5 stores a
+      `language` property, so that query would have silently returned nothing
+      in 4.2. Fixed in phase-4-plan.md section 4.1 with the source cited.
+    - **Incident**: `next build` on `main` was failing. Cause: an embedded-Studio
+      scaffold (root `sanity.config.ts` and `sanity.cli.ts`, `src/app/studio/`,
+      a next-sanity based `src/sanity/`, and two lines appended to the
+      gitignored `.env.local`) matches the output of `npm create sanity` run
+      from the repo root, which switches to the embedded flow in a Next.js
+      app. It reached the 4.0 commit through `git add -A` and was pushed. With
+      no Sanity packages in the root `package.json` the build could not
+      resolve them, so a Vercel build of `main` would have failed. I removed
+      the five scaffold paths (all remain in git history), kept the two
+      correct `.env.local` values (`NEXT_PUBLIC_SANITY_PROJECT_ID="b0kesagv"`,
+      dataset `production`), and confirmed the build and `yarn audit` (0) are
+      clean again. No secrets were committed (`.env.local` is gitignored).
+      I did not determine who or what created those files (their timestamps
+      read Sep 15 and were not present in the repo listing earlier this
+      session). My own mistake was handing out `git add -A`; saved as a
+      standing rule — explicit paths only — and recorded in the plan.
+    - Questions Svei asked: reusing one portrait on LinkedIn, the portfolio and
+      ExcelSolutionsV is normal and good for recognition, nothing fishy; the
+      photo is committed and pushed but invisible on the live domain because
+      portfolio.excelsolutionsv.com still serves the old Netlify build (its
+      `/about` returns 404).
