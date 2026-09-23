@@ -510,3 +510,19 @@ phase-4-6-webhook-revalidation-retire-projects-json
   the bridge branch in `src/lib/work/projects.ts`, and the cover JPEGs under
   `public/portfolio/` once they live in Sanity (keep them until the seed has run
   and the live site is confirmed reading Sanity).
+
+## 12. Addendum — 4.3 live + sub-phase 4.4 as executed (2026-10-20)
+
+- 4.3's seed ran: 8 projects + `siteSettings` live in `production`; the Work
+  pages read Sanity (verified, notes.md entry 88). The JSON bridge is now only
+  a fallback and is still scheduled for deletion in 4.6.
+- 4.4 as built: `src/lib/excel-lab/` (types, from-sanity, pieces, labels),
+  `/excel-lab` takes `pieces` (empty = the unchanged 3.5 placeholder),
+  `/excel-lab/[slug]` detail page, sitemap entries. No bridge for Excel Lab.
+- **For 4.6:** the revalidation webhook must map `_type == "excelPiece"` to tag
+  `excelPiece` (and `project` to `project`, `siteSettings` to its own tag);
+  the tags used in code are `project` and `excelPiece`.
+- **For 4.5:** unchanged — site copy moves to `siteSettings` with
+  `src/content/site-copy.ts` as the coded fallback.
+- **For Phase 5:** each piece should fill `catalogUrl` (its ExcelSolutionsV
+  write-up) and a hard-metric `outcome`; the page renders both prominently.

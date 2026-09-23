@@ -16,7 +16,7 @@ type SanityImageField = {
 // can be saved without one (the seed script creates projects before their
 // screenshots exist, and drafts can be invalid), so this checks at runtime too
 // and returns null instead of crashing the page.
-function toWorkImage(field: SanityImageField): WorkImage | null {
+export function toWorkImage(field: SanityImageField): WorkImage | null {
   if (!field?.image?.asset) return null
   return {
     url: urlFor(field.image as Parameters<typeof urlFor>[0])

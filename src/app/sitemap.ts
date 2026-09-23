@@ -1,4 +1,5 @@
 import type {MetadataRoute} from 'next'
+import {getExcelPieceSlugs} from '@/lib/excel-lab/pieces'
 import {getProjectSlugs} from '@/lib/work/projects'
 
 const BASE_URL = 'https://portfolio.excelsolutionsv.com'
@@ -17,5 +18,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(),
   }))
 
-  return [...staticEntries, ...projectEntries]
+  const excelPieceSlugs = await getExcelPieceSlugs()
+  const excelPieceEntries = excelPieceSlugs.map((slug) => ({
+    url: `${BASE_URL}/excel-lab/${slug}`,
+    lastModified: new Date(),
+  }))
+
+  return [...staticEntries, ...projectEntries, ...excelPieceEntries]
 }

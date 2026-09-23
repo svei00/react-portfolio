@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import ExcelLabView from '@/components/excel-lab/excel-lab-view'
 import PageTransition from '@/components/motion/page-transition'
+import { getExcelPieces } from '@/lib/excel-lab/pieces'
 
 export const metadata: Metadata = {
   title: 'Excel Lab',
@@ -9,10 +10,12 @@ export const metadata: Metadata = {
   alternates: { canonical: '/excel-lab' },
 }
 
-export default function ExcelLabPage() {
+export default async function ExcelLabPage() {
+  const pieces = await getExcelPieces()
+
   return (
     <PageTransition>
-      <ExcelLabView />
+      <ExcelLabView pieces={pieces} />
     </PageTransition>
   )
 }

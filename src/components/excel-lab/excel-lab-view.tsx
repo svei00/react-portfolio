@@ -1,12 +1,21 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import Link from 'next/link'
 import { gsap, ScrollTrigger, registerGsapPlugins } from '@/lib/motion/gsap-setup'
 import { registerMotion } from '@/lib/motion/reduced-motion'
+import { EXCEL_CATALOGUE_URL, STATUS_LABEL } from '@/lib/excel-lab/labels'
+import type { ExcelPieceCard } from '@/lib/excel-lab/types'
 import styles from './excel-lab.module.scss'
 
-// Excel Lab — a designed placeholder, not a gap (handoff.md §7 Phase 3
-// requires this; real case studies land in Phase 5, authored in Sanity).
+type ExcelLabViewProps = {
+  pieces: ExcelPieceCard[]
+}
+
+// Excel Lab. With no pieces published yet it shows a designed placeholder,
+// not a gap (handoff.md §7 Phase 3 requires this); once pieces exist in Sanity
+// (authored in Phase 5) the same spot lists them as cards linking to their
+// own pages. The pinned intro is identical either way.
 // Framing line is verbatim from handoff.md §10: a software engineer
 // applying real engineering practice to spreadsheets, proving the claim
 // by construction rather than assertion.
@@ -42,7 +51,7 @@ const COMING_SOON_TILES = [
 // JSX below. The full-motion branch only ADDS the pin + scrub + crossfade
 // on top of that — a reduced-motion visitor scrolls past three
 // already-visible, already-readable steps exactly like any other section.
-const ExcelLabView = () => {
+const ExcelLabView = ({ pieces }: ExcelLabViewProps) => {
   const introRef = useRef<HTMLDivElement>(null)
   const stepRefs = useRef<Array<HTMLDivElement | null>>([])
 
@@ -122,15 +131,36 @@ const ExcelLabView = () => {
         </div>
       </div>
 
-      <div className={styles.tiles}>
-        {COMING_SOON_TILES.map((tile) => (
-          <div key={tile.title} className={styles.tile}>
-            <p className={styles.tileBadge}>Coming soon</p>
-            <p className={styles.tileTitle}>{tile.title}</p>
-            <p className={styles.tileDescription}>{tile.description}</p>
-          </div>
-        ))}
-      </div>
+      {pieces.length === 0 ? (
+        <div className={styles.tiles}>
+          {COMING_SOON_TILES.map((tile) => (
+            <div key={tile.title} className={styles.tile}>
+              <p className={styles.tileBadge}>Coming soon</p>
+              <p className={styles.tileTitle}>{tile.title}</p>
+              <p className={styles.tileDescription}>{tile.description}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className={styles.tiles}>
+          {pieces.map((piece) => (
+            <Link key={piece.slug} href={`/excel-lab/${piece.slug}`} className={styles.pieceCard}>
+              <p className={styles.tileBadge}>{STATUS_LABEL[piece.status]}</p>
+              <p className={styles.tileTitle}>{piece.title}</p>
+              <p className={styles.pieceOutcome}>{piece.outcome}</p>
+              <p className={styles.tileDescription}>{piece.tools.join(' · ')}</p>
+            </Link>
+          ))}
+        </div>
+      )}
+
+      <p className={styles.catalogueLine}>
+        The complete catalogue of tools, written for accountants (in Spanish), lives on{' '}
+        <a href={EXCEL_CATALOGUE_URL} target="_blank" rel="noreferrer">
+          ExcelSolutionsV
+        </a>
+        .
+      </p>
     </div>
   )
 }

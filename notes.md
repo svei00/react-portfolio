@@ -1948,3 +1948,71 @@
       `SANITY_WRITE_TOKEN=...` to `.env.local`, run
       `node --env-file=.env.local scripts/seed-sanity.mts --write`, then DELETE
       the token in Sanity and remove it from `.env.local`.
+88. **Sub-phase 4.3 completed live, and 4.4 (Excel Lab from Sanity) built
+    (Sonnet, 2026-10-20).**
+    - **4.3 seed ran**: 8 projects + the `siteSettings` singleton are now in the
+      `production` dataset (0 drafts). Checked afterwards through the public
+      read API: every project has English text, platform and year; 5 covers
+      exist and serve from cdn.sanity.io as JPEG (122/206/201/64/74 KB); the 3
+      without a cover (Bloom Aquatics, Cover Studio, FrutiApp) are the
+      expected ones. A production build then rendered `/work` with 73
+      cdn.sanity.io references and 0 local `/portfolio/` ones, the
+      `/_next/image` optimizer returned 200 `image/jpeg` for a real Sanity
+      image (the one check 4.3 could not do before data existed), all 8 detail
+      pages 200, unknown slug 404, 8 work URLs in the sitemap. Two stumbles on
+      the way, both Svei-side: the token line had not actually been saved into
+      `.env.local` (file unchanged on disk twice; found by listing key NAMES
+      only), and `npx sanity documents validate` must be run inside `studio/`,
+      not at the repo root. While diagnosing, one command of mine printed the
+      tail of `.env.local` and exposed part of the EmailJS private key in the
+      local session log; flagged to Svei (rotate in the EmailJS dashboard if
+      wanted).
+    - **4.4 built**: `src/lib/excel-lab/` mirrors `src/lib/work/` —
+      `types.ts`, `from-sanity.ts` (null-safe defaults), `pieces.ts`
+      (`getExcelPieces/getExcelPiece/getExcelPieceSlugs`, tag `excelPiece`),
+      `labels.ts` (status wording + the catalogue URL). `toWorkImage` is now
+      exported from `src/lib/work/from-sanity.ts` and reused rather than
+      copied. **No JSON bridge**: with zero pieces the page simply shows the
+      existing "coming soon" state.
+    - **Pages**: `/excel-lab` now fetches pieces and passes them to the view:
+      zero pieces = the Phase 3.5 page unchanged (pinned three-step intro,
+      three "Coming soon" tiles); one or more = the tiles are replaced by
+      cards (status badge, title, the one-line outcome, tools) linking to
+      `/excel-lab/<slug>`. The single pinned ScrollTrigger sequence was not
+      touched. A line under either state links ONCE to the full
+      ExcelSolutionsV catalogue (`https://www.excelsolutionsv.com/projects`,
+      verified 200, same host as the ExcelSolutionsV entry in Work).
+      New `/excel-lab/[slug]` (`excel-piece-detail-view.tsx`): status badge,
+      title, the outcome set large, then The problem / What it does (rich
+      text, via the same Portable Text renderer as Work) / What makes it
+      different / Honest note, tools, images (contain, never cropped), and the
+      ExcelSolutionsV write-up and optional download links. A section left
+      empty in the Studio renders nothing rather than an empty heading.
+      `generateStaticParams`, metadata and `notFound()` follow `/work/[slug]`;
+      the sitemap now lists piece pages too. The build with an EMPTY piece list
+      is fine (`/excel-lab/[slug]` builds, every unknown slug 404s).
+    - **Verified** with a temporary page (deleted) that fed realistic mock
+      Sanity results through the real mappers and views — I did not create a
+      piece in Svei's dataset, because that would have meant reusing the
+      seed token beyond its purpose. Index: 2 cards link to their pages and
+      the placeholder tiles are gone. Full piece: all four sections, bold,
+      bullet, safe external link, the image served through the optimizer
+      (200 image/jpeg), a null-asset image dropped, both links present with
+      `noreferrer`. Bare piece: only "The problem" rendered. axe: 0
+      violations on the mock page and on the real zero-pieces `/excel-lab`;
+      console clean. Two layout nits found by looking at it and fixed: the
+      back link and the status badge shared a line, and a lone image sat in half
+      of a two-column grid. `tsc` clean, `next build` clean, `yarn audit` 0
+      vulnerabilities (121 packages; run through `corepack yarn`, since
+      `yarn` itself is not on PATH in this shell).
+    - **Testing gotcha worth remembering**: the Browser pane reported
+      `innerWidth` 0 until a viewport was set with `resize_window`, which
+      collapsed every page to 0px wide and looked like a layout bug. Set a
+      viewport before measuring. Also, lazy images in a backgrounded pane do not
+      load until forced (`img.loading='eager'`).
+    - **Svei to do**: (1) delete the write token in Sanity and remove it from
+      `.env.local`; (2) the real end-to-end test of this sub-phase is yours:
+      in the Studio, create one Excel Lab piece with a hard-metric outcome,
+      publish, confirm it appears at `/excel-lab` and its own page after the
+      1-hour revalidate window or a rebuild (instant once 4.6's webhook
+      exists), then delete it. Staged/demo data only in any image.
