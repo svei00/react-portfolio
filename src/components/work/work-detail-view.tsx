@@ -1,20 +1,22 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { ViewTransition } from 'react'
-import type { Project } from '@/types/project'
+import {ViewTransition} from 'react'
+import type {ProjectDetail} from '@/lib/work/types'
+import ProjectDescription from './project-description'
 import styles from './work.module.scss'
 
 type WorkDetailViewProps = {
-  project: Project
+  project: ProjectDetail
 }
 
-// A single case study. The cover image shares its ViewTransition `name`
-// with the matching tile on the Work index (work-index-view.tsx) — the
-// image morphs from grid cell to hero instead of the page swapping
-// instantly. Content below (description/tech stack/links) has no
-// transition name, so it simply fades in as new content once the morph
-// resolves (the default page-fade from src/components/motion/page-transition.tsx).
-const WorkDetailView = ({ project }: WorkDetailViewProps) => (
+const PLATFORM_LABEL = {web: 'Web', mobile: 'Mobile', desktop: 'Desktop'} as const
+
+// A single case study. The cover image shares its ViewTransition `name` with
+// the matching tile on the Work index (work-index-view.tsx), so the image
+// morphs from grid cell to hero. Content below has no transition name, so it
+// simply fades in once the morph resolves (the page-fade in
+// src/components/motion/page-transition.tsx).
+const WorkDetailView = ({project}: WorkDetailViewProps) => (
   <article className={styles.detailPage}>
     <Link href="/work" className={styles.backLink}>
       ← Back to Work
@@ -22,21 +24,34 @@ const WorkDetailView = ({ project }: WorkDetailViewProps) => (
 
     <ViewTransition name={`work-image-${project.slug}`}>
       <div className={styles.detailImageWrap}>
-        <Image
-          src={project.coverImage.src}
-          alt={project.coverImage.alt}
-          fill
-          sizes="(max-width: 768px) 100vw, 60vw"
-          className={styles.detailImage}
-          priority
-        />
+        {project.coverImage ? (
+          <Image
+            src={project.coverImage.url}
+            alt={project.coverImage.alt}
+            fill
+            sizes="(max-width: 768px) 100vw, 60vw"
+            className={styles.detailImage}
+            loading="eager"
+            fetchPriority="high"
+          />
+        ) : (
+          <span className={styles.placeholderMark} aria-hidden="true">
+            {project.title.charAt(0)}
+          </span>
+        )}
       </div>
     </ViewTransition>
 
     <div className={styles.detailBody}>
       <h1 className={styles.detailTitle}>{project.title}</h1>
+      <p className={styles.detailMeta}>
+        {PLATFORM_LABEL[project.platform]} · {project.year}
+      </p>
       <p className={styles.detailSummary}>{project.summary}</p>
-      <p className={styles.detailDescription}>{project.description}</p>
+
+      <div className={styles.detailDescription}>
+        <ProjectDescription value={project.description} />
+      </div>
 
       <ul className={styles.techStackList}>
         {project.techStack.map((tech) => (
@@ -56,6 +71,22 @@ const WorkDetailView = ({ project }: WorkDetailViewProps) => (
           </a>
         )}
       </div>
+
+      {project.gallery.length > 0 && (
+        <ul className={styles.gallery}>
+          {project.gallery.map((image) => (
+            <li key={image.url} className={styles.galleryItem}>
+              <Image
+                src={image.url}
+                alt={image.alt}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className={styles.galleryImage}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   </article>
 )

@@ -5,15 +5,23 @@
     "summary": "A bilingual Excel tutorials and automation blog for accountants.",
     "description": "ExcelSolutionsV is the practice I founded in 2014 to help accountants in Mexico go beyond what commercial tax software offers, with custom data-extraction and automation tools. The blog publishes step-by-step tutorials on Excel and Python for tax professionals, including CFDI and SAT workflows, across automation, security, data analysis, data entry, and visualization. The current site is a MERN application (MongoDB, Express, React, Node.js); the first version, in 2019, was plain HTML, CSS, PHP, and SQL.",
     "coverImage": {
-      "src": "/portfolio/1/LogoExcelTrim.png",
-      "alt": "Excel Solutions logo"
+      "src": "/portfolio/1/excel-solutions-cover.jpg",
+      "alt": "Excel Solutions blog home page: hero text, article categories and the latest posts"
     },
     "gallery": [],
-    "techStack": ["React", "Node.js", "Express", "MongoDB", "Vite"],
+    "techStack": [
+      "React",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "Vite"
+    ],
     "liveUrl": "https://www.excelsolutionsv.com",
     "repoUrl": null,
     "featured": true,
-    "orderRank": 1
+    "orderRank": 1,
+    "platform": "web",
+    "year": 2019
   },
   {
     "title": "Pura Vida Vallarta Tours",
@@ -22,14 +30,21 @@
     "description": "Pura Vida Vallarta Tours curates the best tours and experiences around Bahia de Banderas so visitors do not have to guess which operator is worth booking. Bilingual (Spanish/English), video previews for each tour, and WhatsApp-based booking instead of a traditional checkout flow, matching how the target audience actually books travel in the region. Content is managed through Sanity.",
     "coverImage": {
       "src": "/portfolio/2/pura-vida-vallarta-cover.jpg",
-      "alt": "Pura Vida Vallarta Tours homepage hero"
+      "alt": "Pura Vida Vallarta Tours home page with the hero headline over a coastline with seabirds"
     },
     "gallery": [],
-    "techStack": ["Next.js", "React", "Sanity", "Leaflet"],
+    "techStack": [
+      "Next.js",
+      "React",
+      "Sanity",
+      "Leaflet"
+    ],
     "liveUrl": "https://pura-vida-vallarta.com",
     "repoUrl": "https://github.com/svei00/tours-web",
     "featured": true,
-    "orderRank": 2
+    "orderRank": 2,
+    "platform": "web",
+    "year": 2026
   },
   {
     "title": "Bloom Aquatics",
@@ -41,11 +56,18 @@
       "alt": "Bloom Aquatics business tracker screenshot"
     },
     "gallery": [],
-    "techStack": ["React", "Vite", "Express", "SQLite"],
+    "techStack": [
+      "React",
+      "Vite",
+      "Express",
+      "SQLite"
+    ],
     "liveUrl": null,
     "repoUrl": null,
     "featured": true,
-    "orderRank": 3
+    "orderRank": 3,
+    "platform": "web",
+    "year": 2026
   },
   {
     "title": "La Estancia de Lupita",
@@ -54,14 +76,19 @@
     "description": "An earlier React project — a travel site highlighting Riviera Nayarit destinations (La Peñita, Punta de Mita, Puerto Vallarta, the Marietas Islands) for a bungalow rental business.",
     "coverImage": {
       "src": "/portfolio/4/la-estancia-de-lupita-cover.jpg",
-      "alt": "La Estancia de Lupita homepage screenshot"
+      "alt": "La Estancia de Lupita home page: a Riviera Nayarit bay with the headline Your Journey, Your Story"
     },
     "gallery": [],
-    "techStack": ["React", "EmailJS"],
+    "techStack": [
+      "React",
+      "EmailJS"
+    ],
     "liveUrl": "https://travel.excelsolutionsv.com",
     "repoUrl": null,
     "featured": false,
-    "orderRank": 4
+    "orderRank": 4,
+    "platform": "web",
+    "year": 2022
   },
   {
     "title": "Cover Studio",
@@ -73,11 +100,41 @@
       "alt": "Cover Studio desktop app screenshot"
     },
     "gallery": [],
-    "techStack": ["Python", "PySide6"],
+    "techStack": [
+      "Python",
+      "PySide6"
+    ],
     "liveUrl": null,
     "repoUrl": null,
     "featured": false,
-    "orderRank": 5
+    "orderRank": 5,
+    "platform": "desktop",
+    "year": 2026
+  },
+  {
+    "title": "Crónicas del Vejerete",
+    "slug": "cronicas-del-vejerete",
+    "summary": "A Spanish-language personal blog in the voice of a nostalgic, sarcastic old man.",
+    "description": "Crónicas del Vejerete is a personal blog written in Spanish, in the voice of an old man who no longer believes anyone: chronicles of what was, what is, and what we were sold. It is a full Next.js application with its own writing and publishing tools, authentication, and a MongoDB content store.",
+    "coverImage": {
+      "src": "/portfolio/8/cronicas-del-vejerete-cover.jpg",
+      "alt": "Crónicas del Vejerete home page: the blog title in a serif typeface on a dark page, followed by the latest chronicles"
+    },
+    "gallery": [],
+    "techStack": [
+      "Next.js",
+      "TypeScript",
+      "Tailwind",
+      "MongoDB",
+      "Clerk",
+      "GSAP"
+    ],
+    "liveUrl": "https://cronicasdelvejerete.com",
+    "repoUrl": null,
+    "featured": false,
+    "orderRank": 6,
+    "platform": "web",
+    "year": 2024
   },
   {
     "title": "Croquetas el Kilo",
@@ -86,14 +143,19 @@
     "description": "An e-commerce site selling pet food (Purina among the brands carried), rebuilt on Next.js and deployed on Vercel — its original Render-hosted version had gone offline before this rebuild.",
     "coverImage": {
       "src": "/portfolio/7/croquetas-el-kilo-cover.jpg",
-      "alt": "Croquetas el Kilo homepage screenshot"
+      "alt": "Croquetas el Kilo home page: a bowl of pet food beside the headline Powered by Purina"
     },
     "gallery": [],
-    "techStack": ["Next.js", "React"],
+    "techStack": [
+      "Next.js",
+      "React"
+    ],
     "liveUrl": "https://croquetas.excelsolutionsv.com",
     "repoUrl": null,
     "featured": false,
-    "orderRank": 7
+    "orderRank": 7,
+    "platform": "web",
+    "year": 2022
   },
   {
     "title": "FrutiApp",
@@ -105,10 +167,15 @@
       "alt": "FrutiApp screenshot"
     },
     "gallery": [],
-    "techStack": ["Java", "Android"],
+    "techStack": [
+      "Java",
+      "Android"
+    ],
     "liveUrl": null,
     "repoUrl": "https://github.com/svei00/v51_Frutiapp",
     "featured": false,
-    "orderRank": 8
+    "orderRank": 8,
+    "platform": "mobile",
+    "year": 2021
   }
 ]

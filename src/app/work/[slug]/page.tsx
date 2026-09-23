@@ -1,39 +1,40 @@
-import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import type {Metadata} from 'next'
+import {notFound} from 'next/navigation'
 import WorkDetailView from '@/components/work/work-detail-view'
 import PageTransition from '@/components/motion/page-transition'
-import projects from '@/content/projects.json'
+import {getProject, getProjectSlugs} from '@/lib/work/projects'
 
 type WorkDetailPageProps = {
-  params: Promise<{ slug: string }>
+  params: Promise<{slug: string}>
 }
 
-// Static params for every project at build time — this stays a plain
-// array lookup for now; Phase 4 swaps `projects.json` for a Sanity GROQ
-// query here without touching WorkDetailView at all (the Project shape
-// already matches the Sanity schema — see src/types/project.ts).
-export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }))
+// Every published project is built statically. A project published in the
+// Studio after the last build is rendered on demand the first time it is
+// visited (Next's default for unknown params) and cached; the webhook in step
+// 4.6 refreshes it when its content changes.
+export async function generateStaticParams() {
+  const slugs = await getProjectSlugs()
+  return slugs.map((slug) => ({slug}))
 }
 
-export async function generateMetadata({ params }: WorkDetailPageProps): Promise<Metadata> {
-  const { slug } = await params
-  const project = projects.find((item) => item.slug === slug)
+export async function generateMetadata({params}: WorkDetailPageProps): Promise<Metadata> {
+  const {slug} = await params
+  const project = await getProject(slug)
 
   if (!project) {
-    return { title: 'Work' }
+    return {title: 'Work'}
   }
 
   return {
     title: project.title,
     description: project.summary,
-    alternates: { canonical: `/work/${project.slug}` },
+    alternates: {canonical: `/work/${project.slug}`},
   }
 }
 
-export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
-  const { slug } = await params
-  const project = projects.find((item) => item.slug === slug)
+export default async function WorkDetailPage({params}: WorkDetailPageProps) {
+  const {slug} = await params
+  const project = await getProject(slug)
 
   if (!project) {
     notFound()

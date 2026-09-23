@@ -1872,3 +1872,79 @@
     - **Not exercised yet**: a real image through `/_next/image` from
       cdn.sanity.io (the dataset has no assets until 4.3), and `revalidateTag`
       (4.6).
+87. **Sub-phase 4.3 built; the actual import into Sanity is waiting on a
+    write token (Sonnet, 2026-10-20).** Work now reads from Sanity; until the
+    import is run it shows the same projects through a temporary bridge, so
+    nothing regressed.
+    - **Work pages from Sanity**: `src/lib/work/` — `types.ts` (view models
+      the pages render, independent of the source), `from-sanity.ts` (maps
+      generated query results; null-safe because the generated types claim
+      required fields exist but a seeded or draft document can lack them, e.g.
+      a cover), `from-json.ts` (TEMPORARY bridge, deleted in 4.6),
+      `projects.ts` (`getProjects` / `getProject` / `getProjectSlugs`: Sanity
+      is the source when it holds at least one published project, otherwise
+      the JSON — decided once per call so the two never mix). `/work`,
+      `/work/[slug]` and `sitemap.ts` use them; `/work` now builds as ISR (1h
+      fallback). The description renders through `@portabletext/react`
+      (`project-description.tsx`, external links open safely). A project
+      without a cover shows a quiet placeholder (its initial) instead of a
+      broken image; tiles and detail pages now show platform and year; the
+      gallery renders (contain, not cover, so screenshots aren't cropped).
+      `src/types/project.ts` deleted.
+    - **Import tooling (not yet run)**: `scripts/seed-sanity.mts`. Default is a
+      dry run needing no token; `--ndjson` exports the documents;
+      `--write` imports. It never overwrites (a slug that exists is skipped;
+      `siteSettings` uses createIfNotExists), lets Sanity generate ids for
+      ordinary documents, uploads covers that exist on disk, and creates the
+      `siteSettings` singleton from `src/content/site-copy.ts` — one new file
+      holding the shared copy, which is both the seed source and (from 4.5) the
+      coded fallback, so the text isn't pasted in two places.
+    - **Content added**: Crónicas del Vejerete as project 8 (live
+      cronicasdelvejerete.com verified; stack read from its package.json:
+      Next.js, TypeScript, Tailwind, MongoDB, Clerk, GSAP; years from git
+      first commits: Crónicas 2024, Bloom Aquatics 2026, Cover Studio 2026,
+      Pura Vida 2026; Excel Solutions 2019 and La Estancia 2022 from LinkedIn;
+      FrutiApp 2021 from LinkedIn; **Croquetas el Kilo 2022 is the nearest
+      LinkedIn project and unverified — Svei to confirm**). `platform` and `year`
+      added to every entry.
+    - **Real covers for 5 of 8 projects**: no screenshots existed in any repo,
+      so headless Chrome captured the five PUBLIC live sites (Excel Solutions,
+      Pura Vida, La Estancia, Croquetas, Crónicas) at 1440x1080 (4:3), each
+      inspected for banners/blank captures, then converted to optimized JPEG
+      with sharp (4.4 MB of PNG became 652 KB, since anything committed stays
+      in a public repo's history forever). The old logo-only Excel Solutions
+      cover was removed. Still without a cover and needing Svei's own
+      screenshots: **Bloom Aquatics** (a private family-business tracker; its
+      screens may show real business data, so deliberately not captured),
+      **Cover Studio** and **FrutiApp** (desktop/mobile apps, not web pages).
+    - **Verified**: Studio's own validator on the seed documents (exported as
+      NDJSON, checked offline against the real schema): 8 projects + settings,
+      0 unexpected problems — the only markers were the two intended ones
+      (the 3 projects with no cover are flagged "Required" on purpose, and the
+      placeholder asset id doesn't exist yet). A negative control (corrupted
+      copy of the settings document) was caught on all 3 faults, proving the
+      settings document was genuinely validated, not skipped. The Sanity code
+      path was rendered with realistic mock query results (temporary page,
+      deleted): 11/11 checks — optimizer URL from our project's CDN folder,
+      placeholder for a null cover, bold/link/heading/bullets, a null-asset
+      gallery item dropped, repo link present and live link absent. Through the
+      bridge: all 8 projects, details, sitemap and the 5 covers serve; unknown
+      slug 404s. axe 0 violations on `/work` and a detail page. `next build`
+      and `yarn audit` (0, 121 packages) clean; studio `tsc` clean.
+    - **Two things found and fixed on the way**: (1) the JSON bridge pointed
+      three tiles at files that don't exist, causing 404s and broken images on
+      every visit — it now returns null for a missing file, like the Sanity
+      path, which also took Best Practices from 96 to 100. (2) **`priority` on
+      `next/image` is deprecated in Next 16** (docs: use `loading="eager"` /
+      `fetchPriority="high"`); it was used on the About photo and the project
+      hero — replaced, and the first two Work tiles are now flagged
+      above-the-fold. Lighthouse mobile `/work` with real images:
+      Performance 85-86 (LCP ~4.3s), Accessibility 100, Best Practices 100,
+      SEO 100. The earlier 89 was flattered because the images were failing to
+      load, not because it was faster; this is the honest figure and still
+      clears Phase 3's 85. Image weight is a Phase 6 target.
+    - **Blocked on Svei**: a write token. At sanity.io/manage > portfolio >
+      API > Tokens, create one with Editor permission, add
+      `SANITY_WRITE_TOKEN=...` to `.env.local`, run
+      `node --env-file=.env.local scripts/seed-sanity.mts --write`, then DELETE
+      the token in Sanity and remove it from `.env.local`.

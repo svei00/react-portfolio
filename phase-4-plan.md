@@ -490,3 +490,23 @@ phase-4-6-webhook-revalidation-retire-projects-json
   purpose, but `client.ts`/`fetch.ts`/`image.ts` do import `./env` etc., so
   they cannot be run by bare `node`. `scripts/seed-sanity.ts` should build its
   own client with a write token (as the plan says) rather than importing them.
+
+## 11. Addendum — sub-phase 4.3 as executed (2026-10-20)
+
+- Built and verified; the import itself is pending the write token (notes.md
+  entry 87). Work reads Sanity-first with a JSON bridge that 4.6 deletes.
+- **`src/content/site-copy.ts` now exists** and is the seed source for
+  `siteSettings`. **Step 4.5 must make the components read
+  `siteSettings` and fall back to this same file** (not re-paste the text), then
+  the About/Home/Contact components stop hard-coding their copy.
+- **For 4.4 (Excel Lab):** mirror `src/lib/work/` (types, from-sanity,
+  projects) for `excelPiece`; reuse `ProjectDescription` for rich text. There is
+  no Excel Lab bridge to write: with zero pieces the existing 3.5 placeholder
+  page IS the empty state.
+- **Image attributes in this Next version:** never use `priority`
+  (deprecated in 16). Above-the-fold images: `loading="eager"` and
+  `fetchPriority="high"` on the single LCP image.
+- **4.6 deletion list:** `src/lib/work/from-json.ts`, `src/content/projects.json`,
+  the bridge branch in `src/lib/work/projects.ts`, and the cover JPEGs under
+  `public/portfolio/` once they live in Sanity (keep them until the seed has run
+  and the live site is confirmed reading Sanity).

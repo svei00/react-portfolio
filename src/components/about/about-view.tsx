@@ -187,7 +187,8 @@ const AboutView = () => {
                 src="/about/ivan-headshot.jpg"
                 alt="Ivan E. Villanueva"
                 fill
-                priority
+                loading="eager"
+                fetchPriority="high"
                 sizes="(max-width: 768px) 80vw, 22rem"
                 className={styles.photo}
                 onError={() => setImageFailed(true)}
