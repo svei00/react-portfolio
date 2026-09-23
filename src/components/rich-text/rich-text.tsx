@@ -1,10 +1,12 @@
 import {PortableText, type PortableTextComponents} from '@portabletext/react'
 import type {PortableTextBlocks} from '@/lib/work/types'
 
-// Renders a project's rich-text description (Portable Text from Sanity). The
+// Renders any rich text that comes from Sanity (Portable Text): a project's
+// description, an Excel Lab solution, the Home statement, the About body. The
 // defaults already produce plain <p>, <ul>/<li>, <strong>, <em> and <h3>; the
 // only override is the link mark, so external links open safely in a new tab.
-// Styling lives in work.module.scss (.detailDescription), not here.
+// It adds no wrapper element, so the paragraphs land directly inside whatever
+// container the caller provides, and that container's stylesheet styles them.
 const components: PortableTextComponents = {
   marks: {
     link: ({value, children}) => {
@@ -19,8 +21,8 @@ const components: PortableTextComponents = {
   },
 }
 
-const ProjectDescription = ({value}: {value: PortableTextBlocks}) => (
+const RichText = ({value}: {value: PortableTextBlocks}) => (
   <PortableText value={value} components={components} />
 )
 
-export default ProjectDescription
+export default RichText

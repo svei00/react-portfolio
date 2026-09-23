@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { buildInfo } from '@/lib/build-info'
+import { getSiteCopy } from '@/lib/site/settings'
 import styles from './site-footer.module.scss'
 
 // Server Component — buildInfo reads process.env directly, so no
@@ -10,33 +11,33 @@ import styles from './site-footer.module.scss'
 // phase-3-plan.md §3.1 describes — see the comment in
 // site-footer.module.scss for why that has to wait until every page has a
 // normal-flow layout (Phase 3.2-3.6).
-const SOCIAL_LINKS = [
-  { href: 'https://www.linkedin.com/in/ivan-e-villanueva', label: 'LinkedIn' },
-  { href: 'https://github.com/svei00/', label: 'GitHub' },
-  { href: 'https://www.youtube.com/channel/UCbxQit2ZC4U1eUwdZVQkhwg', label: 'YouTube' },
-  { href: 'https://twitter.com/svei00', label: 'Twitter' },
-]
+//
+// The social links come from the `siteSettings` document (coded fallback in
+// src/content/site-copy.ts), so adding or fixing one is a Studio edit.
+const SiteFooter = async () => {
+  const { socialLinks } = await getSiteCopy()
 
-const SiteFooter = () => (
-  <footer className={styles.footer}>
-    <Link href="/contact" className={styles.ctaLink}>
-      Let&apos;s talk →
-    </Link>
+  return (
+    <footer className={styles.footer}>
+      <Link href="/contact" className={styles.ctaLink}>
+        Let&apos;s talk →
+      </Link>
 
-    <ul className={styles.socialList}>
-      {SOCIAL_LINKS.map(({ href, label }) => (
-        <li key={href}>
-          <a href={href} target="_blank" rel="noreferrer" aria-label={label}>
-            {label}
-          </a>
-        </li>
-      ))}
-    </ul>
+      <ul className={styles.socialList}>
+        {socialLinks.map(({ url, label }) => (
+          <li key={url}>
+            <a href={url} target="_blank" rel="noreferrer" aria-label={label}>
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
 
-    <p className={styles.buildStamp}>
-      {buildInfo.commit} · {buildInfo.builtAt}
-    </p>
-  </footer>
-)
+      <p className={styles.buildStamp}>
+        {buildInfo.commit} · {buildInfo.builtAt}
+      </p>
+    </footer>
+  )
+}
 
 export default SiteFooter

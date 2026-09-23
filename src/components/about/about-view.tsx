@@ -4,66 +4,34 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { gsap, registerGsapPlugins } from '@/lib/motion/gsap-setup'
 import { registerMotion } from '@/lib/motion/reduced-motion'
+import RichText from '@/components/rich-text/rich-text'
+import type { BackgroundGroup, SkillGroup } from '@/lib/site/types'
+import type { PortableTextBlocks } from '@/lib/work/types'
 import styles from './about.module.scss'
 
 // About rewrite (phase-3-plan.md §3.4), re-aligned with LinkedIn on
-// 2026-10-11 (handoff.md §2 decisions 6 and 7). Every career fact below —
-// titles, employers, dates, degrees, location — is copied from Svei's
-// LinkedIn profile (linkedin.com/in/ivan-e-villanueva), which is the
-// source of truth for them. The first draft of this copy inferred a
-// timeline ("for years before that, I was the person accountants called")
-// and a California location that LinkedIn contradicts; both are gone.
+// 2026-10-11 (handoff.md §2 decisions 6 and 7).
+//
+// The copy no longer lives in this file. The About body, the Background list
+// and the Skills groups come from the `siteSettings` document in Sanity (the
+// coded fallback is src/content/site-copy.ts) and the page passes them in. Every
+// career fact in them — titles, employers, dates, degrees, location — is
+// copied from Svei's LinkedIn profile (linkedin.com/in/ivan-e-villanueva),
+// which is the source of truth for them. When LinkedIn changes (new role, new
+// degree, a move), change it in the Studio in the same sitting — this page
+// should never say something LinkedIn doesn't.
 //
 // **Copy status: DRAFT, not yet approved by Svei** — same gate as Home's
 // positioning statement. The family/outdoors line carries forward from the
 // pre-Phase-3 About copy Svei already published.
-//
-// When LinkedIn changes (new role, new degree, a move), change it here in
-// the same sitting — this file should never say something LinkedIn doesn't.
-const BACKGROUND_GROUPS = [
-  {
-    label: 'Work',
-    items: [
-      'Accounting & Systems Consultant, ECA Estructura & Arquitectura · 2013 – present',
-      'Founder & Accounting Automation Developer, ExcelSolutionsV · 2014 – present',
-      'Department Head, Servicio de Administración Tributaria (SAT) · 2005 – 2014',
-      'Audit Associate, Deloitte · 2004 – 2005',
-    ],
-  },
-  {
-    label: 'Education',
-    items: [
-      'Ingeniería en Desarrollo de Software, UnADM · 2017 – 2021',
-      'Bachelor of Laws, Universidad de Guadalajara · Mariano Otero Prize',
-      'Public Accounting, Universidad de Guadalajara',
-    ],
-  },
-]
+type AboutViewProps = {
+  name: string
+  aboutBody: PortableTextBlocks
+  background: BackgroundGroup[]
+  skillGroups: SkillGroup[]
+}
 
-const SKILL_GROUPS = [
-  {
-    // Listed first because it is what LinkedIn leads with. Kept separate
-    // from "Languages" on purpose (Svei's own concern): this portfolio is
-    // TypeScript/Next.js, so Python must not sit beside JS/TS and imply it
-    // built this site — it is used for the accounting-automation tools.
-    label: 'Data & Automation',
-    skills: ['Python', 'Microsoft Excel', 'VBA', 'Power Query', 'SQLite', 'CFDI / XML'],
-  },
-  {
-    label: 'Languages',
-    skills: ['JavaScript', 'TypeScript', 'PHP', 'SQL'],
-  },
-  {
-    label: 'Frontend',
-    skills: ['React', 'React Native', 'HTML5', 'CSS3', 'TailwindCSS', 'Bootstrap'],
-  },
-  {
-    label: 'Backend & Tools',
-    skills: ['Node.js', 'Express.js', 'Git', 'NPM', 'Webpack', 'Jest'],
-  },
-]
-
-const AboutView = () => {
+const AboutView = ({ name, aboutBody, background, skillGroups }: AboutViewProps) => {
   // If the headshot file ever goes missing, hide the broken <Image> and let
   // the styled arch frame show through instead of a broken-image icon.
   const [imageFailed, setImageFailed] = useState(false)
@@ -185,7 +153,7 @@ const AboutView = () => {
             {!imageFailed && (
               <Image
                 src="/about/ivan-headshot.jpg"
-                alt="Ivan E. Villanueva"
+                alt={name}
                 fill
                 loading="eager"
                 fetchPriority="high"
@@ -200,32 +168,14 @@ const AboutView = () => {
 
         <div ref={introTextRef} className={styles.introText}>
           <h1 className={styles.heading}>About</h1>
-          <p>
-            I&apos;m a software developer based in Guadalajara, Mexico, working remotely. I turn
-            manual accounting and tax workflows into controlled, automated processes with Excel
-            and Python, and build the web apps around them with React and Next.js.
-          </p>
-          <p>
-            I come to software from accounting: more than 20 years across audit, tax, and
-            consulting, including Deloitte México and nine years at Mexico&apos;s tax authority
-            (SAT), where I rose to department head. Since 2014 I have run ExcelSolutionsV,
-            building tools for accountants and teaching Excel and Python.
-          </p>
-          <p>
-            I work in English and Spanish, which is also why so much of my tooling covers CFDI and
-            SAT workflows for Mexican accountants.
-          </p>
-          <p>
-            Outside of work, I&apos;m a husband and father who&apos;s happiest on a walk through
-            the woods or planning the next family trip.
-          </p>
+          <RichText value={aboutBody} />
         </div>
       </div>
 
       <div className={styles.skills}>
         <h2 className={styles.skillsHeading}>Background</h2>
         <div className={styles.skillGroups}>
-          {BACKGROUND_GROUPS.map((group) => (
+          {background.map((group) => (
             <div key={group.label} className={styles.skillGroup}>
               <p className={styles.skillGroupLabel}>{group.label}</p>
               {group.items.map((item) => (
@@ -241,7 +191,7 @@ const AboutView = () => {
       <div className={styles.skills}>
         <h2 className={styles.skillsHeading}>Skills</h2>
         <div className={styles.skillGroups}>
-          {SKILL_GROUPS.map((group) => (
+          {skillGroups.map((group) => (
             <div key={group.label} className={styles.skillGroup}>
               <p className={styles.skillGroupLabel}>{group.label}</p>
               <p className={styles.skillGroupList}>{group.skills.join(' · ')}</p>

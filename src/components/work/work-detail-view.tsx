@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import {ViewTransition} from 'react'
 import type {ProjectDetail} from '@/lib/work/types'
-import ProjectDescription from './project-description'
+import RichText from '@/components/rich-text/rich-text'
 import styles from './work.module.scss'
 
 type WorkDetailViewProps = {
@@ -50,7 +50,7 @@ const WorkDetailView = ({project}: WorkDetailViewProps) => (
       <p className={styles.detailSummary}>{project.summary}</p>
 
       <div className={styles.detailDescription}>
-        <ProjectDescription value={project.description} />
+        <RichText value={project.description} />
       </div>
 
       <ul className={styles.techStackList}>

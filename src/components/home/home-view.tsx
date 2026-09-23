@@ -4,7 +4,19 @@ import { useEffect, useRef } from 'react'
 import { gsap, ScrollTrigger, SplitText, registerGsapPlugins } from '@/lib/motion/gsap-setup'
 import { registerMotion } from '@/lib/motion/reduced-motion'
 import MagneticLink from '@/components/motion/magnetic-link'
+import RichText from '@/components/rich-text/rich-text'
+import type { PortableTextBlocks } from '@/lib/work/types'
 import styles from './home.module.scss'
+
+// The tagline and the positioning statement come from the `siteSettings`
+// document in Sanity (coded fallback in src/content/site-copy.ts); the page
+// passes them in. The hero name stays here on purpose: "Iván" with its accent
+// is a typographic choice, separate from the plain-text name used in page
+// titles.
+type HomeViewProps = {
+  tagline: string
+  statement: PortableTextBlocks
+}
 
 // Home's hero name reveal — the "signature moment" phase-3-plan.md §3.2
 // asks for. Replaces AnimatedLetters + the three 3D letter images + the
@@ -22,7 +34,7 @@ import styles from './home.module.scss'
 //      instead of just sliding into place. This is the deliberately
 //      non-derivative piece of the whole redesign — see
 //      phase-3-plan.md §6, the anti-copycat table.
-const HomeView = () => {
+const HomeView = ({ tagline, statement }: HomeViewProps) => {
   const heroRef = useRef<HTMLDivElement>(null)
   const nameRef = useRef<HTMLHeadingElement>(null)
   const statementRef = useRef<HTMLDivElement>(null)
@@ -128,21 +140,14 @@ const HomeView = () => {
         <h1 ref={nameRef} className={styles.heroName}>
           Iván E. Villanueva
         </h1>
-        <p className={`${styles.heroTagline} ${styles.fadeIn}`}>
-          Software Developer · Accounting Automation
-        </p>
+        <p className={`${styles.heroTagline} ${styles.fadeIn}`}>{tagline}</p>
         <MagneticLink href="/contact" className={`${styles.ctaButton} ${styles.fadeIn}`}>
           Contact Me
         </MagneticLink>
       </section>
 
       <section ref={statementRef} className={styles.statement}>
-        <p>
-          I turn manual accounting and tax workflows into controlled, automated processes with
-          Excel and Python, and build the web apps around them with React and Next.js. Twenty-plus
-          years in accounting, audit, and tax taught me the real problem is structural, not
-          technical: manual steps, rework, and no audit trail.
-        </p>
+        <RichText value={statement} />
       </section>
 
       <section ref={workTeaserRef} className={styles.workTeaser}>

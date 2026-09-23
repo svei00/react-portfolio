@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import ContactView from '@/components/contact/contact-view'
 import PageTransition from '@/components/motion/page-transition'
+import { getSiteCopy } from '@/lib/site/settings'
 
 export const metadata: Metadata = {
   title: 'Contact',
@@ -11,10 +12,12 @@ export const metadata: Metadata = {
   alternates: { canonical: '/contact' },
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const { name, location, email, contactIntro } = await getSiteCopy()
+
   return (
     <PageTransition>
-      <ContactView />
+      <ContactView name={name} location={location} email={email} intro={contactIntro} />
     </PageTransition>
   )
 }

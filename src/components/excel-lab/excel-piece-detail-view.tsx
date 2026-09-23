@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import {STATUS_LABEL} from '@/lib/excel-lab/labels'
 import type {ExcelPieceDetail} from '@/lib/excel-lab/types'
-import ProjectDescription from '@/components/work/project-description'
+import RichText from '@/components/rich-text/rich-text'
 import styles from './excel-lab.module.scss'
 
 type ExcelPieceDetailViewProps = {
@@ -15,8 +15,8 @@ type ExcelPieceDetailViewProps = {
 // images, and the links. A section whose content was left empty in the Studio
 // is simply not rendered, so a short piece never shows an empty heading.
 //
-// The solution is rich text, so it reuses the Work page's Portable Text
-// renderer; both are styled by their own module (.solutionBody here).
+// The solution is rich text, rendered by the shared RichText component and
+// styled by .solutionBody in this folder's stylesheet.
 const ExcelPieceDetailView = ({piece}: ExcelPieceDetailViewProps) => (
   <article className={styles.detailPage}>
     <Link href="/excel-lab" className={styles.backLink}>
@@ -38,7 +38,7 @@ const ExcelPieceDetailView = ({piece}: ExcelPieceDetailViewProps) => (
       <section className={styles.detailSection}>
         <h2 className={styles.sectionHeading}>What it does</h2>
         <div className={styles.solutionBody}>
-          <ProjectDescription value={piece.solution} />
+          <RichText value={piece.solution} />
         </div>
       </section>
     )}

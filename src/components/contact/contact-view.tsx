@@ -17,25 +17,31 @@ import styles from './contact.module.scss'
 // for OpenStreetMap tiles). All four are removed in this sub-phase — see
 // notes.md for the exact cleanup. If Svei wants the map back, this is a
 // reversible presentation decision, not a data-loss one.
-const ContactView = () => (
+// The name, location, email and intro paragraph come from the `siteSettings`
+// document in Sanity (coded fallback in src/content/site-copy.ts); the page
+// passes them in.
+type ContactViewProps = {
+  name: string
+  location: string
+  email: string
+  intro: string
+}
+
+const ContactView = ({ name, location, email, intro }: ContactViewProps) => (
   <div className={styles.contactPage}>
     <div className={styles.intro}>
       <h1 className={styles.heading}>Contact</h1>
-      <p>
-        I&apos;m open to remote full-time, part-time, and contract work in accounting
-        automation, data analysis, and software development. If you have a different request or
-        question, use the form below.
-      </p>
+      <p>{intro}</p>
     </div>
 
     <div className={styles.layout}>
       <ContactForm />
 
       <div className={styles.locationInfo}>
-        <p className={styles.locationName}>Ivan E. Villanueva</p>
-        <p className={styles.locationCity}>Guadalajara, Mexico · Remote</p>
-        <a href="mailto:svei00@gmail.com" className={styles.locationEmail}>
-          svei00@gmail.com
+        <p className={styles.locationName}>{name}</p>
+        <p className={styles.locationCity}>{location}</p>
+        <a href={`mailto:${email}`} className={styles.locationEmail}>
+          {email}
         </a>
       </div>
     </div>

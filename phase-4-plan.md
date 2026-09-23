@@ -526,3 +526,22 @@ phase-4-6-webhook-revalidation-retire-projects-json
   `src/content/site-copy.ts` as the coded fallback.
 - **For Phase 5:** each piece should fill `catalogUrl` (its ExcelSolutionsV
   write-up) and a hard-metric `outcome`; the page renders both prominently.
+
+## 13. Addendum — sub-phase 4.5 as executed (2026-10-20)
+
+- Shared copy now flows `siteSettings` (Sanity) -> `getSiteCopy()` in
+  `src/lib/site/` -> props into Home / About / Contact, the footer and the root
+  metadata. Per-field fallback to `src/content/site-copy.ts`; Sanity outage =
+  fallback, logged, never a failed build or a blank page.
+- `RichText` (`src/components/rich-text/rich-text.tsx`) is the one Portable
+  Text renderer for the whole site.
+- **For 4.6:** the webhook must also revalidate the tag `siteSettings` (used by
+  the layout, footer and three pages); tags in code are now `project`,
+  `excelPiece` and `siteSettings`. Because the layout reads `siteSettings`,
+  EVERY page depends on that tag.
+- **For 4.6 verification:** the empty-dataset build check should also cover
+  `siteSettings` absent (covered by `mergeSiteCopy(null)`), not only zero
+  projects.
+- Open item carried forward: Work and Excel Lab fetches have no try/catch (a
+  Sanity outage during `next build` would fail the build for those routes);
+  the siteSettings path deliberately does. Decide in 4.6 whether to harden.

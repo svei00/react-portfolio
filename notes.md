@@ -2016,3 +2016,70 @@
       publish, confirm it appears at `/excel-lab` and its own page after the
       1-hour revalidate window or a rebuild (instant once 4.6's webhook
       exists), then delete it. Staged/demo data only in any image.
+89. **Sub-phase 4.5 built: the shared copy now comes from Sanity's
+    `siteSettings`, with the coded copy as fallback (Sonnet, 2026-10-20).**
+    - **Data layer, `src/lib/site/`**: `types.ts` (`SiteCopy`, plain data),
+      `fallback.ts` (`FALLBACK_COPY`, built from `src/content/site-copy.ts`;
+      its plain paragraphs are wrapped into minimal Portable Text blocks),
+      `merge.ts` (`mergeSiteCopy`, pure: FIELD BY FIELD, a filled field wins,
+      a missing/empty/whitespace one falls back; groups with no label or no
+      items are dropped; social links must be `https://` and have a label,
+      since the footer puts them straight into `href`), `settings.ts`
+      (`getSiteCopy()`: one fetch, tag `siteSettings`; if Sanity cannot be
+      reached it logs an error and returns the fallback, so a CMS outage
+      cannot blank or break the site).
+    - **Who reads what**: root `layout.tsx` now uses `generateMetadata`
+      (name, title, description, Open Graph and Twitter text); `SiteFooter` is
+      an async server component (social links); Home takes `tagline` and
+      `statement`; About takes `name`, `aboutBody`, `background`,
+      `skillGroups`; Contact takes `name`, `location`, `email`, `intro`.
+      Pages `/`, `/about`, `/contact` fetch and pass props. The hard-coded
+      copy was removed from those components. Left in code on purpose: the
+      hero name "Iván" and the nav wordmark (a typographic choice, separate
+      from the plain-text `name` used in titles), the per-page SEO
+      descriptions (they describe that page, not the site), and button/label
+      text (UI strings, not content).
+    - **Refactor**: `ProjectDescription` became the shared
+      `src/components/rich-text/rich-text.tsx` (`RichText`), used by Work,
+      Excel Lab, Home and About. It renders no wrapper element, so Home's
+      statement and About's paragraphs land in the same DOM positions as
+      before, and About's GSAP stagger over `introText.children` still gets
+      its h1 + four paragraphs.
+    - **Verified**: (1) Baseline vs after, text and metadata captured from the
+      running site before the change and after: Home, About, Contact and Work
+      text, meta description, og:description and every link (including the four
+      footer links) are IDENTICAL, now served from Sanity. The one difference
+      is deliberate and noted below. (2) The merge rules, run on realistic
+      data through a temporary route (deleted): null settings = fallback; a
+      fully filled document is used in every field; whitespace/empty/null
+      fields each fall back; a `javascript:` URL, an `http://` URL and a link
+      with no label are all dropped while the good one stays; messy groups are
+      trimmed. (3) Sanity unreachable: the dev server was started against a
+      project ID that does not exist; `/contact` still returned 200 with the
+      full coded copy, the right email and all four footer links, and the
+      error was logged ("Dataset not found"). (4) axe 0 violations on Home,
+      About and Contact; About's intro blocks end at opacity 1 and the portrait
+      frame fully open after the animation. `tsc` clean, `next build` clean,
+      `yarn audit` 0 (121 packages).
+    - **One visible change**: the browser-tab title of the home page is now
+      "Ivan E. Villanueva | Software Developer · Accounting Automation" (a
+      middle dot, copied from the Title field) instead of the old
+      "...Software Developer, Accounting Automation" (comma), because the title
+      is now built from the single Title field rather than a separate string.
+      Other pages' titles are unchanged.
+    - **Pages are now ISR** (1h fallback): `/`, `/about`, `/contact`
+      show "Revalidate 1h" in the build output because the layout fetches
+      `siteSettings`. Instant updates arrive with 4.6's webhook.
+    - **Testing notes**: the Browser pane stops painting when it is not being
+      looked at (requestAnimationFrame delivered 0 frames in 3 s), which froze
+      the About intro at opacity 0 and looked like a bug; a screenshot wakes it
+      and the animation then completes. Also: two console 404s seen after a
+      rebuild came from an older test-page tab holding stale chunks, not from
+      the page under test (resource timing for the fresh load showed none).
+    - **Not changed**: `ogImage` exists in the schema but the site still uses
+      the generated `opengraph-image.tsx`; wiring a Studio-uploaded image to it
+      is optional and not part of 4.5.
+    - **Svei to do**: the editing test is yours — in the Studio, change the
+      Title (or any Home/About/Contact text) in Site settings and publish; it
+      shows on the site after the 1-hour window or a rebuild (instantly after
+      4.6). Remember the copy is still DRAFT until you approve it.

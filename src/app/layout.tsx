@@ -4,32 +4,39 @@ import NavBar from '@/components/nav-bar/nav-bar'
 import SiteFooter from '@/components/footer/site-footer'
 import CustomCursor from '@/components/motion/custom-cursor'
 import SmoothScrollProvider from '@/lib/motion/smooth-scroll-provider'
+import { getSiteCopy } from '@/lib/site/settings'
 import { fraunces, generalSans } from '@/styles/fonts'
 import '@/styles/tokens.scss'
 import '@/styles/globals.scss'
 import '@/styles/layout.scss'
 
-const SITE_DESCRIPTION =
-  'Software developer in Guadalajara, Mexico, automating accounting and tax workflows with Excel and Python, and building web apps with React and Next.js.'
+// The site-wide title, description and social-card text come from the
+// `siteSettings` document in Sanity, with the coded fallback behind it (see
+// src/lib/site/). Per-page titles and descriptions stay in each page's own
+// metadata, because they describe that page, not the site.
+export async function generateMetadata(): Promise<Metadata> {
+  const { name, title, seoDescription } = await getSiteCopy()
+  const fullTitle = `${name} | ${title}`
 
-export const metadata: Metadata = {
-  metadataBase: new URL('https://portfolio.excelsolutionsv.com'),
-  title: {
-    default: 'Ivan E. Villanueva | Software Developer, Accounting Automation',
-    template: '%s | Ivan E. Villanueva',
-  },
-  description: SITE_DESCRIPTION,
-  openGraph: {
-    type: 'website',
-    siteName: 'Ivan E. Villanueva',
-    title: 'Ivan E. Villanueva | Software Developer, Accounting Automation',
-    description: SITE_DESCRIPTION,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Ivan E. Villanueva | Software Developer, Accounting Automation',
-    description: SITE_DESCRIPTION,
-  },
+  return {
+    metadataBase: new URL('https://portfolio.excelsolutionsv.com'),
+    title: {
+      default: fullTitle,
+      template: `%s | ${name}`,
+    },
+    description: seoDescription,
+    openGraph: {
+      type: 'website',
+      siteName: name,
+      title: fullTitle,
+      description: seoDescription,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: fullTitle,
+      description: seoDescription,
+    },
+  }
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
