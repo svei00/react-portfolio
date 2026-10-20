@@ -1816,3 +1816,59 @@
       photo is committed and pushed but invisible on the live domain because
       portfolio.excelsolutionsv.com still serves the old Netlify build (its
       `/about` returns 404).
+86. **Sub-phase 4.2 done: the website's data layer for Sanity (Sonnet,
+    2026-10-19).** No visible change on the site yet — nothing renders from
+    Sanity until 4.3.
+    - **Dependencies** (yarn, root): `@sanity/client` 8.9.0,
+      `@sanity/image-url` 2.1.1, `@portabletext/react` 8.0.1,
+      `@sanity/webhook` 4.0.4, `groq` 6.20.0. Not `next-sanity`, per the plan.
+      `yarn audit`: 0 vulnerabilities (121 packages).
+    - **`src/sanity/`** (small single-purpose files, no `@/` aliases inside so
+      they stay runnable by plain Node for tests): `env.ts` (reads the two
+      public NEXT_PUBLIC_ values and throws a clear message if either is
+      missing), `locale.ts` (`DEFAULT_LOCALE = 'en'`, the single constant to
+      change for Spanish), `client.ts` (read-only, `perspective: 'published'`,
+      `useCdn: false` for the stacked-cache reason tours-web documented),
+      `fetch.ts` (`sanityFetch`: the only way the app reads Sanity; passes
+      `next: { tags, revalidate: 3600 }`), `image.ts` (`urlFor`, using the
+      named `createImageUrlBuilder` — the default export is deprecated),
+      `queries.ts` (7 `defineQuery` queries: Work list/detail/slugs, Excel Lab
+      list/detail/slugs, siteSettings), `types.ts` (generated, committed).
+    - **Verified against this Next version's docs, not memory**: `fetch` caching
+      is opt-in in Next 16.4 (`fetch.md`, "Caching is opt-in"), so tags and
+      revalidate must be passed explicitly; `@sanity/client`'s `fetch` accepts
+      `{ next: { tags, revalidate } }` (read from its type definitions).
+    - **TypeGen** is configured in `studio/sanity.cli.ts` to read
+      `../src/**/*.{ts,tsx}` and write `../src/sanity/types.ts`; `npm run
+      typegen` (in `studio/`) extracts the schema with `--enforce-required-fields`
+      and generates. It found all 7 queries and 23 schema types; required
+      fields come out non-null (`platform: "desktop" | "mobile" | "web"`,
+      `year: number`) and localized strings as `string | null`. `schema.json`
+      (an intermediate) is gitignored. The CLI command is `schemas extract`
+      (plural) in this version.
+    - **Config**: `next.config.ts` `images.remotePatterns` allows
+      `https://cdn.sanity.io/images/<projectId>/**` ONLY (not the whole CDN, so
+      `/_next/image` cannot be pointed at someone else's images — relevant
+      given this month's Next.js image-optimizer advisories), and the CSP
+      report-only `img-src` gains `https://cdn.sanity.io` (`connect-src`
+      unchanged: all fetching is server-side). `.env.example` documents the new
+      variables. No Sanity token exists anywhere in the website.
+    - **Tests** (real, not assumed): `env.ts` throws the clear error with the
+      variables unset and loads when set. All 7 queries run against the live
+      empty dataset through `sanityFetch` inside a real `next start` (a
+      temporary route, deleted afterwards): HTTP 200, arrays empty and single
+      results `null` — so GROQ syntax is valid and the empty state is real.
+      Then the actual queries were evaluated with Sanity's own GROQ engine
+      (groq-js) against sample documents in the plugin's exact stored shape:
+      ordering, English, Spanish, per-field Spanish-to-English fallback,
+      slug-less and unknown-slug handling, blocks and gallery, settings
+      singleton — 10/10 pass, plus a check that the OLD `_key`-style lookup
+      returns nothing (the plan bug fixed in 4.1). One test failed first
+      because my sample data included a draft document; that was the test, not
+      the query — the real client uses `perspective: 'published'` which the API
+      applies by hiding drafts — and the test now simulates it. A generated
+      image URL matches the remotePattern and another project's path is
+      refused.
+    - **Not exercised yet**: a real image through `/_next/image` from
+      cdn.sanity.io (the dataset has no assets until 4.3), and `revalidateTag`
+      (4.6).

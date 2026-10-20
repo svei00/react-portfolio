@@ -471,3 +471,22 @@ phase-4-6-webhook-revalidation-retire-projects-json
   `.env.local` already has `NEXT_PUBLIC_SANITY_PROJECT_ID="b0kesagv"` and
   `NEXT_PUBLIC_SANITY_DATASET="production"` — keep them, and add the same two to
   `.env.example` and to Vercel.
+
+## 10. Addendum — sub-phase 4.2 as executed (2026-10-19)
+
+- Built as planned; see notes.md entry 86. Deviations: the API version is an
+  optional env var with a pinned default (`2026-10-01`) rather than required;
+  `revalidate` is 3600 seconds as a safety net behind the webhook.
+- **Tags are per document type** (`project`, `excelPiece`, `siteSettings`). The
+  4.6 webhook projection `{ "tags": [_type] }` must match these exactly, and
+  every `sanityFetch` call must list the types its query reads.
+- **For 4.3 onward:** use `PROJECTS_QUERY` / `PROJECT_QUERY` /
+  `PROJECT_SLUGS_QUERY` from `src/sanity/queries.ts` and the generated
+  `PROJECTS_QUERY_RESULT` types. Image pattern for next/image:
+  `src={urlFor(coverImage.image).width(1200).url()}` with `fill` as today.
+  Re-run `npm run typegen` in `studio/` whenever a schema or query changes, and
+  commit `src/sanity/types.ts`.
+- **Seed script note:** `src/sanity/*.ts` have no relative-extension imports on
+  purpose, but `client.ts`/`fetch.ts`/`image.ts` do import `./env` etc., so
+  they cannot be run by bare `node`. `scripts/seed-sanity.ts` should build its
+  own client with a write token (as the plan says) rather than importing them.
